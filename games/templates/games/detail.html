@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if game.name %}
+    <title>{{ game.name }}</title>
+    {% endif %}
+</head>
+<body>
+    {% if game.is_released %}
+        <p>This game's release date is {{ game.release_year }}</p>
+    {% else %}
+        <p>This game's planned release date is {{ game.release_year }}</p>
+    {% endif %}
+    <p>Test</p>
+</body>
+</html>
