@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WaniKani Home Page</title>
+    <link rel="stylesheet" href="static/wanikani.css">
+    <link rel="stylesheet" href="static/test.scss">
+</head>
+<body>
+    <div id="api_key_box">
+        <h1>Welcome!</h1>
+        <label>Please enter your wanikani api key: <input type="text"></label>
+        <input id="api_key_input" type="submit" value="Submit">
+    </div>
+
+
+    <ul id="progress">
+        <p>Found API key...Loading data...</p>
+        <li>
+            <div id="layer1" class="ball"></div>
+            <div id="layer6" class="pulse"></div>
+        </li>
+        <li>
+            <div id="layer2" class="ball"></div>
+            <div id="layer7" class="pulse"></div>
+        </li>
+        <li>
+            <div id="layer3" class="ball"></div>
+            <div id="layer8" class="pulse"></div>
+        </li>
+        <li>
+            <div id="layer4" class="ball"></div>
+            <div id="layer9" class="pulse"></div>
+        </li>
+        <li>
+            <div id="layer5" class="ball"></div>
+            <div id="layer10" class="pulse"></div>
+        </li>
+
+    </ul>
+    <script src="static/jquery-3.1.1.min.js"></script>
+    <script src="static/index.js"></script>
+</body>
+</html>
