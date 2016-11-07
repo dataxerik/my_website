@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'wanikani.apps.WanikaniConfig',
     'games.apps.GamesConfig',
     'home.apps.HomeConfig',
     'polls.apps.PollsConfig',
