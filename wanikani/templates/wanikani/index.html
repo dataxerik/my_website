@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>WaniKani Home Page</title>
-    <link rel="stylesheet" href="wanikani.css">
-    <link rel="stylesheet" href="static/test.scss">
+
+    {% load static %}
+    <link rel="stylesheet" type='text/css' href="{% static 'wanikani/wanikani.css' %}">
 </head>
 <body>
     <div id="api_key_box">
@@ -38,7 +39,8 @@
         </li>
 
     </ul>
-    <script src="static/jquery-3.1.1.min.js"></script>
-    <script src="static/index.js"></script>
+    <p id="output"></p>
+    <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'wanikani/index.js' %}"></script>
 </body>
 </html>
