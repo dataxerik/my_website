@@ -29,13 +29,19 @@ function callWanikaniApi() {
 
 }
 
-function callWanikaniApi2() {
+function validateWanikaniApiKey(key) {
+    var validKey = new RegExp('[0-9a-zA-Z].{31}$');
+    console.log(key)
+    return validKey.test(key)
+}
+
+function callWanikaniApi2(key) {
     $.ajax({
-        url: 'https://www.wanikani.com/api/user/c9d088f9a75b0648b3904ebee3d8d5fa/user-information',
+        url: 'https://www.wanikani.com/api/user/' + key + '/user-information',
         type: 'GET',
         dataType: 'jsonp',
         beforeSend: function() {
-            console.log("HIIII")
+            $("#progress").css("visibility", "visible");
             $("#progress").removeClass('running').delay(10).queue(function(next) {
                 $(this).addClass('running');
                 next();
@@ -43,15 +49,26 @@ function callWanikaniApi2() {
         },
         success: function(data) {
             console.log(data);
-            $(document).get("head").append(data);
+            $("body").append("p").text(data);
         },
     });
+}
+
+function makeWanikaniApiCall(key) {
+    if(validateWanikaniApiKey(key)) {
+        callWanikaniApi2();
+    }
+    else{
+        console.log("error")
+    }
 }
 
 $(document).ready(function() {
     $("#progress").removeClass('running');
         $("input").click(function() {
-            hideInput();
-            callWanikaniApi2();
+            makeWanikaniApiCall($("input:text").val())
+            //validateWanikaniApiKey('c9d088f9a75b0648b3904ebee3d8d5fa')
+            //hideInput();
+            //callWanikaniApi2();
         });
 });
