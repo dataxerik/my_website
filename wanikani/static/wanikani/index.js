@@ -6,6 +6,15 @@ function hideInput() {
         $("#api_key_box").css("display", "none");
 }
 
+function clearInput() {
+        $("#api_key_box p").remove()
+}
+
+function writeError() {
+        //$("#api_key_box").append("<p></p>")
+        $("#api_key_box p").addClass("error").text("invalid API key");
+}
+
 function callWanikaniApi() {
     var dfd = $.Deferred();
 
@@ -55,11 +64,13 @@ function callWanikaniApi2(key) {
 }
 
 function makeWanikaniApiCall(key) {
+    clearInput();
     if(validateWanikaniApiKey(key)) {
         callWanikaniApi2();
     }
     else{
         console.log("error")
+        writeError();
     }
 }
 
