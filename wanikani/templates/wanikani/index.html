@@ -9,9 +9,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'wanikani/error.css' %}">
 </head>
 <body>
+    <form action="{% url 'wanikani:progress' %}" method="post">
+    {% csrf_token %}
     <div id="api_key_box">
         <h1>Welcome!</h1>
-        <label>Please enter your wanikani api key: <input type="text"></label>
+        <label>Please enter your wanikani api key: <input type="text" name="api_key" ></label>
         <input id="api_key_input" type="submit" value="Submit">
     </div>
 
@@ -40,8 +42,8 @@
         </li>
 
     </ul>
-    <p id="output"></p>
+    </form>
     <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
-    <script src="{% static 'wanikani/index.js' %}"></script>
+    <!--<script src="{% static 'wanikani/index.js' %}"></script>-->
 </body>
 </html>
