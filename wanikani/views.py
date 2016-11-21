@@ -9,3 +9,6 @@ class IndexView(generic.ListView):
 
 def index(request):
     return render(request, 'wanikani/index.html')
+
+def progress(request):
+    return render(request, 'wanikani/progress/html')

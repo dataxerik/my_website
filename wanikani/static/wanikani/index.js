@@ -1,5 +1,5 @@
 function foo(response) {
-    document.getElementById('output').innerHTML = response.user_information.username
+    document.getElementById('output').text = response.user_information.username
 };
 
 function hideInput() {
@@ -11,8 +11,12 @@ function clearInput() {
 }
 
 function writeError() {
-        //$("#api_key_box").append("<p></p>")
+        $("#api_key_box").append("<p></p>")
         $("#api_key_box p").addClass("error").text("invalid API key");
+}
+
+function redirectToDataPage(data_){
+    window.open()
 }
 
 function callWanikaniApi() {
@@ -32,7 +36,7 @@ function callWanikaniApi() {
     }
     startProgressBar();
     var tag = document.createElement("script");
-    tag.src = 'https://www.wanikani.com/api/user/c9d088f9a75b0648b3904ebee3d8d5fa/user-information?callback=foo';
+    tag.src = 'https://www.wanikani.com/api/v1.4/user/' + key + '/user-information?callback=foo';
 
     document.getElementsByTagName("head")[0].appendChild(tag);
 
@@ -46,10 +50,10 @@ function validateWanikaniApiKey(key) {
 
 function callWanikaniApi2(key) {
     $.ajax({
-        url: 'https://www.wanikani.com/api/user/' + key + '/user-information',
+        url: 'https://www.wanikani.com/api/v1.4/user/' + key + '/user-information',
         type: 'GET',
         dataType: 'jsonp',
-        beforeSend: function() {
+        beforeSend: function(settings) {
             $("#progress").css("visibility", "visible");
             $("#progress").removeClass('running').delay(10).queue(function(next) {
                 $(this).addClass('running');
@@ -58,7 +62,7 @@ function callWanikaniApi2(key) {
         },
         success: function(data) {
             console.log(data);
-            $("body").append("p").text(data);
+            $("#api_key_box").append("p").text(data);
         },
     });
 }
@@ -66,7 +70,7 @@ function callWanikaniApi2(key) {
 function makeWanikaniApiCall(key) {
     clearInput();
     if(validateWanikaniApiKey(key)) {
-        callWanikaniApi2();
+        callWanikaniApi2(key);
     }
     else{
         console.log("error")
@@ -77,7 +81,7 @@ function makeWanikaniApiCall(key) {
 $(document).ready(function() {
     $("#progress").removeClass('running');
         $("input").click(function() {
-            makeWanikaniApiCall($("input:text").val())
+            makeWanikaniApiCall($("input:text").val().trim())
             //validateWanikaniApiKey('c9d088f9a75b0648b3904ebee3d8d5fa')
             //hideInput();
             //callWanikaniApi2();
