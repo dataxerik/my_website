@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wanikani/progress.css' %}">
 </head>
 <body>
-    <p>Hi,{{ request.session.api.user_information.username }} <br>This is blank for now.</p>
+    <ul class="wanikaniHeader">
+        <li><a href="{% url 'wanikani:detail' %}">Home</a></li>
+        <li><a href="#">Comparison</a></li>
+        <li><a href="#">Charts</a></li>
+    </ul>
+    <p>Hi, {{ request.session.api.user_information.username }} <br>This is blank for now.</p>
 </body>
 </html>

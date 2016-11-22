@@ -12,6 +12,7 @@ class IndexView(TemplateView):
     template_name = 'wanikani/index.html'
     context_object_name = 'wanikani'
 
+
 class WanikaniDetailView(DetailView):
     template_name = 'wanikani/progress.html'
     context_object_name = 'api_info'
@@ -19,7 +20,6 @@ class WanikaniDetailView(DetailView):
     def get(self, request):
         print(request.session.keys())
         return render(request, self.template_name)
-
 
 
 class ApiView(FormView):
@@ -44,7 +44,6 @@ def progress(request):
     if not api_key or service.is_valid_api_key(api_key) is None:
         print(api_key + " testing")
         return render(request, 'wanikani/index.html', {'error_message': "Please enter a valid api key"})
-
 
     api_info = service.get_api_information(api_key)
 
