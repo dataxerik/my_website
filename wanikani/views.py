@@ -5,7 +5,8 @@ from wanikani import service
 from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+from mysite.settings import BASE_DIR
+import os
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -18,8 +19,13 @@ class WanikaniDetailView(DetailView):
     context_object_name = 'api_info'
 
     def get(self, request):
-        print(request.session.keys())
+        kanji = service.get_jlpt_kanji(os.path.join(BASE_DIR, KANJI_FILE_LOCATION))
+        request.session['kanji'] = kanji
         return render(request, self.template_name)
+
+
+class WanikaniChartView(TemplateView):
+    template_name = 'wanikani/charts.html'
 
 
 class ApiView(FormView):
