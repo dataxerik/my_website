@@ -10,10 +10,15 @@
 <body>
     <ul class="wanikaniHeader">
         <li><a href="{% url 'wanikani:detail' %}">Home</a></li>
-        <li><a href="#">Comparison</a></li>
+        <li><a href="{% url 'wanikani:comparison' %}">Comparison</a></li>
         <li><a href="{% url 'wanikani:chart' %}">Charts</a></li>
     </ul>
-    <p>Hi, {{ request.session.api.user_information.username }} <br>This is blank for now.</p>
-    <p>{{ request.session.kanji }}</p>
+    {% if 'api' in request.session.keys %}
+        <p>Hi, {{ request.session.api.user_information.username }} <br>This is blank for now.</p>
+        <p>{{ request.session.kanji }}</p>
+    {% else %}
+        <p>We couldn't find your api information; Please return to the <a href="{% url 'wanikani:index' %}">login page</a>
+            and enter your api key again.</p>
+    {% endif %}
 </body>
 </html>

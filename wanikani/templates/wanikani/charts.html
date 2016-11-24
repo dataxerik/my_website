@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wanikani/progress.css' %}">
 </head>
 <body>
+    <ul class="wanikaniHeader">
+        <li><a href="{% url 'wanikani:detail' %}">Home</a></li>
+        <li><a href="{% url 'wanikani:comparison' %}">Comparison</a></li>
+        <li><a href="{% url 'wanikani:chart' %}">Charts</a></li>
+    </ul>
 
-    <p>{{ request.session.kanji }}</p>
+    {% for level, values in request.session.kanji.items %}
+        <h2>JLPT Level ({{ level }})</h2>
+        <P>({{ values.length }}) {{values.kanji_list}}</p>
+    {% endfor %}
 </body>
 </html>

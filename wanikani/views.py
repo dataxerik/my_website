@@ -5,8 +5,7 @@ from wanikani import service
 from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from mysite.settings import BASE_DIR
-import os
+
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -18,14 +17,26 @@ class WanikaniDetailView(DetailView):
     template_name = 'wanikani/progress.html'
     context_object_name = 'api_info'
 
-    def get(self, request):
-        kanji = service.get_jlpt_kanji(os.path.join(BASE_DIR, KANJI_FILE_LOCATION))
-        request.session['kanji'] = kanji
+    def get(self, request, *args, **kwargs):
+        # kanji = service.get_jlpt_kanji(os.path.join(BASE_DIR, KANJI_FILE_LOCATION))
+        # request.session['kanji'] = kanji
         return render(request, self.template_name)
 
 
 class WanikaniChartView(TemplateView):
     template_name = 'wanikani/charts.html'
+
+    def get(self, request, *args, **kwargs):
+        jlpt_kanji = service.gather_kanji_list()
+        request.session['kanji'] = jlpt_kanji
+        return render(request, self.template_name)
+
+class WanikaniComparisionView(TemplateView):
+    template_name = 'wanikani/comparison.html'
+
+    def get(self, request, *args, **kwargs):
+        kanji_json = service.gather_kanji_list()
+        return render(request, self.template_name, {'kanji_json': kanji_json})
 
 
 class ApiView(FormView):
@@ -46,7 +57,11 @@ def detail(request):
 
 
 def progress(request):
-    api_key = request.POST['api_key']
+    try:
+        api_key = request.POST['api_key']
+    except KeyError:
+        return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api key, please reenter it"})
+
     if not api_key or service.is_valid_api_key(api_key) is None:
         print(api_key + " testing")
         return render(request, 'wanikani/index.html', {'error_message': "Please enter a valid api key"})

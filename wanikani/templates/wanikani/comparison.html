@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<body>
+</body>
+    {% load js %}
+    {% load static %}
+    <script type="text/javascript">
+        var kanjiJsonVar = {{ kanji_json | js }};
+    </script>
+    <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'wanikani/d3.js' %}"></script>
+    <script src="{% static 'wanikani/comparison.js' %}"></script>
+</html>
