@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
-
+    <style>
+        .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+    </style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wanikani/comparison.css' %}">
 </head>
 <body>
+    <div>
+        <p>JLPT level Progress</p>
+    <svg id="fillgauge5" width="19%" height="250" onclick="gauge5.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 5</text></svg>
+    <svg id="fillgauge4" width="19%" height="250" onclick="gauge4.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 4</text></svg>
+    <svg id="fillgauge3" width="19%" height="250" onclick="gauge3.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 3</text></svg>
+    <svg id="fillgauge2" width="19%" height="250" onclick="gauge2.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 2</text></svg>
+    <svg id="fillgauge1" width="19%" height="250" onclick="gauge1.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 1</text></svg>
+    </div>
 </body>
     {% load js %}
     {% load static %}
@@ -16,4 +27,30 @@
     <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'wanikani/d3.js' %}"></script>
     <script src="{% static 'wanikani/comparison.js' %}"></script>
+    <script src="{% static 'wanikani/liquidFillGauge.js' %}"></script>
+
+    <script type="text/JavaScript">
+        var config5 = liquidFillGaugeDefaultSettings();
+        config5.circleColor = "#FF7777";
+        config5.textColor = "#FF4444";
+        config5.waveTextColor = "#FFAAAA";
+        config5.waveColor = "#FFDDDD";
+        config5.circleThickness = 0.2;
+        //config5.textVertPosition = 0.2;
+        config5.waveAnimateTime = 2000;
+        config5.maxValue = kanjiLengthArr[0];
+        console.log(config5)
+var gauge5 = loadLiquidFillGauge("fillgauge5", 90, config5);
+
+
+
+
+    function NewValue(){
+        if(Math.random() > .5){
+            return Math.round(Math.random()*100);
+        } else {
+            return (Math.random()*100).toFixed(1);
+        }
+    }
+    </script>
 </html>
