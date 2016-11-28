@@ -12,21 +12,27 @@
 <body>
     <div>
         <p>JLPT level Progress</p>
-    <svg id="fillgauge5" width="19%" height="250" onclick="gauge5.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 5</text></svg>
-    <svg id="fillgauge4" width="19%" height="250" onclick="gauge4.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 4</text></svg>
-    <svg id="fillgauge3" width="19%" height="250" onclick="gauge3.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 3</text></svg>
-    <svg id="fillgauge2" width="19%" height="250" onclick="gauge2.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 2</text></svg>
-    <svg id="fillgauge1" width="19%" height="250" onclick="gauge1.update(NewValue());"><text x="43%" y="20" font-family="sans-serif" font-size="20px" fill="red">JLPT 1</text></svg>
+        <svg id="fillgauge5" width="5%" height="75" onclick="gauge5.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 5</text></svg>
+        <svg id="fillgauge4" width="5%" height="75" onclick="gauge4.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 4</text></svg>
+        <svg id="fillgauge3" width="5%" height="75" onclick="gauge3.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 3</text></svg>
+        <svg id="fillgauge2" width="5%" height="75" onclick="gauge2.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 2</text></svg>
+        <svg id="fillgauge1" width="5%" height="75" onclick="gauge1.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 1</text></svg>
+    </div>
+    <div><p>Frequency</p>
+
+
     </div>
 </body>
     {% load js %}
     {% load static %}
     <script type="text/javascript">
-        var kanjiJsonVar = {{ kanji_json | js }};
+        var userJsonVar = {{ user_json | js }};
+        console.log(userJsonVar.N5.total_numbers);
+        console.log(userJsonVar.N5.user_number);
     </script>
     <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'wanikani/d3.js' %}"></script>
-    <script src="{% static 'wanikani/comparison.js' %}"></script>
+   <!-- <script src="{% static 'wanikani/comparison.js' %}"></script> --->
     <script src="{% static 'wanikani/liquidFillGauge.js' %}"></script>
 
     <script type="text/JavaScript">
@@ -38,11 +44,52 @@
         config5.circleThickness = 0.2;
         //config5.textVertPosition = 0.2;
         config5.waveAnimateTime = 2000;
-        config5.maxValue = kanjiLengthArr[0];
-        console.log(config5)
-var gauge5 = loadLiquidFillGauge("fillgauge5", 90, config5);
+        config5.maxValue = userJsonVar.N5.total_numbers;
+        var gauge5 = loadLiquidFillGauge("fillgauge5", userJsonVar.N5.user_number, config5);
 
+        var config4 = liquidFillGaugeDefaultSettings();
+        config4.circleColor = "#FF7777";
+        config4.textColor = "#FF4444";
+        config4.waveTextColor = "#FFAAAA";
+        config4.waveColor = "#FFDDDD";
+        config4.circleThickness = 0.2;
+        //config4.textVertPosition = 0.2;
+        config4.waveAnimateTime = 2000;
+        config4.maxValue = userJsonVar.N4.total_numbers;
+        var gauge4 = loadLiquidFillGauge("fillgauge4", userJsonVar.N4.user_number, config4);
 
+        var config3 = liquidFillGaugeDefaultSettings();
+        config3.circleColor = "#FF7777";
+        config3.textColor = "#FF4444";
+        config3.waveTextColor = "#FFAAAA";
+        config3.waveColor = "#FFDDDD";
+        config3.circleThickness = 0.2;
+        //config3.textVertPosition = 0.2;
+        config3.waveAnimateTime = 2000;
+        config3.maxValue = userJsonVar.N3.total_numbers;
+        var gauge3 = loadLiquidFillGauge("fillgauge3", userJsonVar.N3.user_number, config3);
+
+        var config2 = liquidFillGaugeDefaultSettings();
+        config2.circleColor = "#FF7777";
+        config2.textColor = "#FF4444";
+        config2.waveTextColor = "#FFAAAA";
+        config2.waveColor = "#FFDDDD";
+        config2.circleThickness = 0.2;
+        //config2.textVertPosition = 0.2;
+        config2.waveAnimateTime = 2000;
+        config2.maxValue = userJsonVar.N2.total_numbers;
+        var gauge2 = loadLiquidFillGauge("fillgauge2", userJsonVar.N2.user_number, config2);
+
+        var config1 = liquidFillGaugeDefaultSettings();
+        config1.circleColor = "#FF7777";
+        config1.textColor = "#FF4444";
+        config1.waveTextColor = "#FFAAAA";
+        config1.waveColor = "#FFDDDD";
+        config1.circleThickness = 0.2;
+        //config1.textVertPosition = 0.2;
+        config1.waveAnimateTime = 2000;
+        config1.maxValue = userJsonVar.N1.total_numbers;
+        var gauge1 = loadLiquidFillGauge("fillgauge1", userJsonVar.N1.user_number, config1);
 
 
     function NewValue(){

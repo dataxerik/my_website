@@ -31,12 +31,18 @@ class WanikaniChartView(TemplateView):
         request.session['kanji'] = jlpt_kanji
         return render(request, self.template_name)
 
+
 class WanikaniComparisionView(TemplateView):
     template_name = 'wanikani/comparison.html'
 
     def get(self, request, *args, **kwargs):
-        kanji_json = service.gather_kanji_list()
-        return render(request, self.template_name, {'kanji_json': kanji_json})
+        try:
+            user_json = service.get_jlpt_completion(request.session['api'])
+        except KeyError:
+            print(request.session.keys())
+            return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api information, please reenter it"})
+        #kanji_json = service.gather_kanji_list()
+        return render(request, self.template_name, {'user_json': user_json})
 
 
 class ApiView(FormView):
@@ -53,6 +59,11 @@ def index(request):
 
 
 def detail(request):
+    try:
+        request.POST['api_key']
+    except KeyError:
+        return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api key, please reenter it"})
+
     return render(request, 'wanikani/progress.html')
 
 
@@ -72,5 +83,4 @@ def progress(request):
         return render(request, 'wanikani/index.html', {'error_message': 'Couldn\'t find the given api key'})
 
     request.session['api'] = api_info
-    print(request.session['api'])
     return HttpResponseRedirect(reverse('wanikani:detail'))

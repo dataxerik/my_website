@@ -1,7 +1,7 @@
 function liquidFillGaugeDefaultSettings() {
     return {
         minValue: 0, // The gauge minimum value.
-        maxValue: 100, // The gauge max value.
+        maxValue: 1000, // The gauge max value.
         circleThickness: 0.05, // The outer circle thickness as a % of its radius.
         circleFillGap: 0.05, // The size of the gap between the outer circle and wave circle as % of the outer circle.
         circleColor: "#178BCA", // The color of the outer circle.
@@ -61,7 +61,7 @@ function loadLiquidFillGauge(elementId, value, config) {
 
 
     // Rounding functions so that the correct number of decimal places is always displayed as th
-    var textRounder = function(value) { return Math.round(value * 100); };
+    var textRounder = function(value) { return Math.round(value) };
     if(parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))) {
         textRounder = function(value) { return parseFloat(value * 100).toFixed(0); };
     }
@@ -157,10 +157,9 @@ function loadLiquidFillGauge(elementId, value, config) {
      // Make the value count up
      if(config.valueCountUp){
         var textTween = function() {
-            console.log(textFinalValue)
-            var that = d3.select(this), i = d3.interpolateNumber(parseFloat(that.text().replace(/%/g, "")), parseFloat(textFinalValue));
-            console.log(that.text().replace(/%/g, ""))
-            return function(t) { console.log(t); that.text(textRounder(t) + percentageText); }
+            aFinalValue = Math.round((parseFloat(value) / config.maxValue) * 100)
+            var that = d3.select(this), i = d3.interpolateNumber(that.text().replace(/%/g, ""), aFinalValue);
+            return function(t) {that.text(textRounder(i(t)) + percentageText); }
         };
 
         text1.transition()
@@ -202,7 +201,7 @@ function loadLiquidFillGauge(elementId, value, config) {
         this.update = function(value) {
 
             var newFinalValue = parseFloat(value).toFixed(2);
-            var textRounderUpdater = function(value) { return Math.round(value); };
+            var textRounderUpdater = function(value) { return value * 100; };
             if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))) {
                 textRounderUpdater = function(value){ return parseFloat(value).toFixed(1); };
             }
@@ -211,8 +210,10 @@ function loadLiquidFillGauge(elementId, value, config) {
             }
 
             var textTween = function() {
-                var that = d3.select(this), i = d3.interpolateNumber(that.text().replace(/%/g, ""), newFinalValue);
-                return function(t) { that.text(textRounder(i(t)) + percentageText); }
+                aFinalValue = Math.round((parseFloat(value) / config.maxValue) * 100)
+                var that = d3.select(this), i = d3.interpolateNumber(that.text().replace(/%/g, ""), aFinalValue);
+                console.log(value)
+                return function(t) {that.text(textRounder(i(t)) + percentageText); }
             };
 
             text1.transition()
