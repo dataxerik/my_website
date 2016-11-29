@@ -89,4 +89,8 @@ if __name__ == '__main__':
     total_kanji = len(N5_list['kanji_list'].replace(",", ""))
     get_jlpt_completion(info)
     '''
-    print(get_user_completion(get_api_information('c9d088f9a75b0648b3904ebee3d8d5fa')))
+    #print(get_user_completion(get_api_information('c9d088f9a75b0648b3904ebee3d8d5fa')))
+    with open(os.path.join(BASE_DIR, constant.FREQUENCY_KANJI_FILE_LOCATIONS), encoding='utf8') as fout:
+        for line in fout:
+            with open('frequency1.txt', 'ab') as fin:
+                #fin.write(line.split("\t")[0].rstrip().encode('utf8') + ",F1\n".encode('utf8'))
