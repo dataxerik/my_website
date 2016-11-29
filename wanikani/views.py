@@ -37,7 +37,7 @@ class WanikaniComparisionView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
-            user_json = service.get_jlpt_completion(request.session['api'])
+            user_json = service.get_user_completion(request.session['api'])
         except KeyError:
             print(request.session.keys())
             return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api information, please reenter it"})

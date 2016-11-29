@@ -12,23 +12,45 @@
 <body>
     <div>
         <p>JLPT level Progress</p>
-        <svg id="fillgauge5" width="5%" height="75" onclick="gauge5.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 5</text></svg>
+        <svg id="fillgauge5" width="5%" height="75" onclick="gauge5.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="9px" fill="red">JLPT 5</text></svg>
         <svg id="fillgauge4" width="5%" height="75" onclick="gauge4.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 4</text></svg>
         <svg id="fillgauge3" width="5%" height="75" onclick="gauge3.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 3</text></svg>
         <svg id="fillgauge2" width="5%" height="75" onclick="gauge2.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 2</text></svg>
         <svg id="fillgauge1" width="5%" height="75" onclick="gauge1.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 1</text></svg>
+        <svg id="fillgauge12" width="5%" height="75" onclick="gauge12.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT Total</text></svg>
     </div>
     <div><p>Frequency</p>
-
-
+        <svg id="fillgauge11" width="5%" height="75" onclick="gauge11.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 1</text></svg>
+        <svg id="fillgauge10" width="5%" height="75" onclick="gauge10.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 2</text></svg>
+        <svg id="fillgauge9" width="5%" height="75" onclick="gauge9.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 3</text></svg>
+        <svg id="fillgauge8" width="5%" height="75" onclick="gauge8.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 4</text></svg>
+        <svg id="fillgauge7" width="5%" height="75" onclick="gauge7.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 5</text></svg>
+        <svg id="fillgauge14" width="5%" height="75" onclick="gauge14.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 5</text></svg>
+        <svg id="fillgauge6" width="5%" height="75" onclick="gauge6.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo S</text></svg>
+        <svg id="fillgauge13" width="5%" height="75" onclick="gauge6.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo Total</text></svg>
     </div>
 </body>
     {% load js %}
     {% load static %}
     <script type="text/javascript">
         var userJsonVar = {{ user_json | js }};
-        console.log(userJsonVar.N5.total_numbers);
-        console.log(userJsonVar.N5.user_number);
+        console.log(userJsonVar.jlpt.N5.total_number);
+        console.log(userJsonVar.jlpt.N5.user_number);
+        console.log(userJsonVar)
+
+        var joyoTotal = 0;
+        var userJoyoTotal = 0;
+        for(var level in userJsonVar.joyo) {
+            userJoyoTotal += userJsonVar.joyo[level].user_number;
+            joyoTotal += userJsonVar.joyo[level].total_number;
+        }
+
+        var jlptTotal = 0;
+        var userJlptTotal = 0;
+        for(var level in userJsonVar.jlpt) {
+            userJlptTotal += userJsonVar.jlpt[level].user_number;
+            jlptTotal += userJsonVar.jlpt[level].total_number;
+        }
     </script>
     <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'wanikani/d3.js' %}"></script>
@@ -39,57 +61,170 @@
         var config5 = liquidFillGaugeDefaultSettings();
         config5.circleColor = "#FF7777";
         config5.textColor = "#FF4444";
+        config5.textSize = .75;
         config5.waveTextColor = "#FFAAAA";
         config5.waveColor = "#FFDDDD";
         config5.circleThickness = 0.2;
         //config5.textVertPosition = 0.2;
         config5.waveAnimateTime = 2000;
-        config5.maxValue = userJsonVar.N5.total_numbers;
-        var gauge5 = loadLiquidFillGauge("fillgauge5", userJsonVar.N5.user_number, config5);
+        config5.maxValue = userJsonVar.jlpt.N5.total_number;
+        var gauge5 = loadLiquidFillGauge("fillgauge5", userJsonVar.jlpt.N5.user_number, config5);
 
         var config4 = liquidFillGaugeDefaultSettings();
         config4.circleColor = "#FF7777";
         config4.textColor = "#FF4444";
+        config4.textSize = .75;
         config4.waveTextColor = "#FFAAAA";
         config4.waveColor = "#FFDDDD";
         config4.circleThickness = 0.2;
         //config4.textVertPosition = 0.2;
         config4.waveAnimateTime = 2000;
-        config4.maxValue = userJsonVar.N4.total_numbers;
-        var gauge4 = loadLiquidFillGauge("fillgauge4", userJsonVar.N4.user_number, config4);
+        config4.maxValue = userJsonVar.jlpt.N4.total_number;
+        var gauge4 = loadLiquidFillGauge("fillgauge4", userJsonVar.jlpt.N4.user_number, config4);
 
         var config3 = liquidFillGaugeDefaultSettings();
         config3.circleColor = "#FF7777";
         config3.textColor = "#FF4444";
+        config3.textSize = .75;
         config3.waveTextColor = "#FFAAAA";
         config3.waveColor = "#FFDDDD";
         config3.circleThickness = 0.2;
         //config3.textVertPosition = 0.2;
         config3.waveAnimateTime = 2000;
-        config3.maxValue = userJsonVar.N3.total_numbers;
-        var gauge3 = loadLiquidFillGauge("fillgauge3", userJsonVar.N3.user_number, config3);
+        config3.maxValue = userJsonVar.jlpt.N3.total_number;
+        var gauge3 = loadLiquidFillGauge("fillgauge3", userJsonVar.jlpt.N3.user_number, config3);
 
         var config2 = liquidFillGaugeDefaultSettings();
         config2.circleColor = "#FF7777";
         config2.textColor = "#FF4444";
+        config2.textSize = .75;
         config2.waveTextColor = "#FFAAAA";
         config2.waveColor = "#FFDDDD";
         config2.circleThickness = 0.2;
         //config2.textVertPosition = 0.2;
         config2.waveAnimateTime = 2000;
-        config2.maxValue = userJsonVar.N2.total_numbers;
-        var gauge2 = loadLiquidFillGauge("fillgauge2", userJsonVar.N2.user_number, config2);
+        config2.maxValue = userJsonVar.jlpt.N2.total_number;
+        var gauge2 = loadLiquidFillGauge("fillgauge2", userJsonVar.jlpt.N2.user_number, config2);
 
         var config1 = liquidFillGaugeDefaultSettings();
         config1.circleColor = "#FF7777";
         config1.textColor = "#FF4444";
+        config1.textSize = .75;
         config1.waveTextColor = "#FFAAAA";
         config1.waveColor = "#FFDDDD";
         config1.circleThickness = 0.2;
         //config1.textVertPosition = 0.2;
         config1.waveAnimateTime = 2000;
-        config1.maxValue = userJsonVar.N1.total_numbers;
-        var gauge1 = loadLiquidFillGauge("fillgauge1", userJsonVar.N1.user_number, config1);
+        config1.maxValue = userJsonVar.jlpt.N1.total_number;
+        var gauge1 = loadLiquidFillGauge("fillgauge1", userJsonVar.jlpt.N1.user_number, config1);
+
+        var config12 = liquidFillGaugeDefaultSettings();
+        config12.circleColor = "#FF7777";
+        config12.textColor = "#FF4444";
+        config12.textSize = .75;
+        config12.waveTextColor = "#FFAAAA";
+        config12.waveColor = "#FFDDDD";
+        config12.circleThickness = 0.2;
+        //config12.textVertPosition = 0.2;
+        config12.waveAnimateTime = 2000;
+        config12.maxValue = jlptTotal;
+        var gauge12 = loadLiquidFillGauge("fillgauge12", userJlptTotal, config12);
+        
+        var config11 = liquidFillGaugeDefaultSettings();
+        config11.circleColor = "#FF7777";
+        config11.textColor = "#FF4444";
+        config11.textSize = .75;
+        config11.waveTextColor = "#FFAAAA";
+        config11.waveColor = "#FFDDDD";
+        config11.circleThickness = 0.2;
+        //config11.textVertPosition = 0.2;
+        config11.waveAnimateTime = 2000;
+        config11.maxValue = userJsonVar.joyo.G1.total_number;
+        var gauge11 = loadLiquidFillGauge("fillgauge11", userJsonVar.joyo.G1.user_number, config11);
+
+        var config10 = liquidFillGaugeDefaultSettings();
+        config10.circleColor = "#FF7777";
+        config10.textColor = "#FF4444";
+        config10.textSize = .75;
+        config10.waveTextColor = "#FFAAAA";
+        config10.waveColor = "#FFDDDD";
+        config10.circleThickness = 0.2;
+        //config10.textVertPosition = 0.2;
+        config10.waveAnimateTime = 2000;
+        config10.maxValue = userJsonVar.joyo.G2.total_number;
+        var gauge10 = loadLiquidFillGauge("fillgauge10", userJsonVar.joyo.G2.user_number, config10);
+        
+        var config9 = liquidFillGaugeDefaultSettings();
+        config9.circleColor = "#FF7777";
+        config9.textColor = "#FF4444";
+        config9.textSize = .75;
+        config9.waveTextColor = "#FFAAAA";
+        config9.waveColor = "#FFDDDD";
+        config9.circleThickness = 0.2;
+        //config9.textVertPosition = 0.2;
+        config9.waveAnimateTime = 2000;
+        config9.maxValue = userJsonVar.joyo.G3.total_number;
+        var gauge9 = loadLiquidFillGauge("fillgauge9", userJsonVar.joyo.G3.user_number, config9);
+        
+        var config8 = liquidFillGaugeDefaultSettings();
+        config8.circleColor = "#FF7777";
+        config8.textColor = "#FF4444";
+        config8.textSize = .75;
+        config8.waveTextColor = "#FFAAAA";
+        config8.waveColor = "#FFDDDD";
+        config8.circleThickness = 0.2;
+        //config8.textVertPosition = 0.2;
+        config8.waveAnimateTime = 2000;
+        config8.maxValue = userJsonVar.joyo.G4.total_number;
+        var gauge8 = loadLiquidFillGauge("fillgauge8", userJsonVar.joyo.G4.user_number, config8);
+        
+        var config7 = liquidFillGaugeDefaultSettings();
+        config7.circleColor = "#FF7777";
+        config7.textColor = "#FF4444";
+        config7.textSize = .75;
+        config7.waveTextColor = "#FFAAAA";
+        config7.waveColor = "#FFDDDD";
+        config7.circleThickness = 0.2;
+        //config7.textVertPosition = 0.2;
+        config7.waveAnimateTime = 2000;
+        config7.maxValue = userJsonVar.joyo.G5.total_number;
+        var gauge7 = loadLiquidFillGauge("fillgauge7", userJsonVar.joyo.G5.user_number, config7);
+
+        var config14 = liquidFillGaugeDefaultSettings();
+        config14.circleColor = "#FF7777";
+        config14.textColor = "#FF4444";
+        config14.textSize = .75;
+        config14.waveTextColor = "#FFAAAA";
+        config14.waveColor = "#FFDDDD";
+        config14.circleThickness = 0.2;
+        //config12.textVertPosition = 0.2;
+        config14.waveAnimateTime = 2000;
+        config14.maxValue = userJsonVar.joyo.G6.total_number;
+        var gauge14 = loadLiquidFillGauge("fillgauge14", userJsonVar.joyo.G6.user_number, config14);
+
+        var config6 = liquidFillGaugeDefaultSettings();
+        config6.circleColor = "#FF7777";
+        config6.textColor = "#FF4444";
+        config6.textSize = .75;
+        config6.waveTextColor = "#FFAAAA";
+        config6.waveColor = "#FFDDDD";
+        config6.circleThickness = 0.2;
+        //config6.textVertPosition = 0.2;
+        config6.waveAnimateTime = 2000;
+        config6.maxValue = userJsonVar.joyo.GS.total_number;
+        var gauge6 = loadLiquidFillGauge("fillgauge6", userJsonVar.joyo.GS.user_number, config6);
+
+        var config13 = liquidFillGaugeDefaultSettings();
+        config13.circleColor = "#FF7777";
+        config13.textColor = "#FF4444";
+        config13.textSize = .75;
+        config13.waveTextColor = "#FFAAAA";
+        config13.waveColor = "#FFDDDD";
+        config13.circleThickness = 0.2;
+        //config12.textVertPosition = 0.2;
+        config13.waveAnimateTime = 2000;
+        config13.maxValue = joyoTotal;
+        var gauge13 = loadLiquidFillGauge("fillgauge13", userJoyoTotal, config13);
 
 
     function NewValue(){

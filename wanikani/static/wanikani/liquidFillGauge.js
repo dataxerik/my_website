@@ -1,7 +1,7 @@
 function liquidFillGaugeDefaultSettings() {
     return {
         minValue: 0, // The gauge minimum value.
-        maxValue: 1000, // The gauge max value.
+        maxValue: 100, // The gauge max value.
         circleThickness: 0.05, // The outer circle thickness as a % of its radius.
         circleFillGap: 0.05, // The size of the gap between the outer circle and wave circle as % of the outer circle.
         circleColor: "#178BCA", // The color of the outer circle.
@@ -31,7 +31,6 @@ function loadLiquidFillGauge(elementId, value, config) {
     var locationX = parseInt(gauge.style("width")) / 2 - radius;
     var locationY = (parseInt(gauge.style("height")) + 20) / 2 - radius;
     var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value)) / config.maxValue;
-    console.log(config.maxValue + " " + fillPercent + " " + value)
     var waveHeightScale;
     if(config.waveHeightScaling){
         waveHeightScale = d3.scaleLinear()
@@ -44,7 +43,7 @@ function loadLiquidFillGauge(elementId, value, config) {
     }
 
     var textPixels = (config.textSize * radius / 2);
-    var textFinalValue = parseFloat(value).toFixed(2);
+    var textFinalValue = parseFloat(value);
     var textStartValue = config.valueCountUp ? config.minValue:textFinalValue;
     var percentageText = config.displayPercent ? "%":"";
     var circleThickness = config.circleThickness * radius;
@@ -61,12 +60,12 @@ function loadLiquidFillGauge(elementId, value, config) {
 
 
     // Rounding functions so that the correct number of decimal places is always displayed as th
-    var textRounder = function(value) { return Math.round(value) };
+    var textRounder = function(value) { return value.toFixed(2) };
     if(parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))) {
-        textRounder = function(value) { return parseFloat(value * 100).toFixed(0); };
+        textRounder = function(value) { return parseFloat(value * 100).toFixed(3); };
     }
     if(parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))) {
-        textRounder = function(value) { return parseFloat(value * 100).toFixed(0); };
+        textRounder = function(value) { return parseFloat(value * 100).toFixed(4); };
     }
 
     // Data for building the clip wave area.
@@ -100,6 +99,7 @@ function loadLiquidFillGauge(elementId, value, config) {
         .domain([0, 1]);
 
      // Center the gauge within the parent SVG.
+     var gaugeGroup = gauge.append("g")
      var gaugeGroup = gauge.append("g")
         .attr('transform', 'translate(' + locationX + ',' + locationY + ')');
 
@@ -157,7 +157,7 @@ function loadLiquidFillGauge(elementId, value, config) {
      // Make the value count up
      if(config.valueCountUp){
         var textTween = function() {
-            aFinalValue = Math.round((parseFloat(value) / config.maxValue) * 100)
+            aFinalValue = ((parseFloat(value) / config.maxValue) * 100).toFixed(2)
             var that = d3.select(this), i = d3.interpolateNumber(that.text().replace(/%/g, ""), aFinalValue);
             return function(t) {that.text(textRounder(i(t)) + percentageText); }
         };
@@ -203,10 +203,10 @@ function loadLiquidFillGauge(elementId, value, config) {
             var newFinalValue = parseFloat(value).toFixed(2);
             var textRounderUpdater = function(value) { return value * 100; };
             if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))) {
-                textRounderUpdater = function(value){ return parseFloat(value).toFixed(1); };
+                textRounderUpdater = function(value){ return parseFloat(value).toFixed(3); };
             }
             if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))) {
-                textRounderUpdater = function(value) { return parseFloat(value).toFixed(2); };
+                textRounderUpdater = function(value) { return parseFloat(value).toFixed(4); };
             }
 
             var textTween = function() {
