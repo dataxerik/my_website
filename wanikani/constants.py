@@ -13,3 +13,5 @@ FREQUENCY_KANJI_FILE_LOCATIONS = {'F1': 'wanikani\static\wanikani\\frequency\\ta
                                   'F3': 'wanikani\static\wanikani\\frequency\\tangorin_1017.csv',
                                   'F4': 'wanikani\static\wanikani\\frequency\\tangorin_1018.csv',
                                   'F5': 'wanikani\static\wanikani\\frequency\\tangorin_1019.csv'}
+
+FREQUENCY_KANJI_FILE_LOCATION = 'wanikani\static\wanikani\\frequency\\frequency.txt'
