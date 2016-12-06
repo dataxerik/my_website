@@ -12,10 +12,17 @@
         <li><a href="{% url 'wanikani:comparison' %}">Comparison</a></li>
         <li><a href="{% url 'wanikani:chart' %}">Charts</a></li>
     </ul>
-
+<ul><li class="test">飲</li><li></li></ul>
     {% for level, values in request.session.kanji.items %}
         <h2>JLPT Level ({{ level }})</h2>
-        <P>({{ values.length }}) {{values.kanji_list}}</p>
+        <P>({{ values.length }})</p>
+        {% for kanji, rank in values.user %}
+        <li class="{{ arnk }}">{{  kanji }}</li>
+        {% endfor %}
     {% endfor %}
+
 </body>
+{% load js %}
+<script type="text/javascript">var test = {{ request.session.kanji | js }}
+console.log(test)</script>
 </html>

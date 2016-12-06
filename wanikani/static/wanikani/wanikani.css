@@ -1,3 +1,8 @@
+#test {
+    background-color: #00aaff;
+    background-image: linear-gradient(-30deg, #00aaff, #99ddff);
+}
+
 h1 {
     font-size:34px;
     color:red;

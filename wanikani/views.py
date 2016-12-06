@@ -27,7 +27,8 @@ class WanikaniChartView(TemplateView):
     template_name = 'wanikani/charts.html'
 
     def get(self, request, *args, **kwargs):
-        jlpt_kanji = service.gather_kanji_list()
+        jlpt_kanji = service.gather_kanji_list(request.session['api'])
+
         request.session['kanji'] = jlpt_kanji
         return render(request, self.template_name)
 
@@ -39,7 +40,7 @@ class WanikaniComparisionView(TemplateView):
         try:
             user_json = service.get_user_completion(request.session['api'])
         except KeyError:
-            print(request.session.keys())
+            #print(request.session.keys())
             return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api information, please reenter it"})
         #kanji_json = service.gather_kanji_list()
         return render(request, self.template_name, {'user_json': user_json})

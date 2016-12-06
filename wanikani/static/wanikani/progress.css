@@ -6,3 +6,15 @@ p {
     color: red;
     margin: 0 auto;
 }
+
+li {
+    border-radius: 4px;
+    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset, 0 0 10px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    display: inline-block;
+    margin: 1px;
+    padding: 2px 4px;
+    color: blue
+    background-color: #00aaff;
+    background-image: linear-gradient(-30deg, #00aaff, #99ddff);
+}

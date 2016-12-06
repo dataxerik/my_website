@@ -10,24 +10,60 @@
     <link rel="stylesheet" type="text/css" href="{% static 'wanikani/comparison.css' %}">
 </head>
 <body>
+    <ul class="wanikaniHeader">
+        <li><a href="{% url 'wanikani:detail' %}">Home</a></li>
+        <li><a href="{% url 'wanikani:comparison' %}">Comparison</a></li>
+        <li><a href="{% url 'wanikani:chart' %}">Charts</a></li>
+    </ul>
     <div>
-        <p>JLPT level Progress</p>
-        <svg id="fillgauge5" width="5%" height="75" onclick="gauge5.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="9px" fill="red">JLPT 5</text></svg>
-        <svg id="fillgauge4" width="5%" height="75" onclick="gauge4.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 4</text></svg>
-        <svg id="fillgauge3" width="5%" height="75" onclick="gauge3.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 3</text></svg>
-        <svg id="fillgauge2" width="5%" height="75" onclick="gauge2.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 2</text></svg>
-        <svg id="fillgauge1" width="5%" height="75" onclick="gauge1.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT 1</text></svg>
-        <svg id="fillgauge12" width="5%" height="75" onclick="gauge12.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">JLPT Total</text></svg>
+        <div class="compheader">
+           <p>JLPT level Progress</p>
+        </div>
+        <div class="leftcomppanel">
+            <svg id="fillgauge5" width="15%" height="75" onclick="gauge5.update(NewValue());"><text x="32.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">JLPT 5</text></svg>
+            <svg id="fillgauge4" width="15%" height="75" onclick="gauge4.update(NewValue());"><text x="32.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">JLPT 4</text></svg>
+            <svg id="fillgauge3" width="15%" height="75" onclick="gauge3.update(NewValue());"><text x="32.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">JLPT 3</text></svg>
+            <svg id="fillgauge2" width="15%" height="75" onclick="gauge2.update(NewValue());"><text x="32.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">JLPT 2</text></svg>
+            <svg id="fillgauge1" width="15%" height="75" onclick="gauge1.update(NewValue());"><text x="32.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">JLPT 1</text></svg>
+            <svg id="fillgauge12" width="15%" height="75" onclick="gauge12.update(NewValue());"><text x="22.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">JLPT Total</text></svg>
+        </div>
+        <div class="rightcomppanel">
+            <p>This section is for the JLPT completion</p>
+        </div>
     </div>
-    <div><p>Frequency</p>
-        <svg id="fillgauge11" width="5%" height="75" onclick="gauge11.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 1</text></svg>
-        <svg id="fillgauge10" width="5%" height="75" onclick="gauge10.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 2</text></svg>
-        <svg id="fillgauge9" width="5%" height="75" onclick="gauge9.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 3</text></svg>
-        <svg id="fillgauge8" width="5%" height="75" onclick="gauge8.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 4</text></svg>
-        <svg id="fillgauge7" width="5%" height="75" onclick="gauge7.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 5</text></svg>
-        <svg id="fillgauge14" width="5%" height="75" onclick="gauge14.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo 5</text></svg>
-        <svg id="fillgauge6" width="5%" height="75" onclick="gauge6.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo S</text></svg>
-        <svg id="fillgauge13" width="5%" height="75" onclick="gauge6.update(NewValue());"><text x="30%" y="20" font-family="sans-serif" font-size="11px" fill="red">Joyo Total</text></svg>
+    <div>
+        <div class="compheader">
+            <p>Joyo</p>
+        </div>
+        <div class="leftcomppanel">
+            <svg id="fillgauge11" width="11%" height="75" onclick="gauge11.update(NewValue());"><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo 1</text></svg>
+            <svg id="fillgauge10" width="11%" height="75" onclick="gauge10.update(NewValue());"><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo 2</text></svg>
+            <svg id="fillgauge9" width="11%" height="75" onclick="gauge9.update(NewValue());"><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo 3</text></svg>
+            <svg id="fillgauge8" width="11%" height="75" onclick="gauge8.update(NewValue());"><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo 4</text></svg>
+            <svg id="fillgauge7" width="11%" height="75" onclick="gauge7.update(NewValue());"><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo 5</text></svg>
+            <svg id="fillgauge14" width="11%" height="75" onclick="gauge14.update(NewValue());"><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo 6</text></svg>
+            <svg id="fillgauge6" width="11%" height="75" onclick="gauge6.update(NewValue());"><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo S</text></svg>
+            <svg id="fillgauge13" width="11%" height="75" onclick="gauge13.update(NewValue());"><text x="25%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo Total</text></svg>
+        </div>
+        <div class="rightcomppanel">
+            <p>This section is for the Joyo completion</p>
+        </div>
+    </div>
+    <div>
+        <div class="compheader">
+        <p>Frequency</p>
+        </div>
+        <div class="leftcomppanel">
+            <svg id="fillgaugefreq1" width="15%" height="75" onclick="gaugefreq1.update(NewValue());"><text x="20%" y="15" font-family="sans-serif" font-size="11px" fill="red">Frequency 1</text></svg>
+            <svg id="fillgaugefreq2" width="15%" height="75" onclick="gaugefreq2.update(NewValue());"><text x="20%" y="15" font-family="sans-serif" font-size="11px" fill="red">Frequency 2</text></svg>
+            <svg id="fillgaugefreq3" width="15%" height="75" onclick="gaugefreq3.update(NewValue());"><text x="20%" y="15" font-family="sans-serif" font-size="11px" fill="red">Frequency 3</text></svg>
+            <svg id="fillgaugefreq4" width="15%" height="75" onclick="gaugefreq4.update(NewValue());"><text x="20%" y="15" font-family="sans-serif" font-size="11px" fill="red">Frequency 4</text></svg>
+            <svg id="fillgaugefreq5" width="15%" height="75" onclick="gaugefreq5.update(NewValue());"><text x="20%" y="15" font-family="sans-serif" font-size="11px" fill="red">Frequency 5</text></svg>
+            <svg id="fillgaugefreqtotal" width="15%" height="75" onclick="gaugefreqtotal.update(NewValue());"><text x="15%" y="15" font-family="sans-serif" font-size="11px" fill="red">Frequency Total</text></svg>
+        </div>
+        <div class="rightcomppanel">
+            <p>This section is for the Frequency completion</p>
+        </div>
     </div>
 </body>
     {% load js %}
@@ -50,6 +86,13 @@
         for(var level in userJsonVar.jlpt) {
             userJlptTotal += userJsonVar.jlpt[level].user_number;
             jlptTotal += userJsonVar.jlpt[level].total_number;
+        }
+
+        var frequencyTotal = 0;
+        var userFrequencyTotal = 0;
+        for(var level in userJsonVar.frequency) {
+            userFrequencyTotal += userJsonVar.frequency[level].user_number;
+            frequencyTotal += userJsonVar.frequency[level].total_number;
         }
     </script>
     <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
@@ -226,6 +269,77 @@
         config13.maxValue = joyoTotal;
         var gauge13 = loadLiquidFillGauge("fillgauge13", userJoyoTotal, config13);
 
+        var configFreq1 = liquidFillGaugeDefaultSettings();
+        configFreq1.circleColor = "#FF7777";
+        configFreq1.textColor = "#FF4444";
+        configFreq1.textSize = .75;
+        configFreq1.waveTextColor = "#FFAAAA";
+        configFreq1.waveColor = "#FFDDDD";
+        configFreq1.circleThickness = 0.2;
+        //config12.textVertPosition = 0.2;
+        configFreq1.waveAnimateTime = 2000;
+        configFreq1.maxValue = userJsonVar.frequency.F1.total_number;
+        var gaugeFreq1 = loadLiquidFillGauge("fillgaugefreq1", userJsonVar.frequency.F1.user_number, configFreq1);
+
+                var configFreq2 = liquidFillGaugeDefaultSettings();
+        configFreq2.circleColor = "#FF7777";
+        configFreq2.textColor = "#FF4444";
+        configFreq2.textSize = .75;
+        configFreq2.waveTextColor = "#FFAAAA";
+        configFreq2.waveColor = "#FFDDDD";
+        configFreq2.circleThickness = 0.2;
+        //config22.textVertPosition = 0.2;
+        configFreq2.waveAnimateTime = 2000;
+        configFreq2.maxValue = userJsonVar.frequency.F2.total_number;
+        var gaugeFreq2 = loadLiquidFillGauge("fillgaugefreq2", userJsonVar.frequency.F2.user_number, configFreq2);
+
+                var configFreq3 = liquidFillGaugeDefaultSettings();
+        configFreq3.circleColor = "#FF7777";
+        configFreq3.textColor = "#FF4444";
+        configFreq3.textSize = .75;
+        configFreq3.waveTextColor = "#FFAAAA";
+        configFreq3.waveColor = "#FFDDDD";
+        configFreq3.circleThickness = 0.2;
+        //config32.textVertPosition = 0.2;
+        configFreq3.waveAnimateTime = 2000;
+        configFreq3.maxValue = userJsonVar.frequency.F3.total_number;
+        var gaugeFreq3 = loadLiquidFillGauge("fillgaugefreq3", userJsonVar.frequency.F3.user_number, configFreq3);
+
+                var configFreq4 = liquidFillGaugeDefaultSettings();
+        configFreq4.circleColor = "#FF7777";
+        configFreq4.textColor = "#FF4444";
+        configFreq4.textSize = .75;
+        configFreq4.waveTextColor = "#FFAAAA";
+        configFreq4.waveColor = "#FFDDDD";
+        configFreq4.circleThickness = 0.2;
+        //config42.textVertPosition = 0.2;
+        configFreq4.waveAnimateTime = 2000;
+        configFreq4.maxValue = userJsonVar.frequency.F4.total_number;
+        var gaugeFreq4 = loadLiquidFillGauge("fillgaugefreq4", userJsonVar.frequency.F4.user_number, configFreq4);
+
+                var configFreq5 = liquidFillGaugeDefaultSettings();
+        configFreq5.circleColor = "#FF7777";
+        configFreq5.textColor = "#FF4444";
+        configFreq5.textSize = .75;
+        configFreq5.waveTextColor = "#FFAAAA";
+        configFreq5.waveColor = "#FFDDDD";
+        configFreq5.circleThickness = 0.2;
+        //config52.textVertPosition = 0.2;
+        configFreq5.waveAnimateTime = 2000;
+        configFreq5.maxValue = userJsonVar.frequency.F5.total_number;
+        var gaugeFreq5 = loadLiquidFillGauge("fillgaugefreq5", userJsonVar.frequency.F5.user_number, configFreq5);
+
+                var configFreqtotal = liquidFillGaugeDefaultSettings();
+        configFreqtotal.circleColor = "#FF7777";
+        configFreqtotal.textColor = "#FF4444";
+        configFreqtotal.textSize = .75;
+        configFreqtotal.waveTextColor = "#FFAAAA";
+        configFreqtotal.waveColor = "#FFDDDD";
+        configFreqtotal.circleThickness = 0.2;
+        //configtotal2.textVertPosition = 0.2;
+        configFreqtotal.waveAnimateTime = 2000;
+        configFreqtotal.maxValue = frequencyTotal;
+        var gaugeFreqtotal = loadLiquidFillGauge("fillgaugefreqtotal", userFrequencyTotal, configFreqtotal);
 
     function NewValue(){
         if(Math.random() > .5){
