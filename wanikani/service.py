@@ -96,7 +96,6 @@ def get_user_completion(api_info):
 
 def get_api_information(api_key):
     url = 'https://www.wanikani.com/api/v1.4/user/{0}//kanji/'.format(api_key)
-    #print(url)
     r = requests.get(url)
     if r.status_code == 200:
         print('success')
@@ -108,7 +107,6 @@ def get_api_information(api_key):
 
 def get_user_kanji(api):
     kanji_dic = {}
-    print("Here")
     user_info = api
     for character in user_info['requested_information']:
         kanji_dic[character['character']] = character['user_specific']['srs']
@@ -130,18 +128,19 @@ def gather_kanji_list(api):
             os.path.join(BASE_DIR, constant.JLPT_KANJI_FILE_LOCATIONS[level]))
         kanji_list[level]['length'] = len(kanji_list[level]['kanji_list'].replace(",", ""))
         kanji_list[level]['kanji_list'] = kanji_list[level]['kanji_list'].split(",")
-
     user_kanji_list = get_user_kanji(api)
 
     for level in kanji_list:
+        ranked_number = 0
         kanji_list[level]['user'] = {}
+        kanji_list[level]['user']['kanji_ranking'] = {}
         for kanji in kanji_list[level]['kanji_list']:
             if kanji in user_kanji_list:
-                kanji_list[level]['user'][kanji] = user_kanji_list[kanji]
-                #kanji_list[level]['user']['level'] = kanji
+                kanji_list[level]['user']['kanji_ranking'][kanji] = user_kanji_list[kanji]
+                ranked_number += 1
             else:
-                kanji_list[level]['user'][kanji] = 'unranked'
-    #print(user_kanji_list)
+                kanji_list[level]['user']['kanji_ranking'][kanji] = 'unranked'
+        kanji_list[level]['user']['ranked_number'] = ranked_number
     return kanji_list
 
 
@@ -177,4 +176,4 @@ if __name__ == '__main__':
 '''
     #print(get_jlpt_completion(get_api_information('c9d088f9a75b0648b3904ebee3d8d5fa')))
     #print(get_user_kanji('c9d088f9a75b0648b3904ebee3d8d5fa'))
-    print(gather_kanji_list('c9d088f9a75b0648b3904ebee3d8d5fa'))
+    print(gather_kanji_list(get_api_information('c9d088f9a75b0648b3904ebee3d8d5fa')))

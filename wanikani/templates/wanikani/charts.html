@@ -7,22 +7,31 @@
     <link rel="stylesheet" type="text/css" href="{% static 'wanikani/progress.css' %}">
 </head>
 <body>
-    <ul class="wanikaniHeader">
-        <li><a href="{% url 'wanikani:detail' %}">Home</a></li>
-        <li><a href="{% url 'wanikani:comparison' %}">Comparison</a></li>
-        <li><a href="{% url 'wanikani:chart' %}">Charts</a></li>
-    </ul>
-<ul><li class="test">飲</li><li></li></ul>
-    {% for level, values in request.session.kanji.items %}
-        <h2>JLPT Level ({{ level }})</h2>
-        <P>({{ values.length }})</p>
-        {% for kanji, rank in values.user %}
-        <li class="{{ arnk }}">{{  kanji }}</li>
+    <nav>
+        <a href="{% url 'wanikani:detail' %}">Home</a>
+        <a href="{% url 'wanikani:comparison' %}">Comparison</a>
+        <a href="{% url 'wanikani:chart' %}">Charts</a>
+    </nav>
+    <nav id="submenu">
+        <a href="#jlpt">JLPT</a>
+        <a href="#joyo">Joyo</a>
+        <a href="#frequency">Frequency</a>
+    </nav>
+    <div id="jlpt">
+        <ul>
+        {% for level, values in request.session.kanji.items %}
+            <h2>JLPT Level ({{ level }})</h2>
+            <P>({{ values.user.ranked_number }}/{{ values.length }})</p>
+            {% for kanji, rank in values.user.kanji_ranking.items %}
+            <li class="{{ rank }}">{{  kanji }}</li>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-
+        </ul>
+    </div>
+<div id="joyo"><p>A dummy div for things</p></div>
 </body>
-{% load js %}
-<script type="text/javascript">var test = {{ request.session.kanji | js }}
-console.log(test)</script>
+{% load static %}
+<script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'wanikani/d3.js' %}"></script>
+<script src="{% static 'wanikani/chart.js' %}"></script>
 </html>
