@@ -19,18 +19,44 @@
     </nav>
     <div id="jlpt">
         <ul>
-        {% for level, values in request.session.kanji.items %}
+        {% for level, values in request.session.kanji.jlpt.jlpt.items %}
             <h2>JLPT Level ({{ level }})</h2>
-            <P>({{ values.user.ranked_number }}/{{ values.length }})</p>
-            {% for kanji, rank in values.user.kanji_ranking.items %}
+            <p>({{ values.user.user_number }}/{{ values.user.total_number }})</p>
+            {% for kanji, rank in values.kanji.items %}
             <li class="{{ rank }}">{{  kanji }}</li>
             {% endfor %}
         {% endfor %}
         </ul>
     </div>
-<div id="joyo"><p>A dummy div for things</p></div>
+    <div id="joyo">
+                <ul>
+            {% for level, values in request.session.kanji.joyo.joyo.items %}
+                <h2>Joyo Level ({{ level }})</h2>
+                <p>({{ values.user.user_number }}/{{ values.user.total_number }})</p>
+                {% for kanji, rank in values.kanji.items %}
+                <li class="{{ rank }}">{{  kanji }}</li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+    </div>
+    <div id="frequency">
+                <ul>
+            {% for level, values in request.session.kanji.frequency.frequency.items %}
+                <h2>Frequency Level ({{ level }})</h2>
+                <p>({{ values.user.user_number }}/{{ values.user.total_number }})</p>
+                {% for kanji, rank in values.kanji.items %}
+                <li class="{{ rank }}">{{  kanji }}</li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+    </div>
 </body>
 {% load static %}
+{% load js %}
+<script type="text/javascript" >
+    var js_list = {{ request.session.kanji|js }};
+    console.log(js_list)
+</script>
 <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'wanikani/d3.js' %}"></script>
 <script src="{% static 'wanikani/chart.js' %}"></script>

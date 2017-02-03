@@ -7,6 +7,26 @@ p {
     margin: 0 auto;
 }
 
+#frequency ul li {
+    border-radius: 4px;
+    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset, 0 0 10px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    display: inline-block;
+    margin: 1px;
+    padding: 2px 4px;
+    color: white
+}
+
+#joyo ul li {
+    border-radius: 4px;
+    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset, 0 0 10px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    display: inline-block;
+    margin: 1px;
+    padding: 2px 4px;
+    color: white
+}
+
 #jlpt ul li {
     border-radius: 4px;
     box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset, 0 0 10px rgba(255, 255, 255, 0.5);
@@ -17,34 +37,39 @@ p {
     color: white
 }
 
+.na{
+    background-color: #d5d5d5;
+    background-image: linear-gradient(-45deg, #555, #d5d5d5);
+}
+
 .unranked{
-    background-color: #00aaff;
-    background-image: linear-gradient(-30deg, #00aaff, #99ddff);
+    background-color: #d5d5d5;
+    background-image: linear-gradient(-45deg, #555, #d5d5d5);
 }
 
 .apprentice{
-    background-color: #00FF00;
-    background-image: linear-gradient(-30deg, #00FF00, #99ddff);
+    background-color: #dd0093;
+    background-image: linear-gradient(-45deg, #f0a, #dd0093);
 }
 
 .guru{
-    background-color: #FF00FF;
-    background-image: linear-gradient(-30deg, #FF00FF, #99ddff);
+    background-color: #882d9e;
+    background-image: linear-gradient(-45deg, #aa38c6, #882d9e);
 }
 
 .master{
-    background-color: #800000;
-    background-image: linear-gradient(-30deg, #800000, #99ddff);
+    background-color: #294ddb;
+    background-image: linear-gradient(-45deg, #5571e2, #294ddb);
 }
 
 .enlighten{
-    background-color: #FF0000;
-    background-image: linear-gradient(-30deg, #FF0000, #99ddff);
+    background-color: #0093dd;
+    background-image: linear-gradient(-45deg, #0af, #0093dd);
 }
 
 .burned{
-    background-color: #000000;
-    background-image: linear-gradient(-30deg, #000000, #99ddff);
+    background-color: #434343;
+    background-image: linear-gradient(-45deg, #555, #434343);
 }
 
 #selected {
