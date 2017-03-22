@@ -45,7 +45,7 @@ class WanikaniComparisionView(TemplateView):
             user_json = service.get_user_completion(request.session['api'])
         except KeyError:
             #print(request.session.keys())
-            return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api information, please reenter it"})
+            return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api information, please re-enter it"})
         #kanji_json = service.gather_kanji_list()
         return render(request, self.template_name, {'user_json': user_json})
 
