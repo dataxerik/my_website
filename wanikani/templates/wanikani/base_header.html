@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>{% block title %}WaniKani Stat Site{% endblock %}</title>
+    {% load static %}
+    <link href="{% static 'wanikani/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    {% load static %}
+    <link href="{% static 'wanikani/wanikani_header.css' %}" rel="stylesheet">
+    {% block unique_css %}{% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Wanikani Statistics</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'wanikani:detail' %}">Home</a></li>
+            <li><a href="{% url 'wanikani:comparison' %}">Comparison</a></li>
+            <li><a href="{% url 'wanikani:chart' %}">Charts</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <div id="content">
+    {% block content %}{% endblock %}
+  </div>
+  </body>
+  <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
+  <script src="{% static 'wanikani/d3.js' %}"></script>
+  {% block unique_js %}{% endblock %}
+
+</html>

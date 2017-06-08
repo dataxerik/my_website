@@ -1,0 +1,17 @@
+.navbar-inverse {
+    /* background-color : #999999;*/
+    color: #EB009D;
+}
+
+.wanikani_header {
+    color : red;
+}
+
+p {
+    color : blue;
+}
+
+#content {
+    padding-top: 70px;
+    padding-left: 10px;
+}

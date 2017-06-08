@@ -5,7 +5,7 @@ from wanikani import service
 from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+import traceback
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -27,8 +27,12 @@ class WanikaniChartView(TemplateView):
     template_name = 'wanikani/charts.html'
 
     def get(self, request, *args, **kwargs):
-        jlpt_kanji = service.gather_kanji_list(request.session['api'])
-
+        try:
+            jlpt_kanji = service.get_user_completion_info(request.session['api'])
+        except KeyError:
+            print(traceback.format_exc())
+            return render(request, 'wanikani/index.html',
+                          {'error_message': "Couldn't find api information, please reenter it"})
         request.session['kanji'] = jlpt_kanji
         return render(request, self.template_name)
 
@@ -41,7 +45,7 @@ class WanikaniComparisionView(TemplateView):
             user_json = service.get_user_completion(request.session['api'])
         except KeyError:
             #print(request.session.keys())
-            return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api information, please reenter it"})
+            return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api information, please re-enter it"})
         #kanji_json = service.gather_kanji_list()
         return render(request, self.template_name, {'user_json': user_json})
 
