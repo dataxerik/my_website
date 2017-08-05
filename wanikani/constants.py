@@ -14,7 +14,6 @@ FREQUENCY_KANJI_LEVELS = ['F5', 'F4', 'F3', 'F2', 'F1']
 
 PROGRESS_TYPES = ['jlpt', 'joyo', 'frequency']
 
-
 JOYO_KANJI_FILE_LOCATIONS = 'wanikani\static\wanikani\joyo\joyo.txt'
 
 FREQUENCY_KANJI_FILE_LOCATIONS = {'F1': 'wanikani\static\wanikani\\frequency\\tangorin_1015.csv',
@@ -24,3 +23,16 @@ FREQUENCY_KANJI_FILE_LOCATIONS = {'F1': 'wanikani\static\wanikani\\frequency\\ta
                                   'F5': 'wanikani\static\wanikani\\frequency\\tangorin_1019.csv'}
 
 FREQUENCY_KANJI_FILE_LOCATION = 'wanikani\static\wanikani\\frequency\\frequency.txt'
+
+SRS_LEARNED_LEVEL = "guru"
+SRS_UNRANKED_LEVEL = "unranked"
+SRS_APPRENTICE_LEVEL = "apprentice"
+SRS_GURU_LEVEL = "guru"
+SRS_MASTER_LEVEL = "master"
+SRS_BURNED_LEVEL = "burn"
+
+WANIKANI_API_TYPE = ["radical", "kanji"]
+
+NOTRANKED = 'unranked'
+
+LEVEL_CAP = 60

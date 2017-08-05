@@ -135,7 +135,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'E:/PycharmProjects/mysite/wanikani/debug.log',
+            'filename': 'debug.log',
             'formatter': 'verbose'
         },
     },

@@ -28,7 +28,8 @@ class WanikaniChartView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
-            jlpt_kanji = service.get_user_completion_info(request.session['api'])
+            #jlpt_kanji = service.get_user_completion_info(request.session['api'])
+            jlpt_kanji = service.create_offline_user_info()
         except KeyError:
             print(traceback.format_exc())
             return render(request, 'wanikani/index.html',
@@ -82,8 +83,8 @@ def progress(request):
         print(api_key + " testing")
         return render(request, 'wanikani/index.html', {'error_message': "Please enter a valid api key"})
 
-    api_info = service.get_api_information(api_key)
-
+    #api_info = service.create_user_info(api_key)
+    api_info = service.create_offline_user_info()
     if 'error' in api_info:
         return render(request, 'wanikani/index.html', {'error_message': 'Couldn\'t find the given api key'})
 
