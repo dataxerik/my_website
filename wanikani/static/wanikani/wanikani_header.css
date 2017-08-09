@@ -19,7 +19,7 @@ p {
 #percentageChart {
     width:100%;
 }
-percentageChart table, th, td {
+#percentageChart table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
 }

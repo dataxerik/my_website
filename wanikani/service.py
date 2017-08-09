@@ -14,7 +14,7 @@ from wanikani.exceptions import InvalidAPIKeyException, BadRequestException
 from mysite.settings import BASE_DIR
 from collections import OrderedDict
 
-logger = logging.getLogger("debug.log")
+logger = logging.getLogger("wanikani")
 
 
 def is_valid_api_key(api_key):
@@ -207,10 +207,10 @@ def get_kanji_completion(api_info, user_dict_):
     user_dict_['kanji']['jlpt'] = {}
     user_dict_['kanji']['joyo'] = {}
     user_dict_['kanji']['freq'] = {}
-    user_dict_['kanji']['meaning_oorrect'] = 0
-    user_dict_['kanji']['meaning_inoorrect'] = 0
-    user_dict_['kanji']['reading_oorrect'] = 0
-    user_dict_['kanji']['reading_inoorrect'] = 0
+    user_dict_['kanji']['meaning_correct'] = 0
+    user_dict_['kanji']['meaning_incorrect'] = 0
+    user_dict_['kanji']['reading_correct'] = 0
+    user_dict_['kanji']['reading_incorrect'] = 0
     user_dict_['kanji']['total_count'] = 0
     user_dict_['kanji']['characters'] = {}
 
@@ -240,11 +240,11 @@ def get_kanji_completion(api_info, user_dict_):
         check_kanji_level(character_, freq_lookup_dict, "freq", user_dict_['kanji'])
 
         if character_['user_specific'] is not None:
-            user_dict_['kanji']['meaning_oorrect'] += character_['user_specific']['meaning_correct']
-            user_dict_['kanji']['meaning_inoorrect'] += character_['user_specific']['meaning_incorrect']
-            user_dict_['kanji']['reading_oorrect'] += character_['user_specific']['reading_correct']
-            user_dict_['kanji']['reading_inoorrect'] += character_['user_specific']['reading_incorrect']
-            user_dict_['kanji']['characters'].update({character_['character']:character_['user_specific']['srs']})
+            user_dict_['kanji']['meaning_correct'] += character_['user_specific']['meaning_correct']
+            user_dict_['kanji']['meaning_incorrect'] += character_['user_specific']['meaning_incorrect']
+            user_dict_['kanji']['reading_correct'] += character_['user_specific']['reading_correct']
+            user_dict_['kanji']['reading_incorrect'] += character_['user_specific']['reading_incorrect']
+            user_dict_['kanji']['characters'].update({character_['character']: character_['user_specific']['srs']})
         else:
             user_dict_['kanji']['characters'].update({character_['character']: constant.NOTRANKED})
 
@@ -276,8 +276,8 @@ def get_vocab_information(api_info, user_dict_):
 
 def get_radical_information(api_info, user_dict_):
     user_dict_['radical'] = {}
-    user_dict_['radical']['meaning_oorrect'] = 0
-    user_dict_['radical']['meaning_inoorrect'] = 0
+    user_dict_['radical']['meaning_correct'] = 0
+    user_dict_['radical']['meaning_incorrect'] = 0
     user_dict_['radical']['total_count'] = 0
     user_dict_['radical']['characters'] = {}
     user_dict_['unlock'] = {}
@@ -291,18 +291,20 @@ def get_radical_information(api_info, user_dict_):
         user_dict_['unlock']['timespent'] = {}
         print("user unlock time")
         for level in sorted(levels_['unlock']['date'].keys()):
-            if levels_['unlock']['date'].get(level+1) is None:
-                user_dict_['unlock']['date'].update({level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
+            if levels_['unlock']['date'].get(level + 1) is None:
+                user_dict_['unlock']['date'].update(
+                    {level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
                 break
-            user_dict_['unlock']['timespent']["{0}_unlock".format(level)] = str(levels_['unlock']['date'][level+1] - levels_['unlock']['date'][level])
-            user_dict_['unlock']['date'].update({level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
-
+            user_dict_['unlock']['timespent']["{0}_unlock".format(level)] = str(
+                levels_['unlock']['date'][level + 1] - levels_['unlock']['date'][level])
+            user_dict_['unlock']['date'].update(
+                {level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
 
     for character_ in api_info['requested_information']:
         if character_['user_specific'] is not None:
-            user_dict_['radical']['meaning_oorrect'] += character_['user_specific']['meaning_correct']
-            user_dict_['radical']['meaning_inoorrect'] += character_['user_specific']['meaning_incorrect']
-            user_dict_['radical']['characters'].update({character_['character']:character_['user_specific']['srs']})
+            user_dict_['radical']['meaning_correct'] += character_['user_specific']['meaning_correct']
+            user_dict_['radical']['meaning_incorrect'] += character_['user_specific']['meaning_incorrect']
+            user_dict_['radical']['characters'].update({character_['character']: character_['user_specific']['srs']})
             if character_['user_specific']['srs'].lower() != constant.SRS_LEARNED_LEVEL:
                 character_learned += 1
             else:
@@ -311,7 +313,7 @@ def get_radical_information(api_info, user_dict_):
             if character_['level'] not in unlock_dic.keys():
                 logger.debug("adding level {}".format(character_['level']))
                 unlock_dic['date'][character_['level']] = datetime.datetime.fromtimestamp(
-                    character_['user_specific']['unlocked_date'])#.strftime('%Y-%m-%d %H:%M:%S')
+                    character_['user_specific']['unlocked_date'])  # .strftime('%Y-%m-%d %H:%M:%S')
         else:
             user_dict_['radical']['characters'].update({character_['character']: constant.NOTRANKED})
 
@@ -343,7 +345,6 @@ def get_user_completion_2(api_info, type):
     return user_completion
 
 
-
 def create_user_info(api_key):
     t = datetime.datetime.utcnow()
     user = dict()
@@ -356,7 +357,6 @@ def create_user_info(api_key):
 
     api_info = get_api_information(api_key, "vocab")
     user.update(get_user_completion_2(api_info, "vocab"))
-
 
     logger.debug(user)
     logger.debug(datetime.datetime.utcnow() - t)
@@ -383,7 +383,7 @@ def get_api_information(api_key, service_type):
         raise InvalidAPIKeyException.InvalidAPIKeyException("Invalid API Key")
 
     level_range = "1"
-    for i in range(2, constant.LEVEL_CAP+1):
+    for i in range(2, constant.LEVEL_CAP + 1):
         level_range += "," + str(i)
 
     logger.debug(level_range)
@@ -547,9 +547,9 @@ if __name__ == '__main__':
     # print(get_user_completion(get_api_information('c9d088f9a75b0648b3904ebee3d8d5fa')))
     # get_user_completion_2(get_api_information("c9d088f9a75b0648b3904ebee3d8d5fa"))
 
-    #logger.debug(create_offline_user_info())
+    # logger.debug(create_offline_user_info())
     print(get_radical_information(json.load(open('../Test/radical_static_data.json', 'r', encoding='utf-8')), dict()))
-    #print(get_kanji_completion(json.load(open('../Test/kanji_static_data.json', 'r', encoding='utf-8')), dict()))
-    #print(get_vocab_information(json.load(open('../Test/vocab_static_data.json', 'r', encoding='utf-8')), dict()))
-    #print(create_user_info('c9d088f9a75b0648b3904ebee3d8d5fa'))
-    #get_api_information("c9d088f9a75b0648b3904ebee3d8d5fa", "kanji")
+    # print(get_kanji_completion(json.load(open('../Test/kanji_static_data.json', 'r', encoding='utf-8')), dict()))
+    # print(get_vocab_information(json.load(open('../Test/vocab_static_data.json', 'r', encoding='utf-8')), dict()))
+    # print(create_user_info('c9d088f9a75b0648b3904ebee3d8d5fa'))
+    # get_api_information("c9d088f9a75b0648b3904ebee3d8d5fa", "kanji")

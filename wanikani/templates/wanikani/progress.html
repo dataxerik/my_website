@@ -4,7 +4,7 @@
 #percentageChart {
     width:100%;
 }
-percentageChart table, th, td {
+#percentageChart table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
 }
@@ -34,7 +34,77 @@ th, td {
 <script type="text/javascript" >
     var js_list = {{ request.session.api|js }};
     console.log(js_list)
-    $("#percentageChart").append("<table></table>")
-    $("#percentageChart table").append("<tr><th>Reading</th><th>Writing</th><th>Meaning</th></tr>")
+
+
+    function calculatePercentages(userInfoObj) {
+        function roundNumber(Num) {
+            return (Math.round((Num + 0.00001) * 10000) / 100);
+        }
+
+        percentageObj = {}
+
+        //Meaning Stats
+        percentageObj.kanjiMeaningCorrect = userInfoObj['kanji']['meaning_correct'];
+        percentageObj.kanjiMeaningIncorrect = userInfoObj['kanji']['meaning_incorrect'];
+        percentageObj.vocabMeaningCorrect = userInfoObj['vocab']['meaning_correct'];
+        percentageObj.vocabMeaningIncorrect = userInfoObj['vocab']['meaning_incorrect'];
+        percentageObj.radicalMeaningCorrect = userInfoObj['radical']['meaning_correct'];
+        percentageObj.radicalMeaningIncorrect = userInfoObj['radical']['meaning_incorrect'];
+
+        percentageObj.kanjiMeaningPercentage = roundNumber(userInfoObj['kanji']['meaning_correct'] / (userInfoObj['kanji']['meaning_correct'] + userInfoObj['kanji']['meaning_incorrect']));
+        percentageObj.vocabMeaningPercentage = roundNumber(userInfoObj['vocab']['meaning_correct'] / (userInfoObj['vocab']['meaning_correct'] + userInfoObj['vocab']['meaning_incorrect']));
+        percentageObj.radicalMeaningPercentage = roundNumber(userInfoObj['radical']['meaning_correct'] / (userInfoObj['radical']['meaning_correct'] + userInfoObj['radical']['meaning_incorrect']));
+
+        //Reading Stats
+        percentageObj.kanjiReadingCorrect = userInfoObj['kanji']['reading_correct'];
+        percentageObj.kanjiReadingIncorrect = userInfoObj['kanji']['reading_incorrect'];
+        percentageObj.vocabReadingCorrect = userInfoObj['vocab']['reading_correct'];
+        percentageObj.vocabReadingIncorrect = userInfoObj['vocab']['reading_incorrect'];
+
+
+        percentageObj.kanjiReadingPercentage = roundNumber(userInfoObj['kanji']['reading_correct'] / (userInfoObj['kanji']['reading_correct'] + userInfoObj['kanji']['reading_incorrect']));
+        percentageObj.vocabReadingPercentage = roundNumber(userInfoObj['vocab']['reading_correct'] / (userInfoObj['vocab']['reading_correct'] + userInfoObj['vocab']['reading_incorrect']));
+
+        //Total Stats
+        percentageObj.totalMeaningCorrect = percentageObj.kanjiMeaningCorrect + percentageObj.vocabMeaningCorrect + percentageObj.radicalMeaningCorrect;
+        percentageObj.totalMeaningIncorrect = percentageObj.kanjiMeaningIncorrect + percentageObj.vocabMeaningIncorrect + percentageObj.radicalMeaningIncorrect;
+        percentageObj.totalMeaningPercentage = roundNumber(percentageObj.TotalMeaningCorrect / (percentageObj.TotalMeaningCorrect + percentageObj.TotalMeaningIncorrect));
+
+        percentageObj.totalReadingCorrect = percentageObj.kanjiReadingCorrect + percentageObj.vocabReadingCorrect;
+        percentageObj.totalReadingIncorrect = percentageObj.kanjiReadingIncorrect + percentageObj.vocabReadingIncorrect;
+        percentageObj.totalReadingPercentage = roundNumber(percentageObj.TotalReadingCorrect / (percentageObj.TotalReadingCorrect + percentageObj.TotalReadingIncorrect));
+
+        //Average stats
+        percentageObj.kanjiAveragePercentage = roundNumber((percentageObj.kanjiMeaningPercentage + percentageObj.kanjiReadingPercentage) / 2 / 100);
+        percentageObj.radicalAveragePercentage = percentageObj.radicalMeaningPercentage;
+        percentageObj.vocabAveragePercentage = roundNumber((percentageObj.vocabMeaningPercentage + percentageObj.vocabReadingPercentage) / 2 / 100);
+
+        return percentageObj
+
+    }
+
+    dataObj = calculatePercentages(js_list);
+
+    console.log(dataObj)
+
+    $("#percentageChart").append("<table>");
+    $("#percentageChart").append("<tr><th></th><th>Reading</th><th>Meaning</th><th>Total</th></tr>");
+    $("#percentageChart").append("<tr>" +
+                                    "<td>Correct</td>" +
+                                    "<td></td>" +
+                                    "<td>" + dataObj.radicalMeaningPercentage + "</td>" +
+                                    "<td>" + dataObj.radicalAveragePercentage + "</td></tr>");
+    $("#percentageChart").append("<tr>" +
+                                    "<td>Incorrect</td>" +
+                                    "<td>" + dataObj.kanjiReadingPercentage + "</td>" +
+                                    "<td>" + dataObj.kanjiMeaningPercentage + "</td>" +
+                                    "<td>" + dataObj.kanjiAveragePercentage + "</td></tr>");
+    $("#percentageChart").append("<tr>" +
+                                    "<td>Accuracy</td>" +
+                                    "<td>" + dataObj.vocabReadingPercentage + "</td>" +
+                                    "<td>" + dataObj.vocabMeaningPercentage + "</td>" +
+                                    "<td>" + dataObj.vocabAveragePercentage + "</td></tr>");
+    $("#percentageChart").append("<tr><td colspan=\"4\">Total</td></tr>");
+    $("#percentageChart").append("</table>");
 </script>
 {% endblock %}

@@ -133,9 +133,9 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'debug.log',
+            'filename': 'C:\\Users\\dsharp\\PycharmProjects\\my_website\\debug.log',
             'formatter': 'verbose'
         },
     },
