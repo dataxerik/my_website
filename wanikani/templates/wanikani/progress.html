@@ -1,7 +1,40 @@
 {% extends "wanikani/base_header.html" %}
-
+<head>
+<style>
+#percentageChart {
+    width:100%;
+}
+percentageChart table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+</style>
+</head>
 {% block content %}
-    <p>
-      Welcome, {{request.session.api.user_information.username}}
+    <p style="co">
+      Welcome, {{request.session.api.user.name}}
     </p>
+
+<div id="percentageChart">
+
+</div>
+
+<div>hi 2</div>
+{% endblock %}
+
+
+
+{% block unique_js %}
+{% load static %}
+{% load js %}
+<script type="text/javascript" >
+    var js_list = {{ request.session.api|js }};
+    console.log(js_list)
+    $("#percentageChart").append("<table></table>")
+    $("#percentageChart table").append("<tr><th>Reading</th><th>Writing</th><th>Meaning</th></tr>")
+</script>
 {% endblock %}

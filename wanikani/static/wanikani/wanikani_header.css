@@ -15,3 +15,15 @@ p {
     padding-top: 70px;
     padding-left: 10px;
 }
+
+#percentageChart {
+    width:100%;
+}
+percentageChart table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}

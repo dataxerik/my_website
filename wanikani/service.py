@@ -147,8 +147,8 @@ def get_user_completion(api_info):
     user_completion['joyo'] = get_joyo_completion(api_info)
     user_completion['frequency'] = get_frequency_completion(api_info)
     get_user_stats(api_info)
-    print("returning user completion 1")
-    print(datetime.datetime.utcnow() - t)
+    logger.debug("returning user completion 1")
+    logger.debug(datetime.datetime.utcnow() - t)
     return user_completion
 
 
@@ -187,7 +187,7 @@ def get_user_stats(api_info):
 
     total_time = datetime.timedelta(0)
     for level in sorted(unlock_dic.keys()):
-        print("Current time {0}".format(total_time))
+        logger.debug("Current time {0}".format(total_time))
         if level < len(unlock_dic):
             time_delta = unlock_dic[level + 1] - unlock_dic[level]
         else:
@@ -195,7 +195,7 @@ def get_user_stats(api_info):
         total_time += time_delta
         days = time_delta.days if hasattr(time_delta, 'days') else 0
         hours = round(time_delta.seconds / 3600) if hasattr(time_delta, 'seconds') else 0
-        print("{0} days, {1} hours".format(days, hours))
+        logger.debug("{0} days, {1} hours".format(days, hours))
 
 
 def get_kanji_completion(api_info, user_dict_):
@@ -229,6 +229,10 @@ def get_kanji_completion(api_info, user_dict_):
                 user_dict[lookup_type][lookup_type + '_count'] += 1
             else:
                 user_dict[lookup_type][lookup_type + '_count'] = 1
+
+    user_dict_['user'] = {}
+    user_dict_['user']['name'] = api_info['user_information']['username']
+    user_dict_['user']['level'] = api_info['user_information']['level']
 
     for character_ in api_info['requested_information']:
         check_kanji_level(character_, jlpt_lookup_dict, "jlpt", user_dict_['kanji'])
@@ -277,9 +281,22 @@ def get_radical_information(api_info, user_dict_):
     user_dict_['radical']['total_count'] = 0
     user_dict_['radical']['characters'] = {}
     user_dict_['unlock'] = {}
+    user_dict_['unlock']['date'] = {}
 
     unlock_dic = dict()
+    unlock_dic['date'] = dict()
     character_learned = 0
+
+    def get_user_unlock_time(levels_):
+        user_dict_['unlock']['timespent'] = {}
+        print("user unlock time")
+        for level in sorted(levels_['unlock']['date'].keys()):
+            if levels_['unlock']['date'].get(level+1) is None:
+                user_dict_['unlock']['date'].update({level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
+                break
+            user_dict_['unlock']['timespent']["{0}_unlock".format(level)] = str(levels_['unlock']['date'][level+1] - levels_['unlock']['date'][level])
+            user_dict_['unlock']['date'].update({level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
+
 
     for character_ in api_info['requested_information']:
         if character_['user_specific'] is not None:
@@ -289,21 +306,22 @@ def get_radical_information(api_info, user_dict_):
             if character_['user_specific']['srs'].lower() != constant.SRS_LEARNED_LEVEL:
                 character_learned += 1
             else:
-                print(character_)
+                logger.debug(character_)
 
             if character_['level'] not in unlock_dic.keys():
-                print("adding level {}".format(character_['level']))
-                unlock_dic[character_['level']] = datetime.datetime.fromtimestamp(
-                    character_['user_specific']['unlocked_date']).strftime('%Y-%m-%d %H:%M:%S')
+                logger.debug("adding level {}".format(character_['level']))
+                unlock_dic['date'][character_['level']] = datetime.datetime.fromtimestamp(
+                    character_['user_specific']['unlocked_date'])#.strftime('%Y-%m-%d %H:%M:%S')
         else:
             user_dict_['radical']['characters'].update({character_['character']: constant.NOTRANKED})
 
-
-
-
         user_dict_['radical']['total_count'] += 1
-        print(unlock_dic)
+        logger.debug(unlock_dic)
+
         user_dict_['unlock'].update(unlock_dic)
+
+    get_user_unlock_time(user_dict_)
+
     return user_dict_
 
 
@@ -320,9 +338,10 @@ def get_user_completion_2(api_info, type):
     else:
         raise ValueError("Invalid type requested")
 
-    print(user_completion)
-    print(datetime.datetime.utcnow() - t)
+    logger.debug(user_completion)
+    logger.debug(datetime.datetime.utcnow() - t)
     return user_completion
+
 
 
 def create_user_info(api_key):
@@ -337,8 +356,10 @@ def create_user_info(api_key):
 
     api_info = get_api_information(api_key, "vocab")
     user.update(get_user_completion_2(api_info, "vocab"))
-    print(user)
-    print(datetime.datetime.utcnow() - t)
+
+
+    logger.debug(user)
+    logger.debug(datetime.datetime.utcnow() - t)
     return user
 
 
@@ -350,8 +371,8 @@ def create_offline_user_info():
     get_radical_information(json.load(open('../Test/radical_static_data.json', 'r', encoding='utf-8')), user)
     get_vocab_information(json.load(open('../Test/vocabulary_static_data.json', 'r', encoding='utf-8')), user)
 
-    print(user)
-    print(datetime.datetime.utcnow() - t)
+    logger.debug(user)
+    logger.debug(datetime.datetime.utcnow() - t)
     return user
 
 
@@ -365,7 +386,7 @@ def get_api_information(api_key, service_type):
     for i in range(2, constant.LEVEL_CAP+1):
         level_range += "," + str(i)
 
-    print(level_range)
+    logger.debug(level_range)
     base_url = 'https://www.wanikani.com/api/v1.4/user/{0}/'
     if service_type.lower() == 'kanji':
         base_url += 'kanji/'
@@ -378,7 +399,7 @@ def get_api_information(api_key, service_type):
 
     base_url += level_range
     url = base_url.format(api_key)
-    print(url)
+    logger.debug(url)
     try:
         r = requests.get(url)
     except Exception:  # Need to check what type of exceptions requests will throw, may not be needed at all
@@ -487,7 +508,7 @@ def get_kanji_by_type(user_dic, type_dic, type, user_information_api):
 
     type_file = "{}_KANJI_LEVELS".format(type.upper())
 
-    print(type_file)
+    logger.debug(type_file)
 
     for level in getattr(constant, type_file):
         user[type][level] = {}
@@ -526,8 +547,8 @@ if __name__ == '__main__':
     # print(get_user_completion(get_api_information('c9d088f9a75b0648b3904ebee3d8d5fa')))
     # get_user_completion_2(get_api_information("c9d088f9a75b0648b3904ebee3d8d5fa"))
 
-    print(create_offline_user_info())
-    #print(get_radical_information(json.load(open('../Test/radical_static_data.json', 'r', encoding='utf-8')), dict()))
+    #logger.debug(create_offline_user_info())
+    print(get_radical_information(json.load(open('../Test/radical_static_data.json', 'r', encoding='utf-8')), dict()))
     #print(get_kanji_completion(json.load(open('../Test/kanji_static_data.json', 'r', encoding='utf-8')), dict()))
     #print(get_vocab_information(json.load(open('../Test/vocab_static_data.json', 'r', encoding='utf-8')), dict()))
     #print(create_user_info('c9d088f9a75b0648b3904ebee3d8d5fa'))

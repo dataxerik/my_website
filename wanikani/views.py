@@ -6,7 +6,9 @@ from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 import traceback
+import logging
 
+logger = logging.getLogger("wanikani")
 # Create your views here.
 class IndexView(TemplateView):
     template_name = 'wanikani/index.html'
@@ -16,6 +18,7 @@ class IndexView(TemplateView):
 class WanikaniDetailView(DetailView):
     template_name = 'wanikani/progress.html'
     context_object_name = 'api_info'
+    logger.info("hi")
 
     def get(self, request, *args, **kwargs):
         # kanji = service.get_jlpt_kanji(os.path.join(BASE_DIR, KANJI_FILE_LOCATION))
@@ -28,13 +31,13 @@ class WanikaniChartView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         try:
-            #jlpt_kanji = service.get_user_completion_info(request.session['api'])
-            jlpt_kanji = service.create_offline_user_info()
+            request.session['api']
+            #jlpt_kanji = service.create_offline_user_info()
         except KeyError:
             print(traceback.format_exc())
             return render(request, 'wanikani/index.html',
                           {'error_message': "Couldn't find api information, please reenter it"})
-        request.session['kanji'] = jlpt_kanji
+        request.session['kanji'] = request.session['api']
         return render(request, self.template_name)
 
 
@@ -83,10 +86,13 @@ def progress(request):
         print(api_key + " testing")
         return render(request, 'wanikani/index.html', {'error_message': "Please enter a valid api key"})
 
-    #api_info = service.create_user_info(api_key)
-    api_info = service.create_offline_user_info()
+    api_info = service.create_user_info(api_key)
+    #api_info = service.create_offline_user_info()
     if 'error' in api_info:
         return render(request, 'wanikani/index.html', {'error_message': 'Couldn\'t find the given api key'})
 
     request.session['api'] = api_info
+    logger.debug(api_info)
+    logger.debug("in method progress")
+    print("in method progress")
     return HttpResponseRedirect(reverse('wanikani:detail'))
