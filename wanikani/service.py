@@ -233,6 +233,7 @@ def get_kanji_completion(api_info, user_dict_):
     user_dict_['user'] = {}
     user_dict_['user']['name'] = api_info['user_information']['username']
     user_dict_['user']['level'] = api_info['user_information']['level']
+    character_learned = 0
 
     for character_ in api_info['requested_information']:
         check_kanji_level(character_, jlpt_lookup_dict, "jlpt", user_dict_['kanji'])
@@ -245,9 +246,15 @@ def get_kanji_completion(api_info, user_dict_):
             user_dict_['kanji']['reading_correct'] += character_['user_specific']['reading_correct']
             user_dict_['kanji']['reading_incorrect'] += character_['user_specific']['reading_incorrect']
             user_dict_['kanji']['characters'].update({character_['character']: character_['user_specific']['srs']})
+            if character_['user_specific']['srs'].lower() in constant.SRS_LEARNED_LEVEL:
+                character_learned += 1
+            else:
+                pass
+                #logger.debug(character_)
         else:
             user_dict_['kanji']['characters'].update({character_['character']: constant.NOTRANKED})
 
+        user_dict_['kanji']['characters_learned'] = character_learned
         user_dict_['kanji']['total_count'] += 1
     return user_dict_
 
@@ -260,6 +267,7 @@ def get_vocab_information(api_info, user_dict_):
     user_dict_['vocab']['reading_incorrect'] = 0
     user_dict_['vocab']['total_count'] = 0
     user_dict_['vocab']['characters'] = {}
+    character_learned = 0
 
     for character_ in api_info['requested_information']:
         if character_['user_specific'] is not None:
@@ -268,8 +276,15 @@ def get_vocab_information(api_info, user_dict_):
             user_dict_['vocab']['reading_correct'] += character_['user_specific']['reading_correct']
             user_dict_['vocab']['reading_incorrect'] += character_['user_specific']['reading_incorrect']
             user_dict_['vocab']['characters'].update({character_['character']: character_['user_specific']['srs']})
+            if character_['user_specific']['srs'].lower() in constant.SRS_LEARNED_LEVEL:
+                character_learned += 1
+            else:
+                pass
+                #logger.debug(character_)
         else:
             user_dict_['vocab']['characters'].update({character_['character']: constant.NOTRANKED})
+
+    user_dict_['vocab']['characters_learned'] = character_learned
 
     return user_dict_
 
@@ -290,38 +305,47 @@ def get_radical_information(api_info, user_dict_):
     def get_user_unlock_time(levels_):
         user_dict_['unlock']['timespent'] = {}
         print("user unlock time")
+        total_average_time = datetime.timedelta(0)
         for level in sorted(levels_['unlock']['date'].keys()):
             if levels_['unlock']['date'].get(level + 1) is None:
+                #user_dict_['unlock']['timespent']["current_level".format(level)] = str(
+                #    datetime.datetime.now() - levels_['unlock']['date'][level])
+                #total_average_time += datetime.datetime.now() - levels_['unlock']['date'][level]
                 user_dict_['unlock']['date'].update(
                     {level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
                 break
+            total_average_time += levels_['unlock']['date'][level + 1] - levels_['unlock']['date'][level]
             user_dict_['unlock']['timespent']["{0}_unlock".format(level)] = str(
                 levels_['unlock']['date'][level + 1] - levels_['unlock']['date'][level])
             user_dict_['unlock']['date'].update(
                 {level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
+        #levels_['unlock']['timespent']['average'] = str(total_average_time / len(levels_['unlock']['date'].keys()))
 
     for character_ in api_info['requested_information']:
         if character_['user_specific'] is not None:
             user_dict_['radical']['meaning_correct'] += character_['user_specific']['meaning_correct']
             user_dict_['radical']['meaning_incorrect'] += character_['user_specific']['meaning_incorrect']
             user_dict_['radical']['characters'].update({character_['character']: character_['user_specific']['srs']})
-            if character_['user_specific']['srs'].lower() != constant.SRS_LEARNED_LEVEL:
+            #print(character_['user_specific']['srs'].lower()  in constant.SRS_LEARNED_LEVEL)
+            if character_['user_specific']['srs'].lower() in constant.SRS_LEARNED_LEVEL:
                 character_learned += 1
             else:
-                logger.debug(character_)
+                pass
+                #logger.debug(character_)
 
             if character_['level'] not in unlock_dic.keys():
-                logger.debug("adding level {}".format(character_['level']))
+                #logger.debug("adding level {}".format(character_['level']))
                 unlock_dic['date'][character_['level']] = datetime.datetime.fromtimestamp(
                     character_['user_specific']['unlocked_date'])  # .strftime('%Y-%m-%d %H:%M:%S')
         else:
             user_dict_['radical']['characters'].update({character_['character']: constant.NOTRANKED})
 
         user_dict_['radical']['total_count'] += 1
-        logger.debug(unlock_dic)
+        #@logger.debug(unlock_dic)
 
         user_dict_['unlock'].update(unlock_dic)
 
+    user_dict_['radical']['characters_learned'] = character_learned
     get_user_unlock_time(user_dict_)
 
     return user_dict_
@@ -340,7 +364,7 @@ def get_user_completion_2(api_info, type):
     else:
         raise ValueError("Invalid type requested")
 
-    logger.debug(user_completion)
+    #logger.debug(user_completion)
     logger.debug(datetime.datetime.utcnow() - t)
     return user_completion
 
@@ -358,7 +382,7 @@ def create_user_info(api_key):
     api_info = get_api_information(api_key, "vocab")
     user.update(get_user_completion_2(api_info, "vocab"))
 
-    logger.debug(user)
+    #logger.debug(user)
     logger.debug(datetime.datetime.utcnow() - t)
     return user
 

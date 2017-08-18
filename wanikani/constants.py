@@ -24,12 +24,14 @@ FREQUENCY_KANJI_FILE_LOCATIONS = {'F1': 'wanikani\static\wanikani\\frequency\\ta
 
 FREQUENCY_KANJI_FILE_LOCATION = 'wanikani\static\wanikani\\frequency\\frequency.txt'
 
-SRS_LEARNED_LEVEL = "guru"
-SRS_UNRANKED_LEVEL = "unranked"
+
 SRS_APPRENTICE_LEVEL = "apprentice"
 SRS_GURU_LEVEL = "guru"
 SRS_MASTER_LEVEL = "master"
-SRS_BURNED_LEVEL = "burn"
+SRS_ENLIGHTEN_LEVEL = "enlighten"
+SRS_BURNED_LEVEL = "burned"
+SRS_LEARNED_LEVEL = [SRS_GURU_LEVEL, SRS_ENLIGHTEN_LEVEL, SRS_MASTER_LEVEL, SRS_BURNED_LEVEL]
+SRS_UNRANKED_LEVEL = "unranked"
 
 WANIKANI_API_TYPE = ["radical", "kanji"]
 

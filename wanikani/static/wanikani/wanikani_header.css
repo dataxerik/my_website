@@ -27,3 +27,17 @@ th, td {
     padding: 5px;
     text-align: left;
 }
+
+.bar {
+    fill: steelblue;
+    padding: 3px;
+}
+
+.bar:hover {
+    fill: brown;
+}
+
+.axis--x path {
+    display:none;
+    color:red;
+}
