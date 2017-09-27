@@ -308,8 +308,8 @@ def get_radical_information(api_info, user_dict_):
         total_average_time = datetime.timedelta(0)
         for level in sorted(levels_['unlock']['date'].keys()):
             if levels_['unlock']['date'].get(level + 1) is None:
-                #user_dict_['unlock']['timespent']["current_level".format(level)] = str(
-                #    datetime.datetime.now() - levels_['unlock']['date'][level])
+                user_dict_['unlock']['timespent']["{0}_unlock".format(level)] = str(
+                    datetime.datetime.now() - levels_['unlock']['date'][level])
                 #total_average_time += datetime.datetime.now() - levels_['unlock']['date'][level]
                 user_dict_['unlock']['date'].update(
                     {level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
@@ -319,7 +319,7 @@ def get_radical_information(api_info, user_dict_):
                 levels_['unlock']['date'][level + 1] - levels_['unlock']['date'][level])
             user_dict_['unlock']['date'].update(
                 {level: user_dict_['unlock']['date'][level].strftime('%Y-%m-%d %H:%M:%S')})
-        #levels_['unlock']['timespent']['average'] = str(total_average_time / len(levels_['unlock']['date'].keys()))
+        levels_['unlock']['average'] = str(total_average_time / len(levels_['unlock']['date'].keys()))
 
     for character_ in api_info['requested_information']:
         if character_['user_specific'] is not None:

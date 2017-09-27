@@ -27,8 +27,9 @@
     {% block content %}{% endblock %}
   </div>
   </body>
-  <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
-  <script src="{% static 'wanikani/d3.js' %}"></script>
-  {% block unique_js %}{% endblock %}
+  {% block unique_js %}
+  <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}" chartset="utf-8">></script>
+  <script src="{% static 'wanikani/d3.js' %}" chartset="utf-8"></script>
+  {% endblock %}
 
 </html>

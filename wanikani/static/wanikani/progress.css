@@ -94,3 +94,7 @@ p {
 .hide {
     display: none
 }
+
+#Removed {
+    fill: gray;
+}

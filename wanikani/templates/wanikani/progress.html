@@ -24,23 +24,35 @@ th, td {
       Welcome, {{request.session.api.user.name}}
     </p>
 
-<div id="percentageChart">
+    <div>
+        <h1>Current Status</h1>
+        <div id="currLevel">Current Level: </div>
+        <div id="currLevelTime">Current Level Time: </div>
+        <div>Estimated Level In: </div>
+        <div id="averTime">Average Level up: </div>
+        <div id="startTime">Start Date:</div>
+        <div id="learned">Items Learned (Guru+): </div>
+    </div>
 
-</div>
+    <div id="percentageChart">
+
+    </div>
+
+    <div id="averageLevel">
+        Average Time:
+    </div>
 
 <svg width="960" height="500"></svg>
 <div>hi 2</div>
 {% endblock %}
-
-
 {% block unique_js %}
+{{ block.super }}
 {% load static %}
 {% load js %}
 <script type="text/javascript" >
     var js_list = {{ request.session.api|js }};
     console.log(js_list)
-
-
+/*
     function calculatePercentages(userInfoObj) {
         function roundNumber(Num) {
             return (Math.round((Num + 0.00001) * 10000) / 100);
@@ -154,11 +166,12 @@ th, td {
                         '五十六',　'五十七',　'五十八',　'五十九',　'六十',]
         console.log(orderKeys[i]);
         temp = unlock_data[orderKeys[i]]
+        date = temp.split(" ")[0] + "日" + temp.split(" ")[2].split(":")[0] + "時" + temp.split(" ")[2].split(":")[1] + "分"
         value = +(temp.split(" ")[0] + "." + temp.split(" ")[2].split(":")[0])
         unlockArr.push(value);
         tick_label.push(level_kanji[i]);
         test.push({"level": level_kanji[i], "time": value,
-                    "date": unlock_data[orderKeys[i]]})
+                    "date": date})
     }
     console.log(unlockArr);
 
@@ -195,11 +208,11 @@ th, td {
         .call(d3.axisBottom(x).tickSize(0).tickPadding(10));
 
 
-        /*.selectAll("text")
+        .selectAll("text")
             .style("text-anchor", "end")
             .attr("transform", function(d) {
                 return "rotate(-65)"
-                });*/
+                });
 
     g.append("g")
         .attr("class", "axis axis--y")
@@ -228,13 +241,17 @@ th, td {
 
 	var textLabels = text
 	    //.attr("transform", "rotate(-65)")
-	    //.attr("x", function(d) { return x(d.level); })
-		//.attr("y", function(d) { return y(d.time); })
-		.attr("transform", function(d) { return "translate(" + x(d.level) + "," + y(d.time) +") rotate(-65," +  x(d.level) + "," + y(d.time)   + ")" })
+	    .attr("x", function(d) { return x(d.level); })
+		.attr("y", function(d) { return y(d.time); })
+		//.attr("transform", function(d) { return "rotate(-65," +  x(d.level) + "," + y(d.time)   + ")" })
+		.attr("writing-mode", "tb-rl")
+		.attr("dy", ".35em")
+		.attr("dx", ".85em")
+		.attr("class", "date-text")
 		.text(function(d) { return d.date; })
 		.attr("fill", "blue")
 
-/*
+
     g.append("text")
         .data(test)
         .enter()
@@ -276,5 +293,8 @@ th, td {
     //    .attr("width", x)
     //    .attr("height", 20 - 1);
 
+</script>
+<script src="{% static 'wanikani/progress.js' %}"></script>
+<script>
 </script>
 {% endblock %}
