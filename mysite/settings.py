@@ -142,10 +142,14 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'propagate': True,
         },
-        'wanikani': {
+        'wanikani.service': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+        'wanikani.views': {
             'handlers': ['file'],
             'level': 'DEBUG',
         },

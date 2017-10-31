@@ -1,2 +1,2 @@
-class BadRequestException(Exception):
+class BadRequestException(BaseException):
     """ Thrown when call to api call is bad """

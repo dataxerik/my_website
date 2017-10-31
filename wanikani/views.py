@@ -1,16 +1,23 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, DetailView
-from wanikani.forms import ApiForm
-from wanikani import service
-from django.views.generic.edit import FormView
+from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, DetailView
+from django.views.generic.edit import FormView
 from django.urls import reverse
+
+from wanikani import service
+from wanikani.error import error_text_constants
+from wanikani.forms import ApiForm
+
 import traceback
 import logging
 
-logger = logging.getLogger("wanikani")
+logger = logging.getLogger(__name__)
+
+
 # Create your views here.
 class IndexView(TemplateView):
+    logger.debug("Called IndexView method: redirecting to homepage")
     template_name = 'wanikani/index.html'
     context_object_name = 'wanikani'
 
@@ -18,11 +25,9 @@ class IndexView(TemplateView):
 class WanikaniDetailView(DetailView):
     template_name = 'wanikani/progress.html'
     context_object_name = 'api_info'
-    logger.info("hi")
+    logger.info("About to render progress")
 
     def get(self, request, *args, **kwargs):
-        # kanji = service.get_jlpt_kanji(os.path.join(BASE_DIR, KANJI_FILE_LOCATION))
-        # request.session['kanji'] = kanji
         return render(request, self.template_name)
 
 
@@ -30,14 +35,15 @@ class WanikaniChartView(TemplateView):
     template_name = 'wanikani/charts.html'
 
     def get(self, request, *args, **kwargs):
+
         try:
             request.session['api']
-            #jlpt_kanji = service.create_offline_user_info()
         except KeyError:
-            print(traceback.format_exc())
+            logging.error(traceback.format_exc())
             return render(request, 'wanikani/index.html',
                           {'error_message': "Couldn't find api information, please reenter it"})
-        request.session['kanji'] = request.session['api']
+
+        request.session['api'] = request.session['api']
         return render(request, self.template_name)
 
 
@@ -45,13 +51,15 @@ class WanikaniComparisionView(TemplateView):
     template_name = 'wanikani/comparison.html'
 
     def get(self, request, *args, **kwargs):
+        '''
         try:
             user_json = service.get_user_completion(request.session['api'])
         except KeyError:
             #print(request.session.keys())
             return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api information, please re-enter it"})
         #kanji_json = service.gather_kanji_list()
-        return render(request, self.template_name, {'user_json': user_json})
+        '''
+        return render(request, self.template_name)
 
 
 class ApiView(FormView):
@@ -68,11 +76,12 @@ def index(request):
 
 
 def detail(request):
+    '''
     try:
         request.POST['api_key']
     except KeyError:
         return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api key, please reenter it"})
-
+    '''
     return render(request, 'wanikani/progress.html')
 
 
@@ -80,19 +89,22 @@ def progress(request):
     try:
         api_key = request.POST['api_key']
     except KeyError:
-        return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api key, please reenter it"})
+        return redirect_due_to_error(request, error_text_constants.API_KEY_404)
 
-    if not api_key or service.is_valid_api_key(api_key) is None:
-        print(api_key + " testing")
-        return render(request, 'wanikani/index.html', {'error_message': "Please enter a valid api key"})
+    if not api_key or not service.is_valid_api_key(api_key):
+        logger.debug("testing result is {0}".format(service.is_valid_api_key(api_key)))
+        return redirect_due_to_error(request, error_text_constants.API_KEY_MALFORMED)
 
     api_info = service.create_user_info(api_key)
-    #api_info = service.create_offline_user_info()
-    if 'error' in api_info:
-        return render(request, 'wanikani/index.html', {'error_message': 'Couldn\'t find the given api key'})
+    if api_info == 'error':
+        return redirect_due_to_error(request, error_text_constants.API_KEY_BAD_CALL)
 
     request.session['api'] = api_info
-    logger.debug(api_info)
     logger.debug("in method progress")
-    print("in method progress")
     return HttpResponseRedirect(reverse('wanikani:detail'))
+
+
+def redirect_due_to_error(request, reason):
+    messages.add_message(request, messages.ERROR,
+                         error_text_constants.APIErrorMessage.construct_api_error_message(reason))
+    return redirect('wanikani:index')

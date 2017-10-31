@@ -59,40 +59,40 @@ function createPercentageTable(dataObj) {
 	/*
 		Creates a simple html table with data from the calculatePercentages function
 	*/
-    $("#percentageChart").append("<table>");
-    $("#percentageChart").append("<tr><th></th><th>Reading</th><th>Meaning</th><th>Average/Sum</th></tr>");
-    $("#percentageChart").append("<tr>" +
+    var table_ = $("<table></table>");
+    table_.append("<tr><th></th><th>Reading</th><th>Meaning</th><th>Average/Sum</th></tr>");
+    table_.append("<tr>" +
                                     "<td>Correct</td>" +
                                     "<td></td>" +
                                     "<td>" + dataObj.radicalMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.radicalAveragePercentage + "</td></tr>");
-    $("#percentageChart").append("<tr>" +
+    table_.append("<tr>" +
                                     "<td>Incorrect</td>" +
                                     "<td>" + dataObj.kanjiReadingPercentage + "</td>" +
                                     "<td>" + dataObj.kanjiMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.kanjiAveragePercentage + "</td></tr>");
-    $("#percentageChart").append("<tr>" +
+    table_.append("<tr>" +
                                     "<td>Accuracy</td>" +
                                     "<td>" + dataObj.vocabReadingPercentage + "</td>" +
                                     "<td>" + dataObj.vocabMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.vocabAveragePercentage + "</td></tr>");
-    $("#percentageChart").append("<tr><td colspan=\"4\">Overall</td></tr>");
-    $("#percentageChart").append("<tr>" +
+    table_.append("<tr><td colspan=\"4\">Overall</td></tr>");
+    table_.append("<tr>" +
                                     "<td>Correct</td>" +
                                     "<td>" + dataObj.totalReadingCorrect + "</td>" +
                                     "<td>" + dataObj.totalMeaningCorrect + "</td>" +
                                     "<td>" + dataObj.totalCorrect + "</td></tr>");
-    $("#percentageChart").append("<tr>" +
+    table_.append("<tr>" +
                                     "<td>Incorrect</td>" +
                                     "<td>" + dataObj.totalReadingIncorrect + "</td>" +
                                     "<td>" + dataObj.totalMeaningIncorrect + "</td>" +
                                     "<td>" + dataObj.totalIncorrect + "</td></tr>");
-    $("#percentageChart").append("<tr>" +
+    table_.append("<tr>" +
                                     "<td>Accuracy</td>" +
                                     "<td>" + dataObj.totalReadingPercentage + "</td>" +
                                     "<td>" + dataObj.totalMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.totalPercentage + "</td></tr>");
-    $("#percentageChart").append("</table>");
+    $("#percentageChart").append(table_);
 }
 
 function createTimespent(unlockData) {
@@ -185,7 +185,8 @@ function createTimespentGraph(unlockData) {
         .attr("x", function(d) { return x(d.level); })
 		.attr("y", function(d) { return y(d.time); })
         .attr("width", x.bandwidth())
-        .attr("height", function(d) { return height - y(d.time); });
+        .attr("height", function(d) { return height - y(d.time); })
+        .text("Wanikani Levels");
 
 	//For each data, i select a non-existent .lavel element and go enter the data and append a text element to g eleemnt
     var text = g.selectAll(".label")
@@ -257,7 +258,13 @@ function updateAverages(time_) {
     class_ = ['#averageLevel', '#averTime']
 
     for (i = 0; i < class_.length; i++) {
-        if (! $(class_[i] + " span").length) {
+        console.log('updating average ' + i + " " + time_)
+
+        if (i == 0) {
+            console.log("first 0")
+            $(class_).text("Average Time: " + time_);
+        }
+        else if (! $(class_[i] + " span").length) {
             $(class_[i]).append("<span>" + time_ + "</span>");
         } else {
             $(class_[i] + " span").text(time_);
@@ -284,7 +291,9 @@ function updateAverages(time_) {
     $("#currLevelTime").append("<span>" + unlockData[orderedKeys.length-1].date + "</span>")
     $("#currLevel").append("<span>" + js_list.user.level + "</span>")
     $("#averTime").append("<span>" + date + "</span>");
-    $("#startTime").append("<span>" + unlockData[0] + "</span");
+    $("#startTime").append("<span>" + unlockData[0].date + "</span");
+    $("#averageLevel").text("Average Time: " + date);
+
 	curTime = js_list.unlock.date[orderedKeys.length];
 	avgTime = js_list.unlock.average;
 
@@ -316,12 +325,12 @@ function updateAverages(time_) {
     $(".bar").eq(slowestLevel).addClass("slowest")
     $(".bar").eq(fastestLevel).addClass("fastest")
     $(".bar").eq(unlockData.length-1).addClass("current")
-
-    $(".bar").not(".current").click(function() {
+    //$(".bar").not(".current").click(function()
+    $(".bar:not(.current)").click(function() {
         newTime = 0;
         j = 0;
         addOrRemove(this)
-        $(".bar").each(function(i, d){
+        $(".bar:not(.current)").each(function(i, d){
             if (! $(this).hasClass("removed")) {
                 newTime += unlockData[i].milli
                 j++;
@@ -329,6 +338,7 @@ function updateAverages(time_) {
         })
 
         if (j != 0) {
+            console.log(j)
             newAverage = calculateAverageLevelTime(newTime/j);
         } else {
             newAverage = calculateAverageLevelTime(avgTimeMilli);

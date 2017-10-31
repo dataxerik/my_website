@@ -1,0 +1,92 @@
+
+#content {
+    padding-top: 70px;
+}
+
+.levelStats {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#percentageChart {
+    width: 50%;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#percentageChart table {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#percentageChart table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: center;
+}
+
+svg {
+    display: block;
+    margin: 0 auto;
+}
+
+.bar{
+    fill: steelblue;
+    padding: 3px;
+}
+
+.bar:hover, #Fastest:hover{
+    fill: brown;
+}
+
+.axis--x path {
+    display:none;
+    color:red;
+}
+
+.date-text {
+    text-orientation: upright;
+    text-anchor: middle;
+    text-shadow: black 0.15em 0.15em 0.15em;
+    fill: white;
+}
+
+.timeData{
+    -webkit-writing-mode: vertical-lr;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    fill: white;
+}
+
+.fastLevel{
+    fill: red;
+}
+
+.slowLevel {
+    fill:purple;
+}
+
+body {
+    background-color: pink;
+}
+
+#slowest {
+    fill: blue;
+}
+
+.fastest {
+    fill: black
+}
+
+.current {
+    fill: green;
+}
+
+.removed {
+    fill: gray;
+}

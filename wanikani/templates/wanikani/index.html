@@ -10,15 +10,28 @@
 </head>
 <body>
 
-    <form action="{% url 'wanikani:progress' %}" method="post">
+    <form onsubmit="return validateWanikaniApiKey()" action="{% url 'wanikani:progress' %}" method="post">
     {% csrf_token %}
     <div id="api_key_box">
         <h1>Welcome!</h1>
-        <label>Please enter your wanikani api key: <input type="text" name="api_key" ></label>
-        <input id="api_key_input" type="submit" value="Submit">
+        <label>Please enter your wanikani api key: <input id="api_key_input" type="text" name="api_key" ></label>
+        <input id="api_key_submit" type="submit" value="Submit">
     </div>
     </form>
-    {% if error_message %}<p class="error">{{ error_message }}</p>{% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                 <p class="error">{{ message }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'wanikani/index.js' %}"></script>
+</body>
+</html>
+
+<!-- Dummy code that I want to save as a reference -->
+<!--
 
     <ul id="progress">
         <p>Found API key...Loading data...</p>
@@ -44,7 +57,4 @@
         </li>
 
     </ul>
-    <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}"></script>
-    <!--<script src="{% static 'wanikani/index.js' %}"></script>-->
-</body>
-</html>
+-->

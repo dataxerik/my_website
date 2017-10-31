@@ -15,12 +15,14 @@
     </nav>
     <div id="jlpt">
         <ul>
-        {% for level, values in request.session.kanji.jlpt.jlpt.items %}
-            <h2>JLPT Level ({{ level }})</h2>
-            <p>({{ values.user.user_number }}/{{ values.user.total_number }})</p>
-            {% for kanji, rank in values.kanji.items %}
-            <li class="{{ rank }}">{{  kanji }}</li>
-            {% endfor %}
+        {% for level, kanji_list in request.session.api.kanji.jlpt.items %}
+            {% if "N" in level %}
+                <h2>JLPT Level ({{ level }})</h2>
+            <!--<p>({{ values.user.user_number }}/{{ values.user.total_number }})</p>-->
+                {% for kanji in kanji_list %}
+                <li class="{{ request.session.api.kanji.characters|lookup:kanji }}">{{  kanji }}</li>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
         </ul>
     </div>
@@ -52,7 +54,7 @@
 {% load static %}
 {% load js %}
 <script type="text/javascript" >
-    var js_list = {{ request.session.kanji|js }};
+    var js_list = {{ request.session.api|js }};
     console.log(js_list)
 </script>
 <script src="{% static 'wanikani/chart.js' %}"></script>

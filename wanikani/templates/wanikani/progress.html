@@ -1,31 +1,16 @@
 {% extends "wanikani/base_header.html" %}
 <head>
 <style>
-#percentageChart {
-    width:100%;
-}
-#percentageChart table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 5px;
-    text-align: left;
-}
-
-.bar {
-    fill: steelblue;
-    padding: 3px;
-}
+{% block unique_css %}
+    {% load static %}
+    <link href="{% static 'wanikani/stats.css' %}" rel="stylesheet">
+{% endblock %}
 </style>
 </head>
 {% block content %}
-    <p style="co">
-      Welcome, {{request.session.api.user.name}}
-    </p>
-
-    <div>
+    <div class="levelStats">
         <h1>Current Status</h1>
+        <div><p>Welcome, {{request.session.api.user.name}}</p></div>
         <div id="currLevel">Current Level: </div>
         <div id="currLevelTime">Current Level Time: </div>
         <div>Estimated Level In: </div>
@@ -38,261 +23,16 @@ th, td {
 
     </div>
 
-    <div id="averageLevel">
-        Average Time:
-    </div>
-
-<svg width="960" height="500"></svg>
-<div>hi 2</div>
+<svg width="960" height="500">
+    <text id="averageLevel" y="15" x="20">Average Time:</text>
+</svg>
 {% endblock %}
 {% block unique_js %}
 {{ block.super }}
 {% load static %}
 {% load js %}
 <script type="text/javascript" >
-    var js_list = {{ request.session.api|js }};
-    console.log(js_list)
-/*
-    function calculatePercentages(userInfoObj) {
-        function roundNumber(Num) {
-            return (Math.round((Num + 0.00001) * 10000) / 100);
-        }
-
-        percentageObj = {}
-
-        //Meaning Stats
-        percentageObj.kanjiMeaningCorrect = userInfoObj['kanji']['meaning_correct'];
-        percentageObj.kanjiMeaningIncorrect = userInfoObj['kanji']['meaning_incorrect'];
-        percentageObj.vocabMeaningCorrect = userInfoObj['vocab']['meaning_correct'];
-        percentageObj.vocabMeaningIncorrect = userInfoObj['vocab']['meaning_incorrect'];
-        percentageObj.radicalMeaningCorrect = userInfoObj['radical']['meaning_correct'];
-        percentageObj.radicalMeaningIncorrect = userInfoObj['radical']['meaning_incorrect'];
-
-        percentageObj.kanjiMeaningPercentage = roundNumber(userInfoObj['kanji']['meaning_correct'] / (userInfoObj['kanji']['meaning_correct'] + userInfoObj['kanji']['meaning_incorrect']));
-        percentageObj.vocabMeaningPercentage = roundNumber(userInfoObj['vocab']['meaning_correct'] / (userInfoObj['vocab']['meaning_correct'] + userInfoObj['vocab']['meaning_incorrect']));
-        percentageObj.radicalMeaningPercentage = roundNumber(userInfoObj['radical']['meaning_correct'] / (userInfoObj['radical']['meaning_correct'] + userInfoObj['radical']['meaning_incorrect']));
-
-        //Reading Stats
-        percentageObj.kanjiReadingCorrect = userInfoObj['kanji']['reading_correct'];
-        percentageObj.kanjiReadingIncorrect = userInfoObj['kanji']['reading_incorrect'];
-        percentageObj.vocabReadingCorrect = userInfoObj['vocab']['reading_correct'];
-        percentageObj.vocabReadingIncorrect = userInfoObj['vocab']['reading_incorrect'];
-
-
-        percentageObj.kanjiReadingPercentage = roundNumber(userInfoObj['kanji']['reading_correct'] / (userInfoObj['kanji']['reading_correct'] + userInfoObj['kanji']['reading_incorrect']));
-        percentageObj.vocabReadingPercentage = roundNumber(userInfoObj['vocab']['reading_correct'] / (userInfoObj['vocab']['reading_correct'] + userInfoObj['vocab']['reading_incorrect']));
-
-        //Total Stats
-        percentageObj.totalMeaningCorrect = percentageObj.kanjiMeaningCorrect + percentageObj.vocabMeaningCorrect + percentageObj.radicalMeaningCorrect;
-        percentageObj.totalMeaningIncorrect = percentageObj.kanjiMeaningIncorrect + percentageObj.vocabMeaningIncorrect + percentageObj.radicalMeaningIncorrect;
-        percentageObj.totalMeaningPercentage = roundNumber(percentageObj.totalMeaningCorrect / (percentageObj.totalMeaningCorrect + percentageObj.totalMeaningIncorrect));
-
-        percentageObj.totalReadingCorrect = percentageObj.kanjiReadingCorrect + percentageObj.vocabReadingCorrect;
-        percentageObj.totalReadingIncorrect = percentageObj.kanjiReadingIncorrect + percentageObj.vocabReadingIncorrect;
-        percentageObj.totalReadingPercentage = roundNumber(percentageObj.totalReadingCorrect / (percentageObj.totalReadingCorrect + percentageObj.totalReadingIncorrect));
-
-        percentageObj.totalCorrect = percentageObj.totalMeaningCorrect + percentageObj.totalReadingCorrect;
-        percentageObj.totalIncorrect = percentageObj.totalMeaningIncorrect + percentageObj.totalReadingIncorrect;
-        percentageObj.totalPercentage = roundNumber(percentageObj.totalCorrect / (percentageObj.totalCorrect + percentageObj.totalIncorrect))
-
-        //Average stats
-        percentageObj.kanjiAveragePercentage = roundNumber((percentageObj.kanjiMeaningPercentage + percentageObj.kanjiReadingPercentage) / 2 / 100);
-        percentageObj.radicalAveragePercentage = percentageObj.radicalMeaningPercentage;
-        percentageObj.vocabAveragePercentage = roundNumber((percentageObj.vocabMeaningPercentage + percentageObj.vocabReadingPercentage) / 2 / 100);
-
-
-
-        return percentageObj
-
-    }
-
-    dataObj = calculatePercentages(js_list);
-
-    console.log(dataObj)
-
-    $("#percentageChart").append("<table>");
-    $("#percentageChart").append("<tr><th></th><th>Reading</th><th>Meaning</th><th>Average/Sum</th></tr>");
-    $("#percentageChart").append("<tr>" +
-                                    "<td>Correct</td>" +
-                                    "<td></td>" +
-                                    "<td>" + dataObj.radicalMeaningPercentage + "</td>" +
-                                    "<td>" + dataObj.radicalAveragePercentage + "</td></tr>");
-    $("#percentageChart").append("<tr>" +
-                                    "<td>Incorrect</td>" +
-                                    "<td>" + dataObj.kanjiReadingPercentage + "</td>" +
-                                    "<td>" + dataObj.kanjiMeaningPercentage + "</td>" +
-                                    "<td>" + dataObj.kanjiAveragePercentage + "</td></tr>");
-    $("#percentageChart").append("<tr>" +
-                                    "<td>Accuracy</td>" +
-                                    "<td>" + dataObj.vocabReadingPercentage + "</td>" +
-                                    "<td>" + dataObj.vocabMeaningPercentage + "</td>" +
-                                    "<td>" + dataObj.vocabAveragePercentage + "</td></tr>");
-    $("#percentageChart").append("<tr><td colspan=\"4\">Overall</td></tr>");
-    $("#percentageChart").append("<tr>" +
-                                    "<td>Correct</td>" +
-                                    "<td>" + dataObj.totalReadingCorrect + "</td>" +
-                                    "<td>" + dataObj.totalMeaningCorrect + "</td>" +
-                                    "<td>" + dataObj.totalCorrect + "</td></tr>");
-    $("#percentageChart").append("<tr>" +
-                                    "<td>Incorrect</td>" +
-                                    "<td>" + dataObj.totalReadingIncorrect + "</td>" +
-                                    "<td>" + dataObj.totalMeaningIncorrect + "</td>" +
-                                    "<td>" + dataObj.totalIncorrect + "</td></tr>");
-    $("#percentageChart").append("<tr>" +
-                                    "<td>Accuracy</td>" +
-                                    "<td>" + dataObj.totalReadingPercentage + "</td>" +
-                                    "<td>" + dataObj.totalMeaningPercentage + "</td>" +
-                                    "<td>" + dataObj.totalPercentage + "</td></tr>");
-    $("#percentageChart").append("</table>");
-
-    var unlock_data = js_list.unlock.timespent;
-
-    unlockArr = []
-    test = []
-    tick_label = []
-    orderKeys = Object.keys(unlock_data).sort(function(a, b) { return a.split("_")[0] - b.split("_")[0] } )
-    for(var i = 0; i < orderKeys.length; i++) {
-        level_kanji = ['一', '二',　'三',　'四',　'五',
-                        '六',　'七',　'八',　'九',　'十',
-                        '十一',　'十二',　'十三',　'十四',　'十五',
-                        '十六',　'十七',　'十八',　'十九',　'二十',
-                        '二十一',　'二十二',　'二十三',　'二十四',　'二十五',
-                        '二十六',　'二十七',　'二十八',　'二十九',　'三十',
-                        '三十一',　'三十二',　'三十三',　'三十四',　'三十五',
-                        '三十六',　'三\n十\n七',　'三十八',　'三十九',　'四十',
-                        '四十一',　'四十二',　'四十三',　'四十四',　'四十五',
-                        '四十六',　'四十七',　'四十八',　'四十九',　'五十',
-                        '五十一',　'五十二',　'五十三',　'五十四',　'五十五',
-                        '五十六',　'五十七',　'五十八',　'五十九',　'六十',]
-        console.log(orderKeys[i]);
-        temp = unlock_data[orderKeys[i]]
-        date = temp.split(" ")[0] + "日" + temp.split(" ")[2].split(":")[0] + "時" + temp.split(" ")[2].split(":")[1] + "分"
-        value = +(temp.split(" ")[0] + "." + temp.split(" ")[2].split(":")[0])
-        unlockArr.push(value);
-        tick_label.push(level_kanji[i]);
-        test.push({"level": level_kanji[i], "time": value,
-                    "date": date})
-    }
-    console.log(unlockArr);
-
-    var svg = d3.select('svg'),
-    margin = {top: 60, right: 20, bottom: 45, left: 60},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom;
-
-    var x = d3.scaleBand().rangeRound([0, width]).padding(.1);
-    var y = d3.scaleLinear().range([height, 0]);
-
-    var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    //.attr('width', width).attr('height', height);
-
-    //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    console.log(tick_label)
-    x.domain(test.map(function(d) { return d.level; }));
-    y.domain([0, d3.max(test, function(d) { return d.time; })]);
-
-    //x.tickValues(tick_label);
-
-    console.log(x("1_unlock"))
-    console.log(y(2))
-    console.log(orderKeys)
-    console.log(unlockArr)
-    console.log(test)
-
-    g.append("g")
-        .attr("class", "axis axis--x")
-        .attr("transform", "translate(0," + height + ")")
-        .attr("writing-mode", "tb-rl")
-        .call(d3.axisBottom(x).tickSize(0).tickPadding(10));
-
-
-        .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("transform", function(d) {
-                return "rotate(-65)"
-                });
-
-    g.append("g")
-        .attr("class", "axis axis--y")
-        .call(d3.axisLeft(y).ticks(10))
-        .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 9)
-        .attr("dy", "0.71em")
-        .attr("text-anchor", "end")
-        .text("Frequency")
-
-    var bar = g.selectAll(".bar")
-        .data(test)
-        .enter()
-        .append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.level); })
-		.attr("y", function(d) { return y(d.time); })
-		//.attr("transform", "translate(0," + height + ")")
-        .attr("width", x.bandwidth())
-        .attr("height", function(d) { return height - y(d.time); })
-
-    var text = g.selectAll(".label")
-        .data(test).enter()
-        .append("text");
-
-	var textLabels = text
-	    //.attr("transform", "rotate(-65)")
-	    .attr("x", function(d) { return x(d.level); })
-		.attr("y", function(d) { return y(d.time); })
-		//.attr("transform", function(d) { return "rotate(-65," +  x(d.level) + "," + y(d.time)   + ")" })
-		.attr("writing-mode", "tb-rl")
-		.attr("dy", ".35em")
-		.attr("dx", ".85em")
-		.attr("class", "date-text")
-		.text(function(d) { return d.date; })
-		.attr("fill", "blue")
-
-
-    g.append("text")
-        .data(test)
-        .enter()
-        .attr("x", 10)
-		.attr("y", 100 / 2)
-		.attr("dy", ".35em")
-        .text("test");
-    var bar = g.selectAll(".bar")
-        .data(test)
-        .enter().append("g")
-        .attr("transform", function(d, i) { return "translate(" + i * 20 + ",0)"; });
-
-    bar.selectAll(".bar")
-        .data(test)
-        .enter().append("rect")
-        .attr("x", function(d) { return x(d.level); })
-		.attr("y", function(d) { return y(d.time); })
-        .attr("width", x.bandwidth() - 5)
-        .attr("height", function(d) { return height - y(d.time); });
-
-     var bar = g.selectAll(".bar")
-        .data(test)
-        .enter().append("g")
-        .attr("transform", function(d, i) { return "translate(" + i * 20 + ",0)"; });
-    bar.append("rect")
-        .data(test)
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.level); })
-		.attr("y", function(d) { return y(d.time); })
-        .attr("width", x.bandwidth() - 5)
-        .attr("height", function(d) { return height - y(d.time); });
-*/
-
-    //    .attr("class", "bar")
-    //    .attr("x", function(d) { return x(d); })
-    //    .attr("width", x.bandwidth())
-    //    .attr("height", "10");
-    //bar.append("rect")
-    //    .attr("width", x)
-    //    .attr("height", 20 - 1);
-
+var js_list = {{ request.session.api|js }};
 </script>
 <script src="{% static 'wanikani/progress.js' %}"></script>
 <script>

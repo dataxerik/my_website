@@ -1,3 +1,16 @@
+
+
+function validateWanikaniApiKey() {
+    var apiKey = $("#api_key_input")[0].value;
+    console.log(apiKey);
+    var validKey = new RegExp('[0-9a-zA-Z].{31}$');
+    console.log(validKey.test(apiKey));
+    return validKey.test(apiKey);
+}
+
+ // This is just dummy code from previous thoughts that I want to say just as a reference.
+/*
+
 function foo(response) {
     document.getElementById('output').text = response.user_information.username
 };
@@ -42,12 +55,6 @@ function callWanikaniApi() {
 
 }
 
-function validateWanikaniApiKey(key) {
-    var validKey = new RegExp('[0-9a-zA-Z].{31}$');
-    console.log(key)
-    return validKey.test(key)
-}
-
 function callWanikaniApi2(key) {
     $.ajax({
         url: 'https://www.wanikani.com/api/v1.4/user/' + key + '/user-information',
@@ -76,7 +83,7 @@ function makeWanikaniApiCall(key) {
         console.log("error")
         writeError();
     }
-}
+ }
 
 $(document).ready(function() {
     $("#progress").removeClass('running');
@@ -86,4 +93,4 @@ $(document).ready(function() {
             //hideInput();
             //callWanikaniApi2();
         });
-});
+});*/
