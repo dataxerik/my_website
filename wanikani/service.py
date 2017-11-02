@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import re
 import requests
 import os
@@ -9,6 +10,7 @@ import datetime
 import sys
 import json
 import wanikani.constants as constant
+
 from wanikani.exceptions.BadRequestException import BadRequestException
 from wanikani.exceptions.InvalidAPIKeyException import InvalidAPIKeyException
 
@@ -49,35 +51,50 @@ def parse_csv_file2(file_):
 
 
 def get_kanji_completion(api_info, user_dict_):
+    def create_dict_for_kanji_type():
+        temp = {}
+
+        for kanji in constant.PROGRESS_KANJI_LEVELS:
+            type = kanji.split('_')[0]
+            temp[type] = OrderedDict()
+            for level in getattr(constant, kanji):
+                temp[type][level] = ""
+        return temp
+
+    def convert_to_tuple(progess_dict):
+        return [(k, v) for k, v in progess_dict.items()]
+
+    def check_kanji_level(character_, character_lookup_dict, lookup_type, user_dict):
+        if character_['character'] in character_lookup_dict:
+            #sys.exit(0)
+            try:
+                user_dict[lookup_type].update(
+                    OrderedDict({character_lookup_dict[character_['character']]: user_dict[lookup_type][character_lookup_dict[
+                        character_['character']]] +
+                                                                     character_['character']}))
+            except KeyError:
+                user_dict[lookup_type][character_lookup_dict[character_['character']]] = character_['character']
+
+            if user_dict['counts'].get(lookup_type + '_count') is not None:
+                user_dict['counts'][lookup_type + '_count'] += 1
+            else:
+                user_dict['counts'][lookup_type + '_count'] = 1
+
+
     jlpt_lookup_dict = parse_csv_file2(os.path.join(BASE_DIR, constant.JLPT_KANJI_FILE_LOCATION))
     joyo_lookup_dict = parse_csv_file2(os.path.join(BASE_DIR, constant.JOYO_KANJI_FILE_LOCATIONS))
     freq_lookup_dict = parse_csv_file2(os.path.join(BASE_DIR, constant.FREQUENCY_KANJI_FILE_LOCATION))
 
     user_dict_['kanji'] = {}
-    user_dict_['kanji']['jlpt'] = {}
-    user_dict_['kanji']['joyo'] = {}
-    user_dict_['kanji']['freq'] = {}
+    user_dict_['kanji'] = create_dict_for_kanji_type()
     user_dict_['kanji']['meaning_correct'] = 0
     user_dict_['kanji']['meaning_incorrect'] = 0
     user_dict_['kanji']['reading_correct'] = 0
     user_dict_['kanji']['reading_incorrect'] = 0
     user_dict_['kanji']['total_count'] = 0
     user_dict_['kanji']['characters'] = {}
+    user_dict_['kanji']['counts'] = {}
 
-    def check_kanji_level(character_, character_lookup_dict, lookup_type, user_dict):
-        if character_['character'] in character_lookup_dict:
-            try:
-                user_dict[lookup_type].update(
-                    {character_lookup_dict[character_['character']]: user_dict[lookup_type][character_lookup_dict[
-                        character_['character']]] +
-                                                                     character_['character']})
-            except KeyError:
-                user_dict[lookup_type][character_lookup_dict[character_['character']]] = character_['character']
-
-            if user_dict[lookup_type].get(lookup_type + '_count') is not None:
-                user_dict[lookup_type][lookup_type + '_count'] += 1
-            else:
-                user_dict[lookup_type][lookup_type + '_count'] = 1
 
     user_dict_['user'] = {}
     user_dict_['user']['name'] = api_info['user_information']['username']
@@ -85,9 +102,8 @@ def get_kanji_completion(api_info, user_dict_):
     character_learned = 0
 
     for character_ in api_info['requested_information']:
-        check_kanji_level(character_, jlpt_lookup_dict, "jlpt", user_dict_['kanji'])
-        check_kanji_level(character_, joyo_lookup_dict, "joyo", user_dict_['kanji'])
-        check_kanji_level(character_, freq_lookup_dict, "freq", user_dict_['kanji'])
+        for progress, lookup_dict in zip(constant.PROGRESS_TYPES, [jlpt_lookup_dict, joyo_lookup_dict, freq_lookup_dict]):
+            check_kanji_level(character_, lookup_dict, progress, user_dict_['kanji'])
 
         if character_['user_specific'] is not None:
             user_dict_['kanji']['meaning_correct'] += character_['user_specific']['meaning_correct']
@@ -105,6 +121,9 @@ def get_kanji_completion(api_info, user_dict_):
 
         user_dict_['kanji']['characters_learned'] = character_learned
         user_dict_['kanji']['total_count'] += 1
+
+    for type in constant.PROGRESS_TYPES:
+        user_dict_['kanji'][type] = convert_to_tuple(user_dict_['kanji'][type])
     return user_dict_
 
 
@@ -301,8 +320,8 @@ if __name__ == '__main__':
     # get_user_completion_2(get_api_information("c9d088f9a75b0648b3904ebee3d8d5fa"))
 
     # logger.debug(create_offline_user_info())
-    print(get_radical_information(json.load(open('../Test/radical_static_data.json', 'r', encoding='utf-8')), dict()))
-    # print(get_kanji_completion(json.load(open('../Test/kanji_static_data.json', 'r', encoding='utf-8')), dict()))
+    #print(get_radical_information(json.load(open('../Test/radical_static_data.json', 'r', encoding='utf-8')), dict()))
+    print(get_kanji_completion(json.load(open('../Test/kanji_static_data.json', 'r', encoding='utf-8')), dict()))
     # print(get_vocab_information(json.load(open('../Test/vocab_static_data.json', 'r', encoding='utf-8')), dict()))
     # print(create_user_info('c9d088f9a75b0648b3904ebee3d8d5fa'))
     # get_api_information("c9d088f9a75b0648b3904ebee3d8d5fa", "kanji")

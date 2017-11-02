@@ -15,7 +15,7 @@
     </nav>
     <div id="jlpt">
         <ul>
-        {% for level, kanji_list in request.session.api.kanji.jlpt.items %}
+        {% for level, kanji_list in request.session.api.kanji.JLPT %}
             {% if "N" in level %}
                 <h2>JLPT Level ({{ level }})</h2>
             <!--<p>({{ values.user.user_number }}/{{ values.user.total_number }})</p>-->
@@ -28,22 +28,20 @@
     </div>
     <div id="joyo">
                 <ul>
-            {% for level, values in request.session.kanji.joyo.joyo.items %}
+            {% for level, kanji_list in request.session.api.kanji.JOYO %}
                 <h2>Joyo Level ({{ level }})</h2>
-                <p>({{ values.user.user_number }}/{{ values.user.total_number }})</p>
-                {% for kanji, rank in values.kanji.items %}
-                <li class="{{ rank }}">{{  kanji }}</li>
+                {% for kanji in kanji_list %}
+                <li class="{{ request.session.api.kanji.characters|lookup:kanji }}">{{  kanji }}</li>
                 {% endfor %}
             {% endfor %}
             </ul>
     </div>
     <div id="frequency">
                 <ul>
-            {% for level, values in request.session.kanji.frequency.frequency.items %}
+            {% for level, kanji_list in request.session.api.kanji.FREQUENCY %}
                 <h2>Frequency Level ({{ level }})</h2>
-                <p>({{ values.user.user_number }}/{{ values.user.total_number }})</p>
-                {% for kanji, rank in values.kanji.items %}
-                <li class="{{ rank }}">{{  kanji }}</li>
+                {% for kanji in kanji_list %}
+                <li class="{{ request.session.api.kanji.characters|lookup:kanji }}">{{  kanji }}</li>
                 {% endfor %}
             {% endfor %}
             </ul>
@@ -51,6 +49,7 @@
 {% endblock %}
 
 {% block unique_js %}
+{{ block.super }}
 {% load static %}
 {% load js %}
 <script type="text/javascript" >
