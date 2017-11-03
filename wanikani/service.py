@@ -67,18 +67,39 @@ def get_kanji_completion(api_info, user_dict_):
     def check_kanji_level(character_, character_lookup_dict, lookup_type, user_dict):
         if character_['character'] in character_lookup_dict:
             #sys.exit(0)
+            level = character_lookup_dict[character_['character']]
             try:
                 user_dict[lookup_type].update(
-                    OrderedDict({character_lookup_dict[character_['character']]: user_dict[lookup_type][character_lookup_dict[
+                    OrderedDict({level: user_dict[lookup_type][character_lookup_dict[
                         character_['character']]] +
                                                                      character_['character']}))
             except KeyError:
-                user_dict[lookup_type][character_lookup_dict[character_['character']]] = character_['character']
+                user_dict[lookup_type][level] = character_['character']
 
-            if user_dict['counts'].get(lookup_type + '_count') is not None:
-                user_dict['counts'][lookup_type + '_count'] += 1
+            if user_dict['counts'].get(lookup_type + '_total') is not None:
+                user_dict['counts'][lookup_type + '_total'] += 1
             else:
-                user_dict['counts'][lookup_type + '_count'] = 1
+                user_dict['counts'][lookup_type + '_total'] = 1
+
+            try:
+                if character_['user_specific']['srs'] in constant.SRS_LEARNED_LEVEL:
+                    user_dict['counts'][lookup_type][level]['learned'] += 1
+            except TypeError:
+                pass
+
+            user_dict['counts'][lookup_type][level]['total'] += 1
+
+    def create_progress_count():
+        temp = {}
+        for kanji in constant.PROGRESS_KANJI_LEVELS:
+            type = kanji.split('_')[0]
+            temp[type] = {}
+            for level in getattr(constant, kanji):
+                temp[type][level] = {}
+                temp[type][level]['total'] = 0
+                temp[type][level]['learned'] = 0
+
+        return temp
 
 
     jlpt_lookup_dict = parse_csv_file2(os.path.join(BASE_DIR, constant.JLPT_KANJI_FILE_LOCATION))
@@ -93,8 +114,7 @@ def get_kanji_completion(api_info, user_dict_):
     user_dict_['kanji']['reading_incorrect'] = 0
     user_dict_['kanji']['total_count'] = 0
     user_dict_['kanji']['characters'] = {}
-    user_dict_['kanji']['counts'] = {}
-
+    user_dict_['kanji']['counts'] = create_progress_count()
 
     user_dict_['user'] = {}
     user_dict_['user']['name'] = api_info['user_information']['username']

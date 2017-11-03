@@ -19,13 +19,13 @@ p {
 }
 
 .leftcomppanel {
-    width: 50%;
+    width: 70%;
     height: 50%;
     float:left;
 }
 
 .rightcomppanel {
-    width: 50%;
+    width: 20%;
     height: 50%;
     float:right;
 }

@@ -9,17 +9,35 @@
 </head>
 {% block content %}
     <div class="levelStats">
+        <div><p>Welcome, {{request.session.api.user.name}}!</p></div>
         <h1>Current Status</h1>
-        <div><p>Welcome, {{request.session.api.user.name}}</p></div>
-        <div id="currLevel">Current Level: </div>
-        <div id="currLevelTime">Current Level Time: </div>
-        <div>Estimated Level In: </div>
-        <div id="averTime">Average Level up: </div>
-        <div id="startTime">Start Date:</div>
-        <div id="learned">Items Learned (Guru+): </div>
+        <div id="currLevel" style="clear: both;">
+            <p class="alignleft">Current Level:</p>
+            <p class="alignright"></p>
+        </div>
+        <div id="currLevelTime" style="clear: both;">
+            <p class="alignleft">Current Level Time:</p>
+            <p class="alignright"></p>
+        </div>
+        <div id="estLevelTime" style="clear: both;">
+            <p class="alignleft">Estimated Level In: </p>
+            <p class="alignright"></p>
+        </div>
+        <div id="averTime" style="clear: both;">
+            <p class="alignleft">Average Level up: </p>
+            <p class="alignright"></p>
+        </div>
+        <div id="startTime" style="clear: both;">
+            <p class="alignleft">Start Date: </p>
+            <p class="alignright"></p>
+        </div>
+        <div id="learned" style="clear: both;">
+            <p class="alignleft">Items Learned (Guru+): </p>
+            <p class="alignright"></p>
+        </div>
     </div>
 
-    <div id="percentageChart">
+    <div style="clear: both;" id="percentageChart">
 
     </div>
 

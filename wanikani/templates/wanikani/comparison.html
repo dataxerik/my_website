@@ -5,6 +5,7 @@
 
 <!-- Having the block here doesn't seem to affect anything, without it the css is still showing up in the header -->
 {% block unique_css %}
+{{ block.super }}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'wanikani/comparison.css' %}">
 {% endblock %}
@@ -14,10 +15,9 @@
         <div class="compheader">
            <p>JLPT level Progress</p>
         </div>
-        {{ request.session.api.kanji.JLPT }}
         <div class="leftcomppanel">
-            {% for level in user_json.jlpt %}
-            <svg id="fillgauge{{ level }}" width="15%" height="75" ><text x="32.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">{{ level }}</text></svg>
+            {% for level in request.session.api.kanji.counts.JLPT %}
+            <svg id="fillgauge{{ level }}" width="15%" height="75" ><text x="25%" y="15" font-family="sans-serif" font-size="11px" fill="red">{{ level }}</text></svg>
             {% endfor %}
             <svg id="fillgaugeNTotal" width="15%" height="75" ><text x="22.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">JLPT Total</text></svg>
         </div>
@@ -30,7 +30,7 @@
             <p>Joyo</p>
         </div>
         <div class="leftcomppanel">
-            {% for level in user_json.joyo %}
+            {% for level in request.session.api.kanji.counts.JOYO %}
             <svg id="fillgauge{{ level }}" width="11%" height="75" ><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red"> {{ level }}</text></svg>
             {% endfor %}
             <svg id="fillgauge13" width="11%" height="75" ><text x="25%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo Total</text></svg>
@@ -44,7 +44,7 @@
         <p>Frequency</p>
         </div>
         <div class="leftcomppanel">
-            {% for level in user_json.frequency %}
+            {% for level in request.session.api.kanji.counts.FREQUENCY %}
             <svg id="fillgauge{{ level }}" width="15%" height="75" ><text x="20%" y="15" font-family="sans-serif" font-size="11px" fill="red">{{ level }}</text></svg>
             {% endfor %}
             <svg id="fillgaugefreqtotal" width="15%" height="75" ><text x="15%" y="15" font-family="sans-serif" font-size="11px" fill="red">Frequency Total</text></svg>
@@ -55,39 +55,39 @@
     </div>
 {% endblock %}
 {% block unique_js %}
+    {{ block.super }}
     {% load js %}
     {% load static %}
     <script type="text/javascript">
-        var userJsonVar = {{ user_json | js }};
-        console.log(userJsonVar.jlpt.N5.total_number);
-        console.log(userJsonVar.jlpt.N5.user_number);
+        var userJsonVar = {{ request.session.api.kanji.counts | js }};
         console.log(userJsonVar)
-
         var joyoTotal = 0;
         var userJoyoTotal = 0;
-        for(var level in userJsonVar.joyo) {
-            userJoyoTotal += userJsonVar.joyo[level].user_number;
-            joyoTotal += userJsonVar.joyo[level].total_number;
+        for(var level in userJsonVar.JOYO) {
+            userJoyoTotal += userJsonVar.JOYO[level].learned;
+            joyoTotal += userJsonVar.JOYO[level].total;
         }
+
+        console.log(userJoyoTotal, joyoTotal)
 
         var jlptTotal = 0;
         var userJlptTotal = 0;
-        for(var level in userJsonVar.jlpt) {
-            userJlptTotal += userJsonVar.jlpt[level].user_number;
-            jlptTotal += userJsonVar.jlpt[level].total_number;
+        for(var level in userJsonVar.JLPT) {
+            userJlptTotal += userJsonVar.JLPT[level].learned;
+            jlptTotal += userJsonVar.JLPT[level].total;
         }
 
         var frequencyTotal = 0;
         var userFrequencyTotal = 0;
-        for(var level in userJsonVar.frequency) {
-            userFrequencyTotal += userJsonVar.frequency[level].user_number;
-            frequencyTotal += userJsonVar.frequency[level].total_number;
+        for(var level in userJsonVar.FREQUENCY) {
+            userFrequencyTotal += userJsonVar.FREQUENCY[level].learned;
+            frequencyTotal += userJsonVar.FREQUENCY[level].total;
         }
     </script>
     <script src="{% static 'wanikani/liquidFillGauge.js' %}"></script>
 
     <script type="text/JavaScript">
-        for (var level in userJsonVar.jlpt) {
+        for (var level in userJsonVar.JLPT) {
             var config = liquidFillGaugeDefaultSettings();
             config.circleColor = "#FF7777";
             config.textColor = "#FF4444";
@@ -97,8 +97,8 @@
             config.circleThickness = 0.2;
             //config.textVertPosition = 0.2;
             config.waveAnimateTime = 2000;
-            config.maxValue = userJsonVar.jlpt[level].total_number;
-            var gauge5 = loadLiquidFillGauge("fillgauge" + level, userJsonVar.jlpt[level].user_number, config);
+            config.maxValue = userJsonVar.JLPT[level].total;
+            var gauge5 = loadLiquidFillGauge("fillgauge" + level, userJsonVar.JLPT[level].learned, config);
         }
         var config12 = liquidFillGaugeDefaultSettings();
         config12.circleColor = "#FF7777";
@@ -112,7 +112,7 @@
         config12.maxValue = jlptTotal;
         var gauge12 = loadLiquidFillGauge("fillgaugeNTotal", userJlptTotal, config12);
 
-        for (level in userJsonVar.joyo) {
+        for (level in userJsonVar.JOYO) {
             var config11 = liquidFillGaugeDefaultSettings();
             config11.circleColor = "#FF7777";
             config11.textColor = "#FF4444";
@@ -122,8 +122,8 @@
             config11.circleThickness = 0.2;
             //config11.textVertPosition = 0.2;
             config11.waveAnimateTime = 2000;
-            config11.maxValue = userJsonVar.joyo[level].total_number;
-            var gauge11 = loadLiquidFillGauge("fillgauge" + level, userJsonVar.joyo[level].user_number, config11);
+            config11.maxValue = userJsonVar.JOYO[level].total;
+            var gauge11 = loadLiquidFillGauge("fillgauge" + level, userJsonVar.JOYO[level].learned, config11);
         }
 
         var config13 = liquidFillGaugeDefaultSettings();
@@ -138,7 +138,7 @@
         config13.maxValue = joyoTotal;
         var gauge13 = loadLiquidFillGauge("fillgauge13", userJoyoTotal, config13);
 
-        for (level in userJsonVar.frequency) {
+        for (level in userJsonVar.FREQUENCY) {
             var configFreq1 = liquidFillGaugeDefaultSettings();
             configFreq1.circleColor = "#FF7777";
             configFreq1.textColor = "#FF4444";
@@ -148,8 +148,8 @@
             configFreq1.circleThickness = 0.2;
             //config12.textVertPosition = 0.2;
             configFreq1.waveAnimateTime = 2000;
-            configFreq1.maxValue = userJsonVar.frequency[level].total_number;
-            var gaugeFreq1 = loadLiquidFillGauge("fillgauge" + level, userJsonVar.frequency[level].user_number, configFreq1);
+            configFreq1.maxValue = userJsonVar.FREQUENCY[level].total;
+            var gaugeFreq1 = loadLiquidFillGauge("fillgauge" + level, userJsonVar.FREQUENCY[level].learned, configFreq1);
         }
 
         var configFreqtotal = liquidFillGaugeDefaultSettings();
@@ -163,5 +163,6 @@
         configFreqtotal.waveAnimateTime = 2000;
         configFreqtotal.maxValue = frequencyTotal;
         var gaugeFreqtotal = loadLiquidFillGauge("fillgaugefreqtotal", userFrequencyTotal, configFreqtotal);
+
      </script>
 {% endblock %}

@@ -6,7 +6,7 @@
 .levelStats {
     width: 50%;
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
 }
 
 #percentageChart {
@@ -89,4 +89,21 @@ body {
 
 .removed {
     fill: gray;
+}
+
+div span {
+    color: #f100a1;
+    font-weight: bold;
+    text-align: right;
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
+
+h1 {
+    text-align: center
 }

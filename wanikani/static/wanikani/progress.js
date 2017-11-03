@@ -62,17 +62,17 @@ function createPercentageTable(dataObj) {
     var table_ = $("<table></table>");
     table_.append("<tr><th></th><th>Reading</th><th>Meaning</th><th>Average/Sum</th></tr>");
     table_.append("<tr>" +
-                                    "<td>Correct</td>" +
+                                    "<td>Radical</td>" +
                                     "<td></td>" +
                                     "<td>" + dataObj.radicalMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.radicalAveragePercentage + "</td></tr>");
     table_.append("<tr>" +
-                                    "<td>Incorrect</td>" +
+                                    "<td>Kanji</td>" +
                                     "<td>" + dataObj.kanjiReadingPercentage + "</td>" +
                                     "<td>" + dataObj.kanjiMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.kanjiAveragePercentage + "</td></tr>");
     table_.append("<tr>" +
-                                    "<td>Accuracy</td>" +
+                                    "<td>Vocabulary</td>" +
                                     "<td>" + dataObj.vocabReadingPercentage + "</td>" +
                                     "<td>" + dataObj.vocabMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.vocabAveragePercentage + "</td></tr>");
@@ -217,7 +217,7 @@ function getLearnedCharacters(characterList) {
     kanjiLearned = characterList.kanji.characters_learned;
     radicalLearned = characterList.radical.characters_learned;
     vocabLearned = characterList.vocab.characters_learned;
-   $("#learned").append("<span>" + radicalLearned + "部首 " + kanjiLearned + "漢字 "  + vocabLearned　+ "単語</span>")
+   $("#learned .alignright").append("<span>" + radicalLearned + "部首 " + kanjiLearned + "漢字 "  + vocabLearned　+ "単語</span>")
 }
 
 function calculateEstimation(cTime, aTime) {
@@ -288,11 +288,11 @@ function updateAverages(time_) {
     orderedKeys = Object.keys(js_list.unlock.timespent).sort(function(a, b) { return a.split("_")[0] - b.split("_")[0] } )
     temp = js_list.unlock.average;
     date = temp.split(" ")[0] + "日" + temp.split(" ")[2].split(":")[0] + "時" + temp.split(" ")[2].split(":")[1] + "分";
-    $("#currLevelTime").append("<span>" + unlockData[orderedKeys.length-1].date + "</span>")
-    $("#currLevel").append("<span>" + js_list.user.level + "</span>")
-    $("#averTime").append("<span>" + date + "</span>");
-    $("#startTime").append("<span>" + unlockData[0].date + "</span");
-    $("#averageLevel").text("Average Time: " + date);
+    $("#currLevelTime .alignright").append("<span>" + unlockData[orderedKeys.length-1].date + "</span>")
+    $("#currLevel .alignright").append("<span>" + js_list.user.level + "</span>")
+    $("#averTime .alignright").append("<span>" + date + "</span>");
+    $("#startTime .alignright").append("<span>" + unlockData[0].date + "</span");
+    $("#averageLevel .alignright").text("Average Time: " + date);
 
 	curTime = js_list.unlock.date[orderedKeys.length];
 	avgTime = js_list.unlock.average;
