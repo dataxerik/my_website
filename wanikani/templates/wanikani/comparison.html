@@ -16,7 +16,7 @@
            <p>JLPT level Progress</p>
         </div>
         <div class="leftcomppanel">
-            {% for level in request.session.api.kanji.counts.JLPT %}
+            {% for level, _ in request.session.api.kanji.JLPT %}
             <svg id="fillgauge{{ level }}" width="15%" height="75" ><text x="25%" y="15" font-family="sans-serif" font-size="11px" fill="red">{{ level }}</text></svg>
             {% endfor %}
             <svg id="fillgaugeNTotal" width="15%" height="75" ><text x="22.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">JLPT Total</text></svg>
@@ -30,7 +30,7 @@
             <p>Joyo</p>
         </div>
         <div class="leftcomppanel">
-            {% for level in request.session.api.kanji.counts.JOYO %}
+            {% for level, _ in request.session.api.kanji.JOYO %}
             <svg id="fillgauge{{ level }}" width="11%" height="75" ><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red"> {{ level }}</text></svg>
             {% endfor %}
             <svg id="fillgauge13" width="11%" height="75" ><text x="25%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo Total</text></svg>
@@ -44,7 +44,7 @@
         <p>Frequency</p>
         </div>
         <div class="leftcomppanel">
-            {% for level in request.session.api.kanji.counts.FREQUENCY %}
+            {% for level, _ in request.session.api.kanji.FREQUENCY %}
             <svg id="fillgauge{{ level }}" width="15%" height="75" ><text x="20%" y="15" font-family="sans-serif" font-size="11px" fill="red">{{ level }}</text></svg>
             {% endfor %}
             <svg id="fillgaugefreqtotal" width="15%" height="75" ><text x="15%" y="15" font-family="sans-serif" font-size="11px" fill="red">Frequency Total</text></svg>
