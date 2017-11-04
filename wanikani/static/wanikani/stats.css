@@ -6,7 +6,8 @@
 .levelStats {
     width: 50%;
     margin: 0 auto;
-    text-align: left;
+    font-weight: 700;
+    //text-align: left;
 }
 
 #percentageChart {
@@ -17,17 +18,27 @@
 }
 
 #percentageChart table {
+    background-color: #D5D5D5;
     width: 50%;
     margin: 0 auto;
+    border-radius:4px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 #percentageChart table, th, td {
-    border: 1px solid black;
+    //border: 1px solid black;
     border-collapse: collapse;
+    padding: 10px
 }
 th, td {
     padding: 5px;
     text-align: center;
+    border-style: none;
+}
+
+th {
+    font-size: 20px;
 }
 
 svg {
@@ -72,7 +83,7 @@ svg {
 }
 
 body {
-    background-color: pink;
+    background-color: #EFEFEF;
 }
 
 #slowest {
@@ -106,4 +117,23 @@ div span {
 
 h1 {
     text-align: center
+}
+
+#radicalCol {
+    color: #0093DD;
+    font-weight:bold
+}
+
+#kanjiCol {
+    color: #FF36BC;
+    font-weight:bold
+}
+
+#vocabCol{
+    color: #9300DD;
+    font-weight:bold
+}
+
+.headerCol{
+    font-weight:bold
 }

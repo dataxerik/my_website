@@ -62,33 +62,33 @@ function createPercentageTable(dataObj) {
     var table_ = $("<table></table>");
     table_.append("<tr><th></th><th>Reading</th><th>Meaning</th><th>Average/Sum</th></tr>");
     table_.append("<tr>" +
-                                    "<td>Radical</td>" +
+                                    "<td id='radicalCol'>Radical</td>" +
                                     "<td></td>" +
                                     "<td>" + dataObj.radicalMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.radicalAveragePercentage + "</td></tr>");
     table_.append("<tr>" +
-                                    "<td>Kanji</td>" +
+                                    "<td id='kanjiCol'>Kanji</td>" +
                                     "<td>" + dataObj.kanjiReadingPercentage + "</td>" +
                                     "<td>" + dataObj.kanjiMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.kanjiAveragePercentage + "</td></tr>");
     table_.append("<tr>" +
-                                    "<td>Vocabulary</td>" +
+                                    "<td id='vocabCol'>Vocabulary</td>" +
                                     "<td>" + dataObj.vocabReadingPercentage + "</td>" +
                                     "<td>" + dataObj.vocabMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.vocabAveragePercentage + "</td></tr>");
-    table_.append("<tr><td colspan=\"4\">Overall</td></tr>");
+    table_.append("<tr><th colspan=\"4\">Overall</th></tr>");
     table_.append("<tr>" +
-                                    "<td>Correct</td>" +
+                                    "<td class='headerCol'>Correct</td>" +
                                     "<td>" + dataObj.totalReadingCorrect + "</td>" +
                                     "<td>" + dataObj.totalMeaningCorrect + "</td>" +
                                     "<td>" + dataObj.totalCorrect + "</td></tr>");
     table_.append("<tr>" +
-                                    "<td>Incorrect</td>" +
+                                    "<td class='headerCol'>Incorrect</td>" +
                                     "<td>" + dataObj.totalReadingIncorrect + "</td>" +
                                     "<td>" + dataObj.totalMeaningIncorrect + "</td>" +
                                     "<td>" + dataObj.totalIncorrect + "</td></tr>");
     table_.append("<tr>" +
-                                    "<td>Accuracy</td>" +
+                                    "<td class='headerCol'>Accuracy</td>" +
                                     "<td>" + dataObj.totalReadingPercentage + "</td>" +
                                     "<td>" + dataObj.totalMeaningPercentage + "</td>" +
                                     "<td>" + dataObj.totalPercentage + "</td></tr>");
