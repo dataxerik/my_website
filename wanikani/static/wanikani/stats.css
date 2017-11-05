@@ -51,7 +51,7 @@ svg {
     padding: 3px;
 }
 
-.bar:hover, #Fastest:hover{
+.slowLevel:hover, .fastLevel:hover{
     fill: #434343;
 }
 

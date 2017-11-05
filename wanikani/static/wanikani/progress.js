@@ -136,8 +136,12 @@ function createTimespentGraph(unlockData) {
 	//Creating svg element
     var svg = d3.select('svg'),
     margin = {top: 60, right: 20, bottom: 45, left: 60},
-    width = +svg.attr("width") - margin.left - margin.right,
+    width = +svg.attr("width") - margin.left - margin.right;
+    console.log(width)
     height = +svg.attr("height") - margin.top - margin.bottom;
+
+    $("#levelCompletionTitle").attr("transform", "translate(" + (width/2) + ",20)")
+                              .attr("text-anchor", "middle");
 
 	//Creating domain and range for x and y axis
     var x = d3.scaleBand().rangeRound([0, width]).padding(.1);
@@ -193,6 +197,10 @@ function createTimespentGraph(unlockData) {
         .data(unlockData).enter()
         .append("text");
 
+    g.append("text").attr("transform", "translate("+ (width/2) +","+(height+(margin.bottom))+")")
+                .attr("text-anchor", "middle")
+                .text("WaniKani Level");
+
 	var textLabels = text
 	    .attr("x", function(d) { return x(d.level); })
 		.attr("y", function(d) { return ((y(d.time) > 270 || y(d.time) < 20) ? 250 : y(d.time)); })
@@ -217,7 +225,7 @@ function getLearnedCharacters(characterList) {
     kanjiLearned = characterList.kanji.characters_learned;
     radicalLearned = characterList.radical.characters_learned;
     vocabLearned = characterList.vocab.characters_learned;
-   $("#learned .alignright").append("<span>" + radicalLearned + "部首 " + kanjiLearned + "漢字 "  + vocabLearned　+ "単語</span>")
+   $("#learned .alignright").append("<span id='radicalCol'>" + radicalLearned + "部首</span> <span id='kanjiCol'>" + kanjiLearned + "漢字</span> <span id='vocabCol'>"  + vocabLearned　+ "単語</span>")
 }
 
 function calculateEstimation(cTime, aTime) {
@@ -261,8 +269,7 @@ function updateAverages(time_) {
         console.log('updating average ' + i + " " + time_)
 
         if (i == 0) {
-            console.log("first 0")
-            $(class_).text("Average Time: " + time_);
+            $(class_[i]).text("Average Time: " + time_);
         }
         else if (! $(class_[i] + " span").length) {
             $(class_[i]).append("<span>" + time_ + "</span>");
@@ -292,7 +299,7 @@ function updateAverages(time_) {
     $("#currLevel .alignright").append("<span>" + js_list.user.level + "</span>")
     $("#averTime .alignright").append("<span>" + date + "</span>");
     $("#startTime .alignright").append("<span>" + js_list.unlock.start_date + "</span");
-    $("#averageLevel .alignright").text("Average Time: " + date);
+    $("#averageLevel").text("Average Time: " + date);
 
 	curTime = js_list.unlock.date[orderedKeys.length];
 	avgTime = js_list.unlock.average;
