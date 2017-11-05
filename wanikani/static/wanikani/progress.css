@@ -3,16 +3,16 @@
 }
 
 .submenu {
-    /*background-color: red;*/
     position: fixed;
+    width: 20%;
 }
 
 p {
-    color: red;
+    color: #294ddb;
     margin: 0 auto;
 }
 
-#frequency ul li {
+.frequency ul li {
     border-radius: 4px;
     box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset, 0 0 10px rgba(255, 255, 255, 0.5);
     cursor: pointer;
@@ -22,7 +22,7 @@ p {
     color: white
 }
 
-#joyo ul li {
+.joyo ul li {
     border-radius: 4px;
     box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset, 0 0 10px rgba(255, 255, 255, 0.5);
     cursor: pointer;
@@ -32,12 +32,21 @@ p {
     color: white
 }
 
-#jlpt, #joyo, #frequency {
-    padding-top: 140px;
+.jlpt, .joyo, .frequency {
+    //padding-top: 10%;
+    float: right;
+    width: 80%
 
 }
 
-#jlpt ul li {
+.anchor{
+  display: block;
+  height: 115px; /*same height as header*/
+  margin-top: -115px; /*same height as header*/
+  visibility: hidden;
+}
+
+.jlpt ul li {
     border-radius: 4px;
     box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2) inset, 0 0 10px rgba(255, 255, 255, 0.5);
     cursor: pointer;

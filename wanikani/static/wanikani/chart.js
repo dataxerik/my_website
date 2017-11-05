@@ -1,22 +1,20 @@
 $(document).ready(function() {
-    $("nav#submenu a").click(function(){
-        selectedId = $(this).attr('href')
-        $("nav#submenu a").each(function(i){
-            //console.log($(this).attr('href'))
-            if (selectedId !== $(this).attr('href')) {
-                $($(this).attr('href')).attr('class', 'hide');
+    $("nav.submenu a").click(function(){
+        selectedId = $(this).attr('href').replace('#', '')
+        $(".section").each(function(i){
+            if (selectedId !== $(this).attr('class').split(' ')[0]) {
+                $(this).addClass('hide');
             } else {
-                $($(this).attr('href')).removeAttr('class', 'hide');
+                $(this).removeClass('hide');
             }
         });
     });
     if ($(".hide")) {
-        $("nav#submenu a").each(function(i){
-            //console.log($(this).attr('href'))
-            if ($(this).attr('href') !== "#jlpt") {
-                $($(this).attr('href')).attr('class', 'hide');
+        $(".section").each(function(i){
+            if ($(this).attr('class').split(' ')[0] !== "jlpt") {
+                $(this).addClass('hide');
             } else {
-                $($(this).attr('href')).removeAttr('class', 'hide');
+                $(this).removeClass('hide');
             }
         });
     }

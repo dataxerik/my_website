@@ -174,7 +174,7 @@ function createTimespentGraph(unlockData) {
 		//.attr("fill", "white")
 		//.append("span")
 		.attr("class", "timeData")
-        .text("Time Spent (Days)");
+        .text("Time Spent in Days");
 
 	//For each data, i select a non-existent .bar element and go enter the data and append a rectangle element to g eleemnt
     var bar = g.selectAll(".bar")
@@ -195,7 +195,7 @@ function createTimespentGraph(unlockData) {
 
 	var textLabels = text
 	    .attr("x", function(d) { return x(d.level); })
-		.attr("y", function(d) { return (y(d.time) > 270 ? 250 : y(d.time)); })
+		.attr("y", function(d) { return ((y(d.time) > 270 || y(d.time) < 20) ? 250 : y(d.time)); })
 		.attr("writing-mode", "tb-rl")
 		.attr("dy", ".35em")
 		.attr("dx", ".85em")
@@ -291,7 +291,7 @@ function updateAverages(time_) {
     $("#currLevelTime .alignright").append("<span>" + unlockData[orderedKeys.length-1].date + "</span>")
     $("#currLevel .alignright").append("<span>" + js_list.user.level + "</span>")
     $("#averTime .alignright").append("<span>" + date + "</span>");
-    $("#startTime .alignright").append("<span>" + unlockData[0].date + "</span");
+    $("#startTime .alignright").append("<span>" + js_list.unlock.start_date + "</span");
     $("#averageLevel .alignright").text("Average Time: " + date);
 
 	curTime = js_list.unlock.date[orderedKeys.length];

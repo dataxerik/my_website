@@ -52,7 +52,7 @@ svg {
 }
 
 .bar:hover, #Fastest:hover{
-    fill: brown;
+    fill: #434343;
 }
 
 .axis--x path {
@@ -63,23 +63,25 @@ svg {
 .date-text {
     text-orientation: upright;
     text-anchor: middle;
-    text-shadow: black 0.15em 0.15em 0.15em;
-    fill: white;
+    text-shadow: black 0.05em 0.01em 0em;
+    fill: #93dd00;
 }
 
 .timeData{
     -webkit-writing-mode: vertical-lr;
     writing-mode: vertical-lr;
     text-orientation: upright;
-    fill: white;
+    fill: #555;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 .fastLevel{
-    fill: red;
+    fill: #294ddb;
 }
 
 .slowLevel {
-    fill:purple;
+    fill: #dd0093;
 }
 
 body {
@@ -87,11 +89,11 @@ body {
 }
 
 #slowest {
-    fill: blue;
+    fill: #dd0093;
 }
 
 .fastest {
-    fill: black
+    fill: #0093dd
 }
 
 .current {
@@ -99,7 +101,7 @@ body {
 }
 
 .removed {
-    fill: gray;
+    fill: #434343;
 }
 
 div span {
@@ -136,4 +138,8 @@ h1 {
 
 .headerCol{
     font-weight:bold
+}
+
+.tick {
+    font-weight: 600;
 }

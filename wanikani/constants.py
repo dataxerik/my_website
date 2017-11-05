@@ -8,9 +8,9 @@ JLPT_KANJI_FILE_LOCATION = 'wanikani\static\wanikani\jlpt\jlpt.txt'
 
 JLPT_KANJI_LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1']
 
-JOYO_KANJI_LEVELS = ['G6', 'G5', 'G4', 'G3', 'G2', 'G1', 'GS']
+JOYO_KANJI_LEVELS = ['G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'GS']
 
-FREQUENCY_KANJI_LEVELS = ['F5', 'F4', 'F3', 'F2', 'F1']
+FREQUENCY_KANJI_LEVELS = ['F1', 'F2', 'F3', 'F4', 'F5']
 
 PROGRESS_KANJI_LEVELS = ['JLPT_KANJI_LEVELS', 'JOYO_KANJI_LEVELS', 'FREQUENCY_KANJI_LEVELS']
 

@@ -51,6 +51,7 @@
 {% load js %}
 <script type="text/javascript" >
 var js_list = {{ request.session.api|js }};
+console.log(js_list)
 </script>
 <script src="{% static 'wanikani/progress.js' %}"></script>
 <script>

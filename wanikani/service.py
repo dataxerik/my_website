@@ -190,6 +190,11 @@ def get_radical_information(api_info, user_dict_):
     unlock_dic['date'] = dict()
     character_learned = 0
 
+    start_date = datetime.datetime.fromtimestamp(api_info['user_information']['creation_date'])
+    start_date = start_date.strftime('%Y-%m-%d %H:%M:%S') + \
+                    " (" + str((datetime.datetime.now() - start_date).days) + " days ago)"
+    user_dict_['unlock']['start_date'] = start_date
+
     def get_user_unlock_time(levels_):
         user_dict_['unlock']['timespent'] = {}
         print("user unlock time")

@@ -6,45 +6,57 @@
     <link rel="stylesheet" type="text/css" href="{% static 'wanikani/progress.css' %}">
 {% endblock %}
 {% block content %}
-    <nav class="submenu">
-            <ul class="nav navbar-nav navbar-left">
-        <li><a href="#jlpt">JLPT</a></li>
-        <li><a href="#joyo">Joyo</a></li>
-        <li><a href="#frequency">Frequency</a></li>
+    <!--<div style="display:inline-block">-->
+        <nav class="submenu">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="#jlpt">JLPT</a></li>
+                <li><a href="#joyo">Joyo</a></li>
+                <li><a href="#frequency">Frequency</a></li>
             </ul>
-    </nav>
-    <div id="jlpt">
+        </nav>
+    <!--</div>-->
+    <span class="anchor" id="jlpt"></span>
+    <div class='jlpt section'>
         <ul>
-        {% for level, kanji_list in request.session.api.kanji.JLPT %}
-            {% if "N" in level %}
-                <h2>JLPT Level ({{ level }})</h2>
+            {% for level, kanji_list in request.session.api.kanji.JLPT %}
+                <h2>JLPT Level {{ level }}
+                    ({{ request.session.api.kanji.counts.JLPT|lookup:level|lookup:'learned' }}/
+                    {{ request.session.api.kanji.counts.JLPT|lookup:level|lookup:'total' }})
+                </h2>
             <!--<p>({{ values.user.user_number }}/{{ values.user.total_number }})</p>-->
                 {% for kanji in kanji_list %}
-                <li class="{{ request.session.api.kanji.characters|lookup:kanji }}">{{  kanji }}</li>
+                    <li class="{{ request.session.api.kanji.characters|lookup:kanji }}">{{  kanji }}</li>
                 {% endfor %}
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
         </ul>
     </div>
-    <div id="joyo">
-                <ul>
+    <span class="anchor" id="joyo"></span>
+    <div class="joyo section">
+        <ul>
             {% for level, kanji_list in request.session.api.kanji.JOYO %}
-                <h2>Joyo Level ({{ level }})</h2>
+                <h2>Joyo Level {{ level }}
+                    ({{ request.session.api.kanji.counts.JOYO|lookup:level|lookup:'learned' }}/
+                    {{ request.session.api.kanji.counts.JOYO|lookup:level|lookup:'total' }})
+                </h2>
                 {% for kanji in kanji_list %}
-                <li class="{{ request.session.api.kanji.characters|lookup:kanji }}">{{  kanji }}</li>
+                    <li class="{{ request.session.api.kanji.characters|lookup:kanji }}">{{  kanji }}</li>
                 {% endfor %}
             {% endfor %}
-            </ul>
+        </ul>
     </div>
-    <div id="frequency">
-                <ul>
+    <span class="anchor" id="frequency"></span>
+    <div class="frequency section">
+        <ul>
             {% for level, kanji_list in request.session.api.kanji.FREQUENCY %}
-                <h2>Frequency Level ({{ level }})</h2>
+                <h2>Frequency Level {{ level }}
+                    ({{ request.session.api.kanji.counts.FREQUENCY|lookup:level|lookup:'learned' }}/
+                    {{ request.session.api.kanji.counts.FREQUENCY|lookup:level|lookup:'total' }})
+                </h2>
                 {% for kanji in kanji_list %}
-                <li class="{{ request.session.api.kanji.characters|lookup:kanji }}">{{  kanji }}</li>
+                    <li class="{{ request.session.api.kanji.characters|lookup:kanji }}">{{  kanji }}</li>
                 {% endfor %}
             {% endfor %}
-            </ul>
+        </ul>
     </div>
 {% endblock %}
 

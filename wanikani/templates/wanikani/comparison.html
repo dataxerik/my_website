@@ -17,9 +17,9 @@
         </div>
         <div class="leftcomppanel">
             {% for level, _ in request.session.api.kanji.JLPT %}
-            <svg id="fillgauge{{ level }}" width="15%" height="75" ><text x="25%" y="15" font-family="sans-serif" font-size="11px" fill="red">{{ level }}</text></svg>
+            <svg id="fillgauge{{ level }}" width="15%" height="75" ></svg>
             {% endfor %}
-            <svg id="fillgaugeNTotal" width="15%" height="75" ><text x="22.5%" y="15" font-family="sans-serif" font-size="11px" fill="red">JLPT Total</text></svg>
+            <svg id="fillgaugeNTotal" width="15%" height="75" ></svg>
         </div>
         <div class="rightcomppanel">
             <p>This section is for the JLPT completion</p>
@@ -31,9 +31,9 @@
         </div>
         <div class="leftcomppanel">
             {% for level, _ in request.session.api.kanji.JOYO %}
-            <svg id="fillgauge{{ level }}" width="11%" height="75" ><text x="30%" y="15" font-family="sans-serif" font-size="11px" fill="red"> {{ level }}</text></svg>
+            <svg id="fillgauge{{ level }}" width="11%" height="75" ></svg>
             {% endfor %}
-            <svg id="fillgauge13" width="11%" height="75" ><text x="25%" y="15" font-family="sans-serif" font-size="11px" fill="red">Joyo Total</text></svg>
+            <svg id="fillgauge13" width="11%" height="75" ></svg>
         </div>
         <div class="rightcomppanel">
             <p>This section is for the Joyo completion</p>
@@ -45,9 +45,9 @@
         </div>
         <div class="leftcomppanel">
             {% for level, _ in request.session.api.kanji.FREQUENCY %}
-            <svg id="fillgauge{{ level }}" width="15%" height="75" ><text x="20%" y="15" font-family="sans-serif" font-size="11px" fill="red">{{ level }}</text></svg>
+            <svg id="fillgauge{{ level }}" width="15%" height="75" ></svg>
             {% endfor %}
-            <svg id="fillgaugefreqtotal" width="15%" height="75" ><text x="15%" y="15" font-family="sans-serif" font-size="11px" fill="red">Frequency Total</text></svg>
+            <svg id="fillgaugefreqtotal" width="15%" height="75" ></svg>
         </div>
         <div class="rightcomppanel">
             <p>This section is for the Frequency completion</p>
@@ -87,39 +87,75 @@
     <script src="{% static 'wanikani/liquidFillGauge.js' %}"></script>
 
     <script type="text/JavaScript">
+
+        function setWaveColor(level) {
+            var textColor, waveColor;
+
+            if(level <= .25){
+                waveColor = "#dd0093";
+                textColor = "#dd2500";
+            } else if(level <= .5) {
+                waveColor = "#882d9e";
+                textColor = "#9e2d44";
+            } else if(level <= .75) {
+                waveColor = "#0093dd";
+                textColor = "#9300dd";
+            } else if(level <= .98) {
+                waveColor = "#294ddb";
+                textColor = "#c929db";
+            } else {
+                waveColor = "#434343";
+                textColor = "#fff";
+            }
+
+            return [textColor, waveColor]
+        }
+
+
         for (var level in userJsonVar.JLPT) {
+            learnedPercentage = userJsonVar.JLPT[level].learned / userJsonVar.JLPT[level].total;
+            var t = setWaveColor(learnedPercentage);
             var config = liquidFillGaugeDefaultSettings();
-            config.circleColor = "#FF7777";
-            config.textColor = "#FF4444";
+            config.circleColor = t[1];
+            config.textColor = t[0];
             config.textSize = .75;
-            config.waveTextColor = "#FFAAAA";
-            config.waveColor = "#FFDDDD";
+            config.waveTextColor = t[0];
+            config.waveColor = t[1];
             config.circleThickness = 0.2;
+            config.level = level;
             //config.textVertPosition = 0.2;
             config.waveAnimateTime = 2000;
             config.maxValue = userJsonVar.JLPT[level].total;
             var gauge5 = loadLiquidFillGauge("fillgauge" + level, userJsonVar.JLPT[level].learned, config);
         }
+
+
         var config12 = liquidFillGaugeDefaultSettings();
-        config12.circleColor = "#FF7777";
-        config12.textColor = "#FF4444";
+        learnedPercentage = userJlptTotal / jlptTotal;
+        t = setWaveColor(learnedPercentage);
+        config12.circleColor = t[1];
+        config12.textColor = t[0];
         config12.textSize = .75;
-        config12.waveTextColor = "#FFAAAA";
-        config12.waveColor = "#FFDDDD";
+        config12.waveTextColor = t[0];
+        config12.waveColor = t[1];
         config12.circleThickness = 0.2;
+        config12.level = 'Total';
         //config12.textVertPosition = 0.2;
         config12.waveAnimateTime = 2000;
         config12.maxValue = jlptTotal;
         var gauge12 = loadLiquidFillGauge("fillgaugeNTotal", userJlptTotal, config12);
 
         for (level in userJsonVar.JOYO) {
+            learnedPercentage = userJsonVar.JOYO[level].learned / userJsonVar.JOYO[level].total;
             var config11 = liquidFillGaugeDefaultSettings();
-            config11.circleColor = "#FF7777";
-            config11.textColor = "#FF4444";
+            var t = setWaveColor(learnedPercentage);
+            config11.circleColor = t[1];
+            config11.textColor = t[0];
             config11.textSize = .75;
-            config11.waveTextColor = "#FFAAAA";
-            config11.waveColor = "#FFDDDD";
+            config11.waveTextColor = t[0];
+            config11.waveColor = t[1];
             config11.circleThickness = 0.2;
+            config11.level = level;
             //config11.textVertPosition = 0.2;
             config11.waveAnimateTime = 2000;
             config11.maxValue = userJsonVar.JOYO[level].total;
@@ -127,25 +163,31 @@
         }
 
         var config13 = liquidFillGaugeDefaultSettings();
-        config13.circleColor = "#FF7777";
-        config13.textColor = "#FF4444";
+        learnedPercentage = userJoyoTotal / joyoTotal;
+        var t = setWaveColor(learnedPercentage);
+        config13.circleColor = t[1];
+        config13.textColor = t[0];
         config13.textSize = .75;
-        config13.waveTextColor = "#FFAAAA";
-        config13.waveColor = "#FFDDDD";
+        config13.waveTextColor = t[0];
+        config13.waveColor = t[1];
         config13.circleThickness = 0.2;
+        config13.level = 'Total';
         //config12.textVertPosition = 0.2;
         config13.waveAnimateTime = 2000;
         config13.maxValue = joyoTotal;
         var gauge13 = loadLiquidFillGauge("fillgauge13", userJoyoTotal, config13);
 
         for (level in userJsonVar.FREQUENCY) {
+            learnedPercentage = userJsonVar.FREQUENCY[level].learned / userJsonVar.FREQUENCY[level].total;
             var configFreq1 = liquidFillGaugeDefaultSettings();
-            configFreq1.circleColor = "#FF7777";
-            configFreq1.textColor = "#FF4444";
+            var t = setWaveColor(learnedPercentage);
+            configFreq1.circleColor = t[1];
+            configFreq1.textColor = t[0];
             configFreq1.textSize = .75;
-            configFreq1.waveTextColor = "#FFAAAA";
-            configFreq1.waveColor = "#FFDDDD";
+            configFreq1.waveTextColor = t[0];
+            configFreq1.waveColor = t[1];
             configFreq1.circleThickness = 0.2;
+            configFreq1.level = level;
             //config12.textVertPosition = 0.2;
             configFreq1.waveAnimateTime = 2000;
             configFreq1.maxValue = userJsonVar.FREQUENCY[level].total;
@@ -153,12 +195,15 @@
         }
 
         var configFreqtotal = liquidFillGaugeDefaultSettings();
-        configFreqtotal.circleColor = "#FF7777";
-        configFreqtotal.textColor = "#FF4444";
+        learnedPercentage = userFrequencyTotal / frequencyTotal;
+        var t = setWaveColor(learnedPercentage);
+        configFreqtotal.circleColor = t[1];
+        configFreqtotal.textColor = t[0];
         configFreqtotal.textSize = .75;
-        configFreqtotal.waveTextColor = "#FFAAAA";
-        configFreqtotal.waveColor = "#FFDDDD";
+        configFreqtotal.waveTextColor = t[0];
+        configFreqtotal.waveColor = t[1];
         configFreqtotal.circleThickness = 0.2;
+        configFreqtotal.level = 'Total';
         //configtotal2.textVertPosition = 0.2;
         configFreqtotal.waveAnimateTime = 2000;
         configFreqtotal.maxValue = frequencyTotal;

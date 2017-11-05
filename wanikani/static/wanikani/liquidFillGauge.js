@@ -19,7 +19,8 @@ function liquidFillGaugeDefaultSettings() {
         valueCountUp: true, // if true, the display value counts from 0 to its final value upon loading.
         displayPercent: true, // if true, a % symbol is displayed after the value.
         textColor: "#045681", // The color of the value text when the wave does not overlap it.
-        waveTextColor: "#A4DBf8" // The color of the value text when the wave overlaps it.
+        waveTextColor: "#A4DBf8", // The color of the value text when the wave overlaps it.
+        level: ''
     };
 }
 
@@ -159,7 +160,7 @@ function loadLiquidFillGauge(elementId, value, config) {
         var textTween = function() {
             aFinalValue = ((parseFloat(value) / config.maxValue) * 100).toFixed(2)
             var that = d3.select(this), i = d3.interpolateNumber(that.text().replace(/%/g, ""), aFinalValue);
-            return function(t) {that.text(textRounder(i(t)) + percentageText); }
+            return function(t) {that.text(textRounder(i(t)) + percentageText).append('tspan').attr('x', 0).attr('dy', '-1.2em').text(config.level); }
         };
 
         text1.transition()
@@ -196,73 +197,4 @@ function loadLiquidFillGauge(elementId, value, config) {
                 animateWave(config.waveAnimateTime);
             });
      }
-
-     function GaugeUpdater() {
-        this.update = function(value) {
-
-            var newFinalValue = parseFloat(value).toFixed(2);
-            var textRounderUpdater = function(value) { return value * 100; };
-            if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))) {
-                textRounderUpdater = function(value){ return parseFloat(value).toFixed(3); };
-            }
-            if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))) {
-                textRounderUpdater = function(value) { return parseFloat(value).toFixed(4); };
-            }
-
-            var textTween = function() {
-                aFinalValue = Math.round((parseFloat(value) / config.maxValue) * 100)
-                var that = d3.select(this), i = d3.interpolateNumber(that.text().replace(/%/g, ""), aFinalValue);
-                console.log(value)
-                return function(t) {that.text(textRounder(i(t)) + percentageText); }
-            };
-
-            text1.transition()
-                .duration(config.waveRiseTime)
-                .tween("text", textTween);
-            text2.transition()
-                .duration(config.waveRiseTime)
-                .tween("text", textTween);
-
-            var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value)) / config.maxValue;
-            var waveHeight = fillCircleRadius * waveHeightScale(fillPercent * 100);
-            var waveRiseScale = d3.scaleLinear()
-                // The clipping area size is the height of the fill circle + the wave height, so we position the clip wave
-                // such that the it will overlap the fill circle at all when at 0%, and will totally cover the fill
-                // circle at 100%.
-                .range([(fillCircleMargin + fillCircleRadius * 2 + waveHeight), (fillCircleMargin - waveHeight)])
-                .domain([0, 1]);
-            var newHeight = waveRiseScale(fillPercent);
-            var waveScaleX = d3.scaleLinear().range([0, waveClipWidth]).domain([0, 1]);
-            var waveScaleY = d3.scaleLinear().range([0, waveHeight]).domain([0, 1]);
-            var newClipArea;
-            if(config.waveHeightScaling) {
-                newClipArea = d3.area()
-                    .x(function(d) { return waveScaleX(d.x); })
-                    .y0(function(d) { return waveScaleY(Math.sin(Math.PI * 2 * config.waveOffset * -1 + Math.PI * 2 * (1 - config.waveCount) + d.y * 2 * Math.PI)); })
-                    .y1(function(d) { return (fillCircleRadius * 2 + waveHeight); });
-            } else {
-                newClipArea = clipArea;
-            }
-
-            var newWavePosition = config.waveAnimate ? waveAnimateScale(1):0;
-            wave.transition()
-                .duration(0)
-                .transition()
-                .duration(config.waveAnimate ? (config.waveAnimateTime * (1 - wave.attr("T"))) : (config.waveRiseTime))
-                .ease(d3.easeLinear)
-                .attr('d', newClipArea)
-                .attr('transform', 'translate(' + newWavePosition+ ',0)')
-                .attr('T', '1')
-                .on('end', function() {
-                    if(config.waveAnimate) {
-                        wave.attr('transform', 'translate('+ waveAnimateScale(0) + ',0)');
-                        animateWave(config.waveAnimateTime);
-                    }
-                });
-            waveGroup.transition()
-                .duration(config.waveRiseTime)
-                .attr("transform", 'translate(' + waveGroupXPosition + ',' + newHeight + ')')
-        }
-     }
-     return new GaugeUpdater();
 }
