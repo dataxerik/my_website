@@ -1,13 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+    <link href="{% static 'home/css/home.css' %}" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Home Page</title>
     <p>Welcome!</p>
 </head>
 <body>
-<ul>
- <li><a href="{% url 'polls:index' %}">Link to polls</a></li>
-</ul>
+    <div>
+        <h1>About me</h1>
+        <div>
+
+            <p>
+                <img src="" height="500" width="500">
+                Derek is a passionate learner, and always looking forward to the next exciting thing. He doesn't
+            hide from a challenge and enjoys the chance to learn something new. He has a variety of interest such
+            as Japanese, gaming, climbing, and virtual reality.
+
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+            </p>
+        </div>
+    </div>
+    <div>
+        <h2>Check out my works!</h2>
+        <p>Here is a highlight of some my works. Check of my full work <a href="#">here</a></p>
+        <div id="VRWorks" class="Works">
+            <h3>Virtual Reality Project</h3>
+
+                <ul>
+                    <li id="UdacityCarnival"><a href="#"><img src="" height="42" width ="42"></a></li>
+                    <li id="UdacityApartment"><a href="#"><img src="" height="42" width ="42"></a></li>
+                    <li id="UdacityMaze"><a href="#"><img src="" height="42" width = "42"></a></li>
+                    <li id="UdacityPuzzler"><a href="#"><img src="" height="42" width ="42"></a></li>
+                </ul>
+        </div>
+        <div id="VRWorksDesc" class="Desc">
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <p id="UdacityCarnivalDesc">test3</p>
+            <p id="UdacityApartmentDesc">test2</p>
+            <p id="UdacityMazeDesc">test1</p>
+            <p id="UdacityPuzzlerDesc">test</p>
+        </div>
+        <div id="PythonWorks"  class="Works">
+            <h3>Python Projects</h3>
+                <ul>
+                     <li id="TutorialPolls"><a href="{% url 'polls:index' %}"><img src="" height="42" width="42"></a></li>
+                     <li id="WaniKaniProject"><a href="{% url 'wanikani:index' %}"><img src="" height="42" width="42"></a></li>
+                </ul>
+        </div>
+        <div class="Desc">
+            <p id="TutorialPollsDesc">test4</p>
+            <p id="WaniKaniProjectDesc">test5</p>
+        </div>
+    </div>
 </body>
+<script src="{% static 'wanikani/jquery-3.1.1.min.js' %}" chartset="utf-8">></script>
+<script src="{% static 'home/js/home.js' %}"  rel="script"></script>
 </html>

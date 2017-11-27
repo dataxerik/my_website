@@ -1,0 +1,20 @@
+#VRWorks img {
+
+}
+
+#PythonWorks li, #VRWorks li{
+    //list-style-type: none;
+    display: inline;
+}
+
+#VRWorksDesc p{
+    //display: none;
+}
+
+.hideDesc {
+    display:none
+}
+
+.showDesc{
+
+}
