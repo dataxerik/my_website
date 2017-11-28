@@ -1,5 +1,15 @@
-#VRWorks img {
+#About img {
+    float: right;
+}
 
+#Projects{
+    clear: both;
+    text-align: center;
+}
+
+#content {
+    padding-top: 70px;
+    margin-left: 10px;
 }
 
 #PythonWorks li, #VRWorks li{
@@ -15,6 +25,6 @@
     display:none
 }
 
-.showDesc{
-
+h1 {
+    text-align: center;
 }

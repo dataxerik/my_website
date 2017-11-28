@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "home/base_header.html" %}
 <head>
+    {% block unique_css %}
     {% load static %}
     <link href="{% static 'home/css/home.css' %}" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Home Page</title>
-    <p>Welcome!</p>
+    {% endblock %}
 </head>
-<body>
-    <div>
+{% block content %}
+    <div id="About">
         <h1>About me</h1>
         <div>
 
             <p>
-                <img src="" height="500" width="500">
+                <img src="{% static 'home/pictures/PlaceHolder.png' %}" height="200" width="200">
                 Derek is a passionate learner, and always looking forward to the next exciting thing. He doesn't
             hide from a challenge and enjoys the chance to learn something new. He has a variety of interest such
             as Japanese, gaming, climbing, and virtual reality.
@@ -23,17 +23,17 @@
             </p>
         </div>
     </div>
-    <div>
-        <h2>Check out my works!</h2>
-        <p>Here is a highlight of some my works. Check of my full work <a href="#">here</a></p>
+    <div id="Projects">
+        <h1>Check out my works!</h1>
+        <p>Here is a highlight of some my works. Check of my full work <a href="{% url 'projects.html' %}">here</a></p>
         <div id="VRWorks" class="Works">
-            <h3>Virtual Reality Project</h3>
+            <h2>Virtual Reality Project</h2>
 
                 <ul>
-                    <li id="UdacityCarnival"><a href="#"><img src="" height="42" width ="42"></a></li>
-                    <li id="UdacityApartment"><a href="#"><img src="" height="42" width ="42"></a></li>
-                    <li id="UdacityMaze"><a href="#"><img src="" height="42" width = "42"></a></li>
-                    <li id="UdacityPuzzler"><a href="#"><img src="" height="42" width ="42"></a></li>
+                    <li id="UdacityCarnival"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width ="42"></a></li>
+                    <li id="UdacityApartment"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width ="42"></a></li>
+                    <li id="UdacityMaze"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width = "42"></a></li>
+                    <li id="UdacityPuzzler"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width ="42"></a></li>
                 </ul>
         </div>
         <div id="VRWorksDesc" class="Desc">
@@ -44,10 +44,10 @@
             <p id="UdacityPuzzlerDesc">test</p>
         </div>
         <div id="PythonWorks"  class="Works">
-            <h3>Python Projects</h3>
+            <h2>Python Projects</h2>
                 <ul>
-                     <li id="TutorialPolls"><a href="{% url 'polls:index' %}"><img src="" height="42" width="42"></a></li>
-                     <li id="WaniKaniProject"><a href="{% url 'wanikani:index' %}"><img src="" height="42" width="42"></a></li>
+                     <li id="TutorialPolls"><a href="{% url 'polls:index' %}"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width="42"></a></li>
+                     <li id="WaniKaniProject"><a href="{% url 'wanikani:index' %}"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width="42"></a></li>
                 </ul>
         </div>
         <div class="Desc">
@@ -55,7 +55,12 @@
             <p id="WaniKaniProjectDesc">test5</p>
         </div>
     </div>
-</body>
+    <div id="footer">
+        <p>Place holder text</p>
+    </div>
+{% endblock %}
+{% block unique_js %}
+{{ block.super }}
 <script src="{% static 'wanikani/jquery-3.1.1.min.js' %}" chartset="utf-8">></script>
 <script src="{% static 'home/js/home.js' %}"  rel="script"></script>
-</html>
+{% endblock %}
