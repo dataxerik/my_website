@@ -5,5 +5,6 @@ from . import views
 app_name='home'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'projects/$', TemplateView.as_view(template_name='projects.html')),
+    url(r'projects/$', TemplateView.as_view(template_name='home/projects/projects_home.html'), name='project'),
+    url(r'resume/$', TemplateView.as_view(template_name='home/resume.html'), name='resume'),
 ]

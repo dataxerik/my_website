@@ -17,7 +17,7 @@
                 Derek is a passionate learner, and always looking forward to the next exciting thing. He doesn't
             hide from a challenge and enjoys the chance to learn something new. He has a variety of interest such
             as Japanese, gaming, climbing, and virtual reality.
-
+                <br>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
             </p>
@@ -25,34 +25,51 @@
     </div>
     <div id="Projects">
         <h1>Check out my works!</h1>
-        <p>Here is a highlight of some my works. Check of my full work <a href="{% url 'projects.html' %}">here</a></p>
+        <p>Here is a highlight of some my works. Check of my full work <a href="{% url 'home:project' %}">here</a></p>
         <div id="VRWorks" class="Works">
             <h2>Virtual Reality Project</h2>
-
                 <ul>
-                    <li id="UdacityCarnival"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width ="42"></a></li>
-                    <li id="UdacityApartment"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width ="42"></a></li>
-                    <li id="UdacityMaze"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width = "42"></a></li>
-                    <li id="UdacityPuzzler"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width ="42"></a></li>
+                    <li id="UdacityCarnival"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="200" width ="400"></a></li>
+                    <li id="UdacityApartment"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="200" width ="400"></a></li>
+                    <li id="UdacityMaze"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="200" width = "400"></a></li>
+                    <li id="UdacityPuzzler"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="200" width ="400"></a></li>
                 </ul>
         </div>
         <div id="VRWorksDesc" class="Desc">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <p id="UdacityCarnivalDesc">test3</p>
-            <p id="UdacityApartmentDesc">test2</p>
-            <p id="UdacityMazeDesc">test1</p>
-            <p id="UdacityPuzzlerDesc">test</p>
+            <p id="UdacityCarnivalDesc">
+                Part of the Udacity VR nanodegree. modifying and fixing an existing project.
+            </p>
+            <p id="UdacityApartmentDesc">
+                Part of the Udacity VR nanodegree. Venturing into world building.
+            </p>
+            <p id="UdacityMazeDesc">
+                Part of the Udacity VR nanodegree. Place holder 1.
+            </p>
+            <p id="UdacityPuzzlerDesc">
+                Part of the Udacity VR nanodegree. Place holder 2.
+            </p>
         </div>
         <div id="PythonWorks"  class="Works">
             <h2>Python Projects</h2>
                 <ul>
-                     <li id="TutorialPolls"><a href="{% url 'polls:index' %}"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width="42"></a></li>
-                     <li id="WaniKaniProject"><a href="{% url 'wanikani:index' %}"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="42" width="42"></a></li>
+                     <li id="WaniKaniProject">
+                         <div class="container">
+                         <a href="{% url 'wanikani:index' %}">
+                            <img src="{% static 'home/pictures/WaniKaniProjectDesc1.PNG' %}" height="250" width="400">
+                             <div class="middle">
+                                 <div class="text">Click to learn more</div>
+                             </div>
+                         </a>
+                         </div>
+                     </li>
                 </ul>
         </div>
         <div class="Desc">
-            <p id="TutorialPollsDesc">test4</p>
-            <p id="WaniKaniProjectDesc">test5</p>
+            <p id="WaniKaniProjectDesc">
+                Wanikani is a Spaced-Reptition-System site where Japanese-language learners can learn kanji! I've
+                created a small statistics site where users can track various statistics about their account. Click the
+                image for more details.
+            </p>
         </div>
     </div>
     <div id="footer">

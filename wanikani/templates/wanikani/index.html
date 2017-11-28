@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>WaniKani Home Page</title>
-
+    <title>WaniKani Stats Home Page</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" type='text/css' href="{% static 'wanikani/wanikani.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'wanikani/error.css' %}">
@@ -13,8 +13,8 @@
     <form onsubmit="return validateWanikaniApiKey()" action="{% url 'wanikani:progress' %}" method="post">
     {% csrf_token %}
     <div id="api_key_box">
-        <h1>Welcome!</h1>
-        <label>Please enter your wanikani api key: <input id="api_key_input" type="text" name="api_key" ></label>
+        <h1>Welcome to the WaniKani Stats Home Page!</h1>
+        <label>Please enter your WaniKani api key: <input id="api_key_input" type="text" name="api_key" ></label>
         <input id="api_key_submit" type="submit" value="Submit">
     </div>
     </form>

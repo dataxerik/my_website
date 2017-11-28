@@ -6,6 +6,8 @@ from django.views import generic
 
 def index(request):
     return render_to_response('home/index.html')
+
+
 '''
 class IndexView(generic.View):
     template_name = 'home/index.html'

@@ -3,9 +3,21 @@
     background-image: linear-gradient(-30deg, #00aaff, #99ddff);
 }
 
+div {
+    text-align: center;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+}
+
+
+body {
+    background-color: #EFEFEF;
+}
+
 h1 {
     font-size:34px;
-    color:red;
+    color: #f100a1;
+    font-weight: bold;
 }
 
 ul#progress {
