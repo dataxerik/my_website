@@ -1,4 +1,4 @@
-$(".Works li").hover(function() {
+$(".Works .card").hover(function() {
     elementID = "#" + $(this).attr("id") + "Desc";
     console.log(elementID);
     $(elementID).removeClass("hideDesc");
@@ -8,7 +8,7 @@ $(".Works li").hover(function() {
 });
 
 function hideDescriptions(elementID) {
-    descriptionSelector = elementID + " p";
+    descriptionSelector = elementID;
     console.log("trying to select element with " + descriptionSelector);
     $(descriptionSelector).each(function() {
         console.log($(this));

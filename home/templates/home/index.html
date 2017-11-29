@@ -28,48 +28,83 @@
         <p>Here is a highlight of some my works. Check of my full work <a href="{% url 'home:project' %}">here</a></p>
         <div id="VRWorks" class="Works">
             <h2>Virtual Reality Project</h2>
-                <ul>
-                    <li id="UdacityCarnival"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="200" width ="400"></a></li>
-                    <li id="UdacityApartment"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="200" width ="400"></a></li>
-                    <li id="UdacityMaze"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="200" width = "400"></a></li>
-                    <li id="UdacityPuzzler"><a href="#"><img src="{% static 'home/pictures/PlaceHolder.png' %}" height="200" width ="400"></a></li>
-                </ul>
+                <div class="row">
+                    <div class="card" id="UdacityCarnival">
+                         <div class="container">
+                            <a href="#">
+                                <img src="{% static 'home/pictures/PlaceHolder.png' %}">
+                            </a>
+                            <div class="middle">
+                                <div class="text">Click to learn more</div>
+                            </div>
+                         </div>
+                         <p id="UdacityCarnivalDesc" class="Desc">
+                                    Part of the Udacity VR nanodegree. modifying and fixing an existing project.
+                         </p>
+                    </div>
+                    <div class="card" id="UdacityApartment">
+                            <div class="container">
+                                <a href="#">
+                                    <img src="{% static 'home/pictures/PlaceHolder.png' %}">
+                                </a>
+                                <div class="middle">
+                                    <div class="text">Click to learn more</div>
+                                </div>
+                            </div>
+                            <p id="UdacityApartmentDesc" class="Desc">
+                                    Part of the Udacity VR nanodegree. Venturing into world building.
+                            </p>
+                    </div>
+                    <div class="card" id="UdacityMaze">
+                            <div class="container">
+                                <a href="#">
+                                    <img src="{% static 'home/pictures/PlaceHolder.png' %}">
+
+                                </a>
+                                <div class="middle">
+                                    <div class="text">Click to learn more</div>
+                                </div>
+                            </div>
+                            <p id="UdacityMazeDesc" class="Desc">
+                                    Part of the Udacity VR nanodegree. Place holder 1.
+                            </p>
+                    </div>
+                    <div class="card" id="UdacityPuzzler">
+                            <div class="container">
+                        <a href="#">
+                            <img src="{% static 'home/pictures/PlaceHolder.png' %}">
+                        </a>
+                                                                <div class="middle">
+                                    <div class="text">Click to learn more</div>
+                                </div>
+                            </div>
+                        <p id="UdacityPuzzlerDesc" class="Desc">
+                                Part of the Udacity VR nanodegree. Place holder 2.
+                        </p>
+                    </div>
+                </div>
         </div>
-        <div id="VRWorksDesc" class="Desc">
-            <p id="UdacityCarnivalDesc">
-                Part of the Udacity VR nanodegree. modifying and fixing an existing project.
-            </p>
-            <p id="UdacityApartmentDesc">
-                Part of the Udacity VR nanodegree. Venturing into world building.
-            </p>
-            <p id="UdacityMazeDesc">
-                Part of the Udacity VR nanodegree. Place holder 1.
-            </p>
-            <p id="UdacityPuzzlerDesc">
-                Part of the Udacity VR nanodegree. Place holder 2.
-            </p>
-        </div>
+        <div></div>
         <div id="PythonWorks"  class="Works">
             <h2>Python Projects</h2>
-                <ul>
-                     <li id="WaniKaniProject">
-                         <div class="container">
-                         <a href="{% url 'wanikani:index' %}">
-                            <img src="{% static 'home/pictures/WaniKaniProjectDesc1.PNG' %}" height="250" width="400">
-                             <div class="middle">
-                                 <div class="text">Click to learn more</div>
-                             </div>
-                         </a>
-                         </div>
-                     </li>
-                </ul>
-        </div>
-        <div class="Desc">
-            <p id="WaniKaniProjectDesc">
-                Wanikani is a Spaced-Reptition-System site where Japanese-language learners can learn kanji! I've
-                created a small statistics site where users can track various statistics about their account. Click the
-                image for more details.
-            </p>
+                <div class="row">
+                    <div class="card" id="WaniKaniProject">
+                        <div class="container">
+                            <a href="{% url 'wanikani:index' %}">
+                                <img src="{% static 'home/pictures/WaniKaniProjectDesc1.PNG' %}">
+                                <div class="middle">
+                                    <div class="text">Click to learn more</div>
+                                </div>
+                            </a>
+                        </div>
+                        <p id="WaniKaniProjectDesc" class="Desc">
+                                    Wanikani is a Spaced-Reptition-System site where Japanese-language learners can learn kanji! I've
+                                    created a small statistics site where users can track various statistics about their account. Click the
+                                    image for more details.
+                        </p>
+                     </div>
+                </div>
+
         </div>
     </div>
     <div id="footer">
