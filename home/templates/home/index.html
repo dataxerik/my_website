@@ -1,11 +1,13 @@
 {% extends "home/base_header.html" %}
 <head>
     {% block unique_css %}
+    {{ block.super }}
     {% load static %}
     <link href="{% static 'home/css/home.css' %}" rel="stylesheet">
+    {% endblock %}
     <meta charset="UTF-8">
     <title>Home Page</title>
-    {% endblock %}
+
 </head>
 {% block content %}
     <div id="About">
@@ -84,13 +86,13 @@
                     </div>
                 </div>
         </div>
-        <div></div>
+        <div class="breaker"></div>
         <div id="PythonWorks"  class="Works">
             <h2>Python Projects</h2>
                 <div class="row">
                     <div class="card" id="WaniKaniProject">
                         <div class="container">
-                            <a href="{% url 'wanikani:index' %}">
+                            <a href="{% url 'home:wanikani_project' %}">
                                 <img src="{% static 'home/pictures/WaniKaniProjectDesc1.PNG' %}">
                                 <div class="middle">
                                     <div class="text">Click to learn more</div>
@@ -99,8 +101,7 @@
                         </div>
                         <p id="WaniKaniProjectDesc" class="Desc">
                                     Wanikani is a Spaced-Reptition-System site where Japanese-language learners can learn kanji! I've
-                                    created a small statistics site where users can track various statistics about their account. Click the
-                                    image for more details.
+                                    created a small statistics site where users can track various statistics about their account.
                         </p>
                      </div>
                 </div>
