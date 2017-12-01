@@ -9,9 +9,48 @@
 </head>
 <body>
     {% block content %}
+    <div>
         <h1>Preface</h1>
+            <h3>Framework & languages used</h3>
+                <ul>
+                    <li>Python 3</li>
+                    <li>Django</li>
+                    <li>Html/CSS</li>
+                    <li>Javascript</li>
+                    <li>Jquery 3.1.1</li>
+                    <li>D3</li>
+                    <li>Bootstrap</li>
+                </ul>
 
+                <h3>What is kanji and WaniKani?</h3>
+                    <p>
+                        When learning Japanese, there are 3 types of writing systems one needs to learn:
+                        <b>Hiragana</b>, <b>Katakana</b>, and <b>Kanji</b>. The first two are pretty easy as they are like the
+                        English alphabet and both only have 46 characters. However, Japanese also uses
+                        Chinese characters also know as Kanji. Kanji is a lot harder to learn comparatively
+                        since there are over <b>2000</b> characters.
+                        <br>
+                        Various solutions have come to help Japanese learners, one of these solutions is
+                        WaniKani. Wanikani is a website that uses spaced repetition. In other words, every
+                        level they quiz one on a certain subset of Kanji, and once you master that level then
+                        one levels up. Right now, there are 60 levels.
+                        <br>
+                        On top of this service, WaniKani provides an API where those interested can get various
+                        statistics about his or her account such 'how many times they got a certain kanji wrong'
+                        or 'when was this kanji unlocked'. So, inspired by a <a href="https://www.idigtech.com/wanikani/">similar site</a>, I've
+                        created my own version using Django.
+                    </p>
+            <h2>Objective</h2>
+                <p>
+                Create a small supplement website to allow users to view there average time per level,
+                his or her level of accuracy, and give clear visual of progress.
+                </p>
+    </div>
+    <div>
+
+    </div>
+    <div>
         <h1>Project</h1>
-
+    </div>
     {% endblock %}
 </body>

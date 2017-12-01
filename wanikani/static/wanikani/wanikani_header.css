@@ -11,16 +11,15 @@ body {
     background-color: #EFEFEF;
 }
 
-p {
-    color : blue;
-}
-
-
 #content{
-    padding-top: 10%;
+    padding-top: 70px;
     padding-bottom: 5%;
 }
 
 div {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
+}
+
+body {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
 }

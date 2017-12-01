@@ -11,9 +11,9 @@
 {% endblock %}
 
 {% block content %}
-    <div>
+    <div class="container">
         <div class="compheader">
-           <p>JLPT level Progress</p>
+           <h3>JLPT level Progress</h3>
         </div>
         <div class="leftcomppanel">
             {% for level, _ in request.session.api.kanji.JLPT %}
@@ -25,9 +25,9 @@
             <p>This section is for the JLPT completion</p>
         </div>
     </div>
-    <div>
+    <div class="container">
         <div class="compheader">
-            <p>Joyo</p>
+            <h3>Joyo</h3>
         </div>
         <div class="leftcomppanel">
             {% for level, _ in request.session.api.kanji.JOYO %}
@@ -39,9 +39,9 @@
             <p>This section is for the Joyo completion</p>
         </div>
     </div>
-    <div>
+    <div class="container">
         <div class="compheader">
-        <p>Frequency</p>
+        <h3>Frequency</h3>
         </div>
         <div class="leftcomppanel">
             {% for level, _ in request.session.api.kanji.FREQUENCY %}
