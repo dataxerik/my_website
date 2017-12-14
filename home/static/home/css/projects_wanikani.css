@@ -1,0 +1,31 @@
+.imageCenter {
+    margin: 0 auto;
+    display: block;
+}
+
+.kana {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+#kanaContainer {
+    text-align: center;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.sideList {
+    text-align: center;
+}
+
+.sideList li{
+    float: none;
+    display: inline-block;
+
+}
+
+.clearFloat {
+    clear:both
+}

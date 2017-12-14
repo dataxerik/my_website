@@ -1,8 +1,9 @@
 {% extends "home/base_header.html" %}
 <head>
+    {% load static %}
     {% block unique_css %}
     {{ block.super }}
-
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/projects_wanikani.css' %}">
     {% endblock %}
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,9 +11,10 @@
 <body>
     {% block content %}
     <div>
+        <div>
         <h1>Preface</h1>
             <h3>Framework & languages used</h3>
-                <ul>
+                <ul class="sideList">
                     <li>Python 3</li>
                     <li>Django</li>
                     <li>Html/CSS</li>
@@ -21,7 +23,8 @@
                     <li>D3</li>
                     <li>Bootstrap</li>
                 </ul>
-
+        </div>
+        <div class="clearFloat">
                 <h3>What is kanji and WaniKani?</h3>
                     <p>
                         When learning Japanese, there are 3 types of writing systems one needs to learn:
@@ -29,17 +32,29 @@
                         English alphabet and both only have 46 characters. However, Japanese also uses
                         Chinese characters also know as Kanji. Kanji is a lot harder to learn comparatively
                         since there are over <b>2000</b> characters.
-                        <br>
+                        </p>
+
+                        <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/vectorstock_862328.jpg' %}" height="200" width="200">
+                    <p>
                         Various solutions have come to help Japanese learners, one of these solutions is
                         WaniKani. Wanikani is a website that uses spaced repetition. In other words, every
                         level they quiz one on a certain subset of Kanji, and once you master that level then
                         one levels up. Right now, there are 60 levels.
-                        <br>
+                        </p>
+                        <div id="kanaContainer">
+                        <img class="kana" src="{% static 'home/pictures/wanikani_pictures/vectorstock_2972424.jpg' %}" height="200" width="200">
+                        <img class="kana" src="{% static 'home/pictures/wanikani_pictures/hirigana.PNG' %}" height="200" width="200">
+                        </div>
+                    <p>
+                        For each level, you are given radicals(characters that make up kanji), kanji, and vocabulary.
+                        The objective is get a 'burned' level for each item. The levels are 'apprentice', 'guru', 'master'
+                        , 'enlightened', and 'burned'
                         On top of this service, WaniKani provides an API where those interested can get various
                         statistics about his or her account such 'how many times they got a certain kanji wrong'
                         or 'when was this kanji unlocked'. So, inspired by a <a href="https://www.idigtech.com/wanikani/">similar site</a>, I've
                         created my own version using Django.
                     </p>
+        </div>
             <h2>Objective</h2>
                 <p>
                 Create a small supplement website to allow users to view there average time per level,
@@ -51,6 +66,35 @@
     </div>
     <div>
         <h1>Project</h1>
+        <div>
+        <p>
+            Each user as an API key that I can use to gather the user information. So, the home page is asking for the
+            user's key. Once they enter a valid key, the next screen is the statistics page.
+        </p>
+        <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectLogin.PNG' %}" height="200" width="500">
+            </div>
+        <div>
+            <p>This page has three main sections. One section to give the general user statistics like current level and
+                number of items learned, the next section to give the user's accuracy, and the last section is a graph
+                showing the user's average time per level.</p>
+            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectStats1.PNG' %}" height="300" width="600">
+            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectStats2.PNG' %}" height="300" width="600">
+            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectStats3.PNG' %}" height="300" width="600">
+        </div>
+        <div>
+            <p>After arriving at this page, the user can go to two additional pages: the comparison and charts page</p>
+            <br>
+            <p>For kanji, there are three popular group: one based on the Japanese Language Proficiency Test(JLPT),
+            one decided by the Japanese Ministry of Education(Joyo), and one based on the frequency of kanji use(Freq).
+            On the comparison screen, there is a data visualization of each grouping where the user has a level of 'guru'
+            or higher for a given kanji. This way the user can clear see his or her current progress as a gauge.</p>
+            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectComparison.PNG' %}" height="350" width="600">
+        </div>
+
+
     </div>
     {% endblock %}
+
+<a href="https://www.vectorstock.com/royalty-free-vector/kanji-vector-862328" target="_blank">Kanji vector image at VectorStock</a>
+<a href="https://www.vectorstock.com/royalty-free-vector/japanese-katakana-vector-2972424" target="_blank">Japanese katakana vector image at VectorStock</a>
 </body>
