@@ -35,37 +35,23 @@
                          <div class="container">
                             <a href="#">
                                 <img src="{% static 'home/pictures/PlaceHolder.png' %}">
+                                <div class="middle">
+                                    <div class="text">Click to learn more</div>
+                                </div>
                             </a>
-                            <div class="middle">
-                                <div class="text">Click to learn more</div>
-                            </div>
                          </div>
                          <p id="UdacityCarnivalDesc" class="Desc">
                                     Part of the Udacity VR nanodegree. modifying and fixing an existing project.
                          </p>
                     </div>
-                    <div class="card" id="UdacityApartment">
-                            <div class="container">
-                                <a href="#">
-                                    <img src="{% static 'home/pictures/PlaceHolder.png' %}">
-                                </a>
-                                <div class="middle">
-                                    <div class="text">Click to learn more</div>
-                                </div>
-                            </div>
-                            <p id="UdacityApartmentDesc" class="Desc">
-                                    Part of the Udacity VR nanodegree. Venturing into world building.
-                            </p>
-                    </div>
                     <div class="card" id="UdacityMaze">
                             <div class="container">
                                 <a href="#">
                                     <img src="{% static 'home/pictures/PlaceHolder.png' %}">
-
+                                    <div class="middle">
+                                        <div class="text">Click to learn more</div>
+                                    </div>
                                 </a>
-                                <div class="middle">
-                                    <div class="text">Click to learn more</div>
-                                </div>
                             </div>
                             <p id="UdacityMazeDesc" class="Desc">
                                     Part of the Udacity VR nanodegree. Place holder 1.
@@ -73,16 +59,29 @@
                     </div>
                     <div class="card" id="UdacityPuzzler">
                             <div class="container">
-                        <a href="#">
-                            <img src="{% static 'home/pictures/PlaceHolder.png' %}">
-                        </a>
-                                                                <div class="middle">
-                                    <div class="text">Click to learn more</div>
-                                </div>
+                                <a href="{% url 'home:puzzler_project' %}">
+                                    <img src="{% static 'home/pictures/puzzler_pictures/PuzzlerStartScreen.png' %}">
+                                    <div class="middle">
+                                        <div class="text">Click to learn more</div>
+                                    </div>
+                                </a>
                             </div>
                         <p id="UdacityPuzzlerDesc" class="Desc">
-                                Part of the Udacity VR nanodegree. Place holder 2.
+                                This project is part of the Udacity VR nanodegree.
                         </p>
+                    </div>
+                    <div class="card" id="UdacityNightAtTheMuseum">
+                            <div class="container">
+                                <a href="{% url 'home:night_at_the_museum_project' %}">
+                                    <img src="{% static 'home/pictures/night_at_the_museum_pictures/NightAtTheMuseumStartScreen.png' %}">
+                                    <div class="middle">
+                                        <div class="text">Click to learn more</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <p id="UdacityNightAtTheMuseumDesc" class="Desc">
+                                    Part of the Udacity VR nanodegree. Venturing into the world of VR.
+                            </p>
                     </div>
                 </div>
         </div>

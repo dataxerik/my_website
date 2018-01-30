@@ -22,7 +22,7 @@ h1, h2, h3 {
 
 .sideList li{
     float: none;
-    display: inline-block;
+    //display: inline-block;
 
 }
 

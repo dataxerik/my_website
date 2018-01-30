@@ -1,0 +1,50 @@
+{% extends "home/base_header.html" %}
+<head>
+    {% load static %}
+    {% block unique_css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/projects.css' %}">
+    {% endblock %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% block content %}
+    <div>
+        <div>
+            <h1>Preface</h1>
+                <h3>Framework & languages used</h3>
+                    <ul class="sideList">
+                        <li>Unity</li>
+                        <li>GVR</li>
+                    </ul>
+                <h3>What is the Udacity VR nano-degree?</h3>
+                    <p>
+                        Udacity offers a self-paced program that teaches people to develop for VR applications. As part
+                        of Term 2, I needed to construct a VR experience focusing VR's application in five different industries. The focus of this project
+                        was those five different applications of VR. You can find more
+                        details about the program
+                        <a href="https://www.udacity.com/course/vr-developer-nanodegree--nd017">here</a>
+                    </p>
+        </div>
+        <div>
+            <h1>Objective</h1>
+                <p>
+                    You can find my Medium write-up <a href="https://medium.com/@dsshar/night-at-the-museum-by-derek-sharp-a92a156306a5">here</a>
+                </p>
+                <ul>
+                    <li>Create a small VR experience focusing VR's use in medicine, therapy, arcades, learning, and space.</li>
+                    <li>Have the experience user tested</li>
+                    <li>Create my own assests such as models, buildings, etc</li>
+                </ul>
+
+        </div>
+
+    </div>
+    <div>
+        <h1>Project</h1>
+        <div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
