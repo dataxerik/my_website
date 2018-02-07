@@ -405,15 +405,14 @@ def get_api_information(api_key, service_type):
 
     try:
         r = requests.get(url)
+        if r.status_code == 200:
+            logger.info('successful api call with status code: {}'.format(r.status_code))
+            return r.json()
+        else:
+            logger.error("Error while making the api call with status code: {}".format(r.status_code))
+            raise BadRequestException("Error while making the request")
     except Exception:  # Need to check what type of exceptions requests will throw, may not be needed at all
         pass
-
-    if r.status_code == 200:
-        logger.info('successful api call with status code: {}'.format(r.status_code))
-        return r.json()
-    else:
-        logger.error("Error while making the api call with status code: {}".format(r.status_code))
-        raise BadRequestException("Error while making the request")
 
 
 
