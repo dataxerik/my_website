@@ -28,11 +28,9 @@ class WanikaniDetailView(DetailView):
     logger.info("About to render progress")
 
     def get(self, request, *args, **kwargs):
-        try:
-            request.POST['api_key']
-        except KeyError:
+        if 'api' not in request.session:
             return redirect_due_to_error(request, error_text_constants.API_KEY_404)
-        
+
         return render(request, self.template_name)
 
 
@@ -40,10 +38,7 @@ class WanikaniChartView(TemplateView):
     template_name = 'wanikani/charts.html'
 
     def get(self, request, *args, **kwargs):
-
-        try:
-            request.POST['api_key']
-        except KeyError:
+        if 'api' not in request.session:
             return redirect_due_to_error(request, error_text_constants.API_KEY_404)
 
         request.session['api'] = request.session['api']
@@ -54,9 +49,7 @@ class WanikaniComparisionView(TemplateView):
     template_name = 'wanikani/comparison.html'
 
     def get(self, request, *args, **kwargs):
-        try:
-            request.POST['api_key']
-        except KeyError:
+        if 'api' not in request.session:
             return redirect_due_to_error(request, error_text_constants.API_KEY_404)
         #kanji_json = service.gather_kanji_list()
         return render(request, self.template_name)
@@ -76,9 +69,7 @@ def index(request):
 
 
 def detail(request):
-    try:
-        request.POST['api_key']
-    except KeyError:
+    if 'api' not in request.session:
         return redirect_due_to_error(request, error_text_constants.API_KEY_404)
     return render(request, 'wanikani/progress.html')
 
