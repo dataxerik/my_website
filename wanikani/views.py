@@ -28,6 +28,11 @@ class WanikaniDetailView(DetailView):
     logger.info("About to render progress")
 
     def get(self, request, *args, **kwargs):
+        try:
+            request.POST['api_key']
+        except KeyError:
+            return redirect_due_to_error(request, error_text_constants.API_KEY_404)
+        
         return render(request, self.template_name)
 
 
@@ -37,11 +42,9 @@ class WanikaniChartView(TemplateView):
     def get(self, request, *args, **kwargs):
 
         try:
-            request.session['api']
+            request.POST['api_key']
         except KeyError:
-            logging.error(traceback.format_exc())
-            return render(request, 'wanikani/index.html',
-                          {'error_message': "Couldn't find api information, please reenter it"})
+            return redirect_due_to_error(request, error_text_constants.API_KEY_404)
 
         request.session['api'] = request.session['api']
         return render(request, self.template_name)
@@ -51,14 +54,11 @@ class WanikaniComparisionView(TemplateView):
     template_name = 'wanikani/comparison.html'
 
     def get(self, request, *args, **kwargs):
-        '''
         try:
-            user_json = service.get_user_completion(request.session['api'])
+            request.POST['api_key']
         except KeyError:
-            #print(request.session.keys())
-            return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api information, please re-enter it"})
+            return redirect_due_to_error(request, error_text_constants.API_KEY_404)
         #kanji_json = service.gather_kanji_list()
-        '''
         return render(request, self.template_name)
 
 
@@ -76,12 +76,10 @@ def index(request):
 
 
 def detail(request):
-    '''
     try:
         request.POST['api_key']
     except KeyError:
-        return render(request, 'wanikani/index.html', {'error_message': "Couldn't find api key, please reenter it"})
-    '''
+        return redirect_due_to_error(request, error_text_constants.API_KEY_404)
     return render(request, 'wanikani/progress.html')
 
 
