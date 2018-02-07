@@ -412,7 +412,7 @@ def get_api_information(api_key, service_type):
             logger.error("Error while making the api call with status code: {}".format(r.status_code))
             raise BadRequestException("Error while making the request")
     except Exception:  # Need to check what type of exceptions requests will throw, may not be needed at all
-        pass
+        raise BadRequestException("Error while making the request")
 
 
 
