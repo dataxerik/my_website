@@ -84,17 +84,30 @@
         <div>
             <p>After arriving at this page, the user can go to two additional pages: the comparison and charts page</p>
             <br>
+            <h3>Comparison Page</h3>
             <p>For kanji, there are three popular group: one based on the Japanese Language Proficiency Test(JLPT),
             one decided by the Japanese Ministry of Education(Joyo), and one based on the frequency of kanji use(Freq).
             On the comparison screen, there is a data visualization of each grouping where the user has a level of 'guru'
             or higher for a given kanji. This way the user can clear see his or her current progress as a gauge.</p>
-            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectComparison.PNG' %}" height="350" width="600">
+            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectComparison.PNG' %}"
+                 height="350" width="600">
+            <br>
+            <h3>Chart Page</h3>
+            <p>The user can also view each individual kanji grouped by JLPT, Joyo, and Freq level. Furthermore, they
+            can see the kanji's level(unranked, apprentice, guru, master, enlightened, burned).</p>
+            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectChart.PNG' %}"
+                 height="350" width="600">
         </div>
 
 
     </div>
+    <div>
+        <h3>Image References</h3>
+        <a href="https://www.vectorstock.com/royalty-free-vector/kanji-vector-862328" target="_blank">
+            Kanji vector image at VectorStock</a>
+        <br>
+        <a href="https://www.vectorstock.com/royalty-free-vector/japanese-katakana-vector-2972424" target="_blank">
+            Japanese katakana vector image at VectorStock</a>
+    </div>
     {% endblock %}
-
-<a href="https://www.vectorstock.com/royalty-free-vector/kanji-vector-862328" target="_blank">Kanji vector image at VectorStock</a>
-<a href="https://www.vectorstock.com/royalty-free-vector/japanese-katakana-vector-2972424" target="_blank">Japanese katakana vector image at VectorStock</a>
 </body>
