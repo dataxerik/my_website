@@ -22,13 +22,13 @@
         <div>
         <h1>What is the Udacity VR nano-degree?</h1>
                     <p>
-                        Udacity offers a self-paced program that teaches people to develop for VR applications. As part
+                        &ensp;Udacity offers a self-paced program that teaches people to develop for VR applications. As part
                         of Term 2, I needed to construct a small simon-says like puzzle project. The focus of this project
-                        was user testing. You can find more
-                        details about the program
+                        was user testing. I need to have various test done, and make iterative improvments to the
+                        project You can find more details about the program
                         <a href="https://www.udacity.com/course/vr-developer-nanodegree--nd017">here</a>
                     </p>
-            <h2>Objective</h2>
+            <h2>Objectives</h2>
                 <p>
                     You can find my Medium write-up <a href="https://medium.com/@dsshar/puzzler-aca3a699e129">here</a>
                 </p>
@@ -42,28 +42,78 @@
     <div>
         <h1>Project</h1>
         <div>
-        <p>
-            Each user as an API key that I can use to gather the user information. So, the home page is asking for the
-            user's key. Once they enter a valid key, the next screen is the statistics page.
-        </p>
-        <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectLogin.PNG' %}" height="200" width="500">
-            </div>
-        <div>
-            <p>This page has three main sections. One section to give the general user statistics like current level and
-                number of items learned, the next section to give the user's accuracy, and the last section is a graph
-                showing the user's average time per level.</p>
-            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectStats1.PNG' %}" height="300" width="600">
-            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectStats2.PNG' %}" height="300" width="600">
-            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectStats3.PNG' %}" height="300" width="600">
+            <h2>Overview</h2>
+            <p>
+                &ensp;The basic flow of the game is the user is asked if they want to 'go on an adventure'. Then, the user is
+                taken inside a small building to solve a simon-says puzzle. After successfully solving the problem, the user
+                is moved to the end and shown the restart screen.
+            </p>
+            <img class="imageCenter" alt="The Puzzler Start Screen"
+                 src="{% static 'home/pictures/puzzler_pictures/PuzzlerStartScreen.png' %}"
+                 height="200" width="500">
         </div>
         <div>
+            <h2>Design</h2>
+            <p>&nbsp;The building and puzzle elements were provided as a part of the project. However, there were still several
+            things that needed to be designed: the UI and environment. So, before creating anything in Unity, I created
+            sketches for easy prototypes.</p>
+            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerDesignDocuments.png' %}"
+                 height="200" width="500">
+            <p>
+            &ensp;The above pictures is a simple sketch of the environment. The upper-left picture is an aerial view of the
+            environment. The build is the square and is surrounded by mountains. I wanted the user to feel enclosed.
+            This way the environment helps point the user to the building more so because the user has no where else to go. Also,
+            having the building surrounded by mountains, I feel, makes it feel more foreboding.
+            <br>
+                &ensp;The upper-right picture is the user looking forward at the building. The same building as in the
+                upper-left picture.
+            </p>
+            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerDesignDocuments1.png' %}"
+                 height="200" width="500">
+            <p>&ensp;The above UI pictures were something I want to keep pretty simple and to the point. However, I
+                didn't want to make the UI too bland. There should be a flair of adventure. So, the starting UI ask
+                'Do you want to go on an adventure?'. And, Since the adventure is pretty short, I want to hint at the
+                possibility of there being more. So, the restart UI was designed to have a message like 'that's the
+                end for now...'
+
+            </p>
+            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerEnvironment.png' %}"
+                 height="200" width="500">
+        </div>
+        <div>
+            <h2>Implementation</h2>
             <p>After arriving at this page, the user can go to two additional pages: the comparison and charts page</p>
             <br>
             <p>For kanji, there are three popular group: one based on the Japanese Language Proficiency Test(JLPT),
             one decided by the Japanese Ministry of Education(Joyo), and one based on the frequency of kanji use(Freq).
             On the comparison screen, there is a data visualization of each grouping where the user has a level of 'guru'
             or higher for a given kanji. This way the user can clear see his or her current progress as a gauge.</p>
-            <img class="imageCenter" src="{% static 'home/pictures/wanikani_pictures/WaniKaniProjectComparison.PNG' %}" height="350" width="600">
+            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerUI.png' %}"
+                 height="350" width="500">
+            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerPuzzleRoom.png' %}"
+                 height="350" width="500">
+            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerEndScreen.png' %}"
+                 height="350" width="500">
+        </div>
+        <div>
+            <h2>Testing & Improvements</h2>
+            <p>After arriving at this page, the user can go to two additional pages: the comparison and charts page</p>
+            <br>
+            <p>For kanji, there are three popular group: one based on the Japanese Language Proficiency Test(JLPT),
+            one decided by the Japanese Ministry of Education(Joyo), and one based on the frequency of kanji use(Freq).
+            On the comparison screen, there is a data visualization of each grouping where the user has a level of 'guru'
+            or higher for a given kanji. This way the user can clear see his or her current progress as a gauge.</p>
+            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerPuzzleRoom.png' %}"
+                 height="350" width="500">
+        </div>
+        <div>
+            <h2>Closing Remarks</h2>
+            <p>After arriving at this page, the user can go to two additional pages: the comparison and charts page</p>
+            <br>
+            <p>For kanji, there are three popular group: one based on the Japanese Language Proficiency Test(JLPT),
+            one decided by the Japanese Ministry of Education(Joyo), and one based on the frequency of kanji use(Freq).
+            On the comparison screen, there is a data visualization of each grouping where the user has a level of 'guru'
+            or higher for a given kanji. This way the user can clear see his or her current progress as a gauge.</p>
         </div>
     </div>
     {% endblock %}
