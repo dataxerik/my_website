@@ -66,8 +66,10 @@
             having the building surrounded by mountains, I feel, makes it feel more foreboding.
             <br>
                 &ensp;The upper-right picture is the user looking forward at the building. The same building as in the
-                upper-left picture.
+                upper-left picture. The below picture is the what I ended up making in Unity.
             </p>
+            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerEnvironment.png' %}"
+                 height="200" width="500">
             <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerDesignDocuments1.png' %}"
                  height="200" width="500">
             <p>&ensp;The above UI pictures were something I want to keep pretty simple and to the point. However, I
@@ -77,43 +79,58 @@
                 end for now...'
 
             </p>
-            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerEnvironment.png' %}"
-                 height="200" width="500">
         </div>
         <div>
             <h2>Implementation</h2>
-            <p>After arriving at this page, the user can go to two additional pages: the comparison and charts page</p>
-            <br>
-            <p>For kanji, there are three popular group: one based on the Japanese Language Proficiency Test(JLPT),
-            one decided by the Japanese Ministry of Education(Joyo), and one based on the frequency of kanji use(Freq).
-            On the comparison screen, there is a data visualization of each grouping where the user has a level of 'guru'
-            or higher for a given kanji. This way the user can clear see his or her current progress as a gauge.</p>
-            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerUI.png' %}"
-                 height="350" width="500">
-            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerPuzzleRoom.png' %}"
-                 height="350" width="500">
-            <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerEndScreen.png' %}"
-                 height="350" width="500">
+            <p>After finalizing the draft, I created the UI, setup the puzzle and end room</p>
+            <div>
+                <div class="imageSideBySideDiv">
+                <img src="{% static 'home/pictures/puzzler_pictures/PuzzlerUI.png' %}"
+                     height="350">
+                </div>
+                <div class="imageSideBySideDiv">
+                <img src="{% static 'home/pictures/puzzler_pictures/PuzzlerPuzzleRoom.png' %}"
+                     height="350">
+                </div>
+                <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerEndScreen.png' %}"
+                     height="350" width="500">
+            </div>
         </div>
         <div>
             <h2>Testing & Improvements</h2>
-            <p>After arriving at this page, the user can go to two additional pages: the comparison and charts page</p>
+            <p>Testing was an interesting experience that you can see more about
+                <a href="https://medium.com/@dsshar/puzzler-aca3a699e129">here</a></p>
             <br>
-            <p>For kanji, there are three popular group: one based on the Japanese Language Proficiency Test(JLPT),
-            one decided by the Japanese Ministry of Education(Joyo), and one based on the frequency of kanji use(Freq).
-            On the comparison screen, there is a data visualization of each grouping where the user has a level of 'guru'
-            or higher for a given kanji. This way the user can clear see his or her current progress as a gauge.</p>
+            <p>One notable chance was that I added a small clue to the side of the wall that can be seen below.</p>
             <img class="imageCenter" src="{% static 'home/pictures/puzzler_pictures/PuzzlerPuzzleRoom.png' %}"
                  height="350" width="500">
         </div>
         <div>
             <h2>Closing Remarks</h2>
-            <p>After arriving at this page, the user can go to two additional pages: the comparison and charts page</p>
+            <p>This was a good experience that I really enjoyed, and help me strength my design skills. And, it opened
+            my mind to some of the issues users who don’t have a lot of experience can face.
             <br>
-            <p>For kanji, there are three popular group: one based on the Japanese Language Proficiency Test(JLPT),
-            one decided by the Japanese Ministry of Education(Joyo), and one based on the frequency of kanji use(Freq).
-            On the comparison screen, there is a data visualization of each grouping where the user has a level of 'guru'
-            or higher for a given kanji. This way the user can clear see his or her current progress as a gauge.</p>
+            <br>
+            I think one issue that will always be a challenge is effectively communicating the idea of a VR experience
+            with minimum words. As a gamer, I know that introducing a experience with a long wordy tutorial can be a
+            major turn to keep play. And, those explanations can just be ignored.
+            <br>
+            <br>
+            So, even though I could convey this puzzle in a simple passage, I would prefer not to. In this project, I
+            struggled with this objective. The puzzle was unclear to the testers. I need to find a better way to
+            communicate the game’s objective. One thing I noticed is that while the testers heard the failure sound for
+            orb, the sound’s meaning wasn’t intuitive.
+            <br>
+            <br>
+                I’m think maybe having a visual mark like a red ‘x’ could better convey the message. Also, I could had a
+                beginner level where there are like 1–2 orbs and only one flashes once, so the user can more quickly try
+                things out and figure out the puzzle’s objective.
+            </p>
+            <h3>Future plans</h3>
+            <p>
+                I would like to implement a more robust hint system or tutorial level and to try to make the environment
+                better.
+            </p>
         </div>
     </div>
     {% endblock %}

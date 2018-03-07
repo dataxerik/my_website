@@ -3,6 +3,15 @@
     display: block;
 }
 
+.imageSideBySideDiv {
+    float: left;
+    width: 50%;
+}
+
+.imageSideBySideDiv img {
+    width: 100%
+}
+
 .kana {
     margin: 0 auto;
     display: inline-block;
